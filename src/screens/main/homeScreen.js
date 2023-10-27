@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dimensions, Image, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Dimensions, Animated, Image, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -9,6 +9,30 @@ import { AppText, AppTextInput } from "../../components";
 
 
 export default function ChatScreen({ navigation }) {
+
+    const micScaleValue = React.useRef(new Animated.Value(1)).current;
+    const micOpacityValue = React.useRef(new Animated.Value(0)).current;
+    const sideBtnScaleValue = React.useRef(new Animated.Value(1)).current;
+
+    const animationConfig = (value) => {
+        return {
+            toValue: value,
+            duration: 500,
+            useNativeDriver: true,
+        }
+    }
+
+    const listeningOnEffect = () => {
+        Animated.timing(micScaleValue, animationConfig(2)).start();
+        Animated.timing(micOpacityValue, animationConfig(1)).start();
+        Animated.timing(sideBtnScaleValue, animationConfig(0.8)).start();
+    };
+
+    const listeningOffEffect = () => {
+        Animated.timing(micScaleValue, animationConfig(1)).start();
+        Animated.timing(micOpacityValue, animationConfig(0)).start();
+        Animated.timing(sideBtnScaleValue, animationConfig(1)).start();
+    };
 
     const chatSeed = [
         {
@@ -104,10 +128,12 @@ export default function ChatScreen({ navigation }) {
     }
 
     const onStartMicPress = () => {
+        listeningOnEffect()
         setIsListening(!isListening)
         setTimeout(() => {
             setIsListening(false)
-        }, 1000);
+            listeningOffEffect()
+        }, 2000);
     }
 
     return (
@@ -147,37 +173,30 @@ export default function ChatScreen({ navigation }) {
             {
                 mode == 'voice' ?
                     <LinearGradient
-
-                        locations={[0, 1]}
                         start={{ x: 0, y: 0 }}
-                        end={{ x: 0, y: 4.8 }}
-                        colors={["black", Colors.primary]}
+                        end={{ x: 0, y: 1 }}
+                        colors={["transparent", "#0008", "#0009", Colors.seconday]}
+                        locations={[0, 0.3, 0.2, 0.9]}
                         style={styles.bottomPanelVoice}
                     >
 
-                        <TouchableOpacity>
+                        <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} >
                             <FontAwesome5 solid name={'user'} size={28} color={isListening ? Colors.seconday : Colors.primary} />
                         </TouchableOpacity>
-                        {
-                            isListening &&
-                            // <View style={[{ width: 150, height: 150, backgroundColor: '#0000', borderRadius: 100, alignItems: 'center', position: 'absolute', left: '33%', bottom: -10 }, ShadowStyles.micShadow]} />
-                            <Image source={require('../../images/custom/listShadow.png')} style={{ width: 170, height: 170, resizeMode: 'contain', position: 'absolute', left: '30%', bottom: Platform.OS == 'ios' ? -10 : -20 }} />
-                        }
 
+                        <Animated.Image source={require('../../images/custom/listShadow.png')} style={{ width: 85, height: 85, resizeMode: 'contain', position: 'absolute', left: '43%', bottom: Platform.OS == 'ios' ? 35 : 10, transform: [{ scale: micScaleValue }], opacity: micOpacityValue }} />
                         <View >
-                            <TouchableOpacity onPress={onStartMicPress} style={[styles.micButtonBig, ShadowStyles.micShadow, { marginTop: 20 }]}>
+                            <TouchableOpacity disabled={isListening} onPress={onStartMicPress} style={[styles.micButtonBig, ShadowStyles.micShadow,]}>
                                 <FontAwesome5 solid name={'microphone'} size={28} color={'white'} />
                             </TouchableOpacity>
                             {
-                                isListening ?
-                                    <AppText style={{ color: 'white', fontSize: 14, marginTop: 10 }}>Listening...</AppText>
-                                    :
-                                    <AppText style={{ color: 'white', fontSize: 14, marginTop: 10 }}></AppText>
+                                isListening &&
+                                <AppText style={{ color: 'white', fontSize: 14, width: '100%', position: 'absolute', bottom: -20 }}>Listening..</AppText>
                             }
 
                         </View>
 
-                        <TouchableOpacity onPress={onKeyboardPress}>
+                        <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} onPress={onKeyboardPress} >
                             <FontAwesome5 solid name={'keyboard'} size={28} color={isListening ? Colors.seconday : Colors.primary} />
                         </TouchableOpacity>
 
@@ -186,8 +205,9 @@ export default function ChatScreen({ navigation }) {
                     :
                     <LinearGradient
                         start={{ x: 0, y: 0 }}
-                        end={{ x: 0, y: 4.8 }}
-                        colors={["#00000", "black", Colors.primary]}
+                        end={{ x: 0, y: 1 }}
+                        colors={["transparent", "#0008", "#0009", Colors.seconday]}
+                        locations={[0, 0.3, 0.2, 0.9]}
                         style={styles.bottomPanelText}
                     >
 
@@ -230,13 +250,14 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         padding: 15,
-        paddingTop: 0,
-        paddingBottom: Platform.OS == 'ios' ? 20 : 0,
+        paddingTop: 20,
+        paddingBottom: Platform.OS == 'ios' ? 50 : 30,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         paddingHorizontal: 20,
+
     },
 
     micButtonBig: {
@@ -249,10 +270,10 @@ const styles = StyleSheet.create({
     },
     bottomPanelText: {
         position: 'absolute',
-        bottom: Platform.OS == 'ios' ? 10 : 5,
+        bottom: 0,
         padding: 15,
-        paddingTop: 0,
-        paddingBottom: Platform.OS == 'ios' ? 20 : 10,
+        paddingTop: 25,
+        paddingBottom: Platform.OS == 'ios' ? 40 : 20,
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
