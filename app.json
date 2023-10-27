@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "AyurAid-mobile",
-    "slug": "AyurAid-mobile",
+    "name": "AyurAid",
+    "slug": "AyurAid",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

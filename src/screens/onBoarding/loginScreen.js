@@ -10,12 +10,29 @@ import {
   RoundButton,
 } from "../../components";
 import Logo from "../../images/logo/logo.png";
+import { useDispatch } from "react-redux";
+import { setActiveUser } from "../../redux/features/userSlice";
 
-const LoginScreen = ({navigation}) => {
+const LoginScreen = ({ navigation }) => {
 
-    const onRegister=()=>{
-        navigation.navigate(Routes.onBoarding.registerScreen)
+  const dispatch = useDispatch()
+
+  const onRegister = () => {
+    navigation.navigate(Routes.onBoarding.registerScreen)
+  }
+
+  const onLoginPress = () => {
+    const user = {
+      name: 'John Doe',
+      email: '',
+      id: '1234567890',
+      profilePic: ''
     }
+    dispatch(setActiveUser({ userToken: '1234567890', loggedIn: true, user: user }))
+    navigation.navigate(Routes.main.tag)
+  }
+
+
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -46,7 +63,7 @@ const LoginScreen = ({navigation}) => {
           <AppTextInput label="Username" placeholder="Ex- johndoe" />
           <AppTextInput label="Password" placeholder="Your Password" />
 
-          <FlatButton title="LOGIN" />
+          <FlatButton enableShadow={true} title="LOGIN" onPress={onLoginPress} />
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onRegister}>
             <AppText style={{ color: "white", fontSize: 15 }}>
