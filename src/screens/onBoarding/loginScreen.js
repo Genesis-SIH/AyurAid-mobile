@@ -43,8 +43,8 @@ const LoginScreen = ({navigation}) => {
           >
             Welcome Back
           </AppText>
-          <AppTextInput label="Username" placeholder="Enter your Username" />
-          <AppTextInput label="Password" placeholder="Enter your Password" />
+          <AppTextInput label="Username" placeholder="Ex- johndoe" />
+          <AppTextInput label="Password" placeholder="Your Password" />
 
           <FlatButton title="LOGIN" />
 
