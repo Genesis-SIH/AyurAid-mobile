@@ -7,8 +7,8 @@ import { Colors } from "../utils";
 export default function AppTextInput(props) {
 
     return (
-        <View style={{ width: '100%', marginVertical: 10,marginBottom:20 }}>
-            <AppText style={{ color: Colors.primary, marginBottom: 5 }}>{props.label}</AppText>
+        <View style={{ width: '100%',marginBottom:20 }}>
+            <AppText style={{ color: Colors.primary, marginBottom: 2 }}>{props.label}</AppText>
             <TextInput placeholderTextColor={'grey'} {...props} style={styles.input} />
         </View>
     )
@@ -19,10 +19,10 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.seconday,   
         padding: 10,
         width:'100%',
-        borderRadius: 5,
+        borderRadius: 8,
         fontSize: 16,
         color: 'white', 
-        paddingVertical: 10,
+        paddingVertical: 7,
 
     }
 })

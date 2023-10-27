@@ -10,7 +10,7 @@ import Logo from '../../images/logo/logo.png'
 const WelcomScreen = ({navigation}) => {
 
   const onGetStarted = () => {
-    navigation.navigate(Routes.onBoarding.loginScreen)
+    navigation.navigate(Routes.onBoarding.registerScreen)
   }
 
   return (
