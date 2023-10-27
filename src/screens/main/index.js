@@ -28,10 +28,10 @@ export default function MainStackNavigator() {
                         backgroundColor:'black'
                     },
                     headerLeft: () => (
-                        <View style={{marginLeft:10,marginTop: Platform.OS=='ios' ? 0 : 20,flexDirection:'row',justifyContent:'flex-start',alignItems:'center'}}>
+                        <View style={{marginLeft:10,marginTop: Platform.OS=='ios' ? -10 : 20,flexDirection:'row',justifyContent:'flex-start',alignItems:'center',paddingBottom:10}}>
                             <Image source={{uri:'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww'}} style={{width:40,height:40,borderRadius:50}} />
                             <View style={{marginLeft:10}}>
-                                <AppText style={{color:'lightgrey',fontSize:14,marginBottom:Platform.OS=='ios' ? 5 : 3}}>👋🏻 Hey,</AppText>
+                                <AppText style={{color:'lightgrey',fontSize:14,marginBottom: 0}}>👋🏻 Hey,</AppText>
                                 <AppText style={{color:'white',fontSize:18,color:Colors.primary}}>{user.name}</AppText>
                             </View>
                         </View>
