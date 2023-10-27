@@ -10,7 +10,7 @@ import Logo from '../../images/logo/logo.png'
 const WelcomScreen = ({navigation}) => {
 
   const onGetStarted = () => {
-    navigation.navigate(Routes.onBoarding.registerScreen)
+    navigation.navigate(Routes.onBoarding.loginScreen)
   }
 
   return (
@@ -36,7 +36,7 @@ const WelcomScreen = ({navigation}) => {
         <RoundButton  
           title='GET STARTED' 
           boldTitle={true}  
-          style={{position:'absolute',bottom:40,width:'80%'}}
+          style={{position:'absolute',bottom:70,width:'80%'}}
           onPress={onGetStarted}
           />
 

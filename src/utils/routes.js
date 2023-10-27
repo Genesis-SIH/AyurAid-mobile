@@ -6,8 +6,12 @@ export const Routes = {
         loginScreen: 'Login',
         registerScreen: 'Register',
     },
-    app:{
+    main:{
         tag: 'app',
-        homeScreen: 'Home',
+        chatScreen: 'Chat',
+        shopScreen: 'Shop',
+        profileScreen: 'Profile',
+        dosageScreen: 'Dosage',
+        settingScreen: 'Setting',
     }
 }
