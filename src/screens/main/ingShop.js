@@ -14,7 +14,7 @@ export default function IngredientShop({ route, navigation }) {
         <ScrollView contentContainerStyle={styles.container}>
             {
                 ingredients.map((item, index) => (
-                    <View style={styles.card}>
+                    <View key={item.id} style={styles.card}>
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
                             <AppText bold style={{ fontSize: 16, color: Colors.primary }}>{item.name}</AppText>
                             <AppText bold style={{ fontSize: 16, color: Colors.primary }}>{item.dosage}</AppText>
@@ -23,7 +23,7 @@ export default function IngredientShop({ route, navigation }) {
                         <ScrollView horizontal style={{ marginTop: 20 }}>
 
                             {item.links.map((linkRef, index) => (
-                                <TouchableOpacity onPress={()=>Linking.openURL(linkRef.url)} style={{ width: 140, height: 140, borderRadius: 10, overflow: 'hidden', marginRight: 15 }}>
+                                <TouchableOpacity key={item.id + "#" + linkRef.id} onPress={()=>Linking.openURL(linkRef.url)} style={{ width: 140, height: 140, borderRadius: 10, overflow: 'hidden', marginRight: 15 }}>
                                     <Image source={{ uri: linkRef.image }} style={{ width: '100%', height: '100%' }} />
                                     <LinearGradient
                                         start={{ x: 0, y: 0 }}
