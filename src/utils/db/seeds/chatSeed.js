@@ -1,3 +1,4 @@
+import { ShopIcons } from "../../../images/shop/icons"
 
 
 export const ChatSeed = [
@@ -36,6 +37,36 @@ export const ChatSeed = [
                     createdAt: new Date().getTime(),
                     updatedAt: new Date().getTime(),
                     source: 'AyurAid',
+                    links: [
+                        {
+                            id: 1,
+                            name: 'Amazon',
+                            icon : ShopIcons.Amazon,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.amazon.in/s?k=tulsi&ref=nb_sb_noss_2'
+                        },
+                        {
+                            id: 2,
+                            name: '1mg',
+                            icon : ShopIcons.OneMg,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.1mg.com/search/all?name=tulsi'
+                        },
+                        {
+                            id: 3,
+                            name: 'Netmeds',
+                            icon : ShopIcons.Netmeds,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.netmeds.com/catalogsearch/result?q=tulsi'
+                        },
+                        {
+                            id: 4,
+                            name: 'Flipkart',
+                            icon : ShopIcons.Flipkart,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.flipkart.com/search?q=tulsi&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off'
+                        }
+                    ]
                 },
                 {
                     id: 2,
@@ -44,6 +75,36 @@ export const ChatSeed = [
                     createdAt: new Date().getTime(),
                     updatedAt: new Date().getTime(),
                     source: 'AyurAid',
+                    links:[
+                        {
+                            id: 1,
+                            name: 'Amazon',
+                            icon : ShopIcons.Amazon,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.amazon.in/s?k=laung&ref=nb_sb_noss_2'
+                        },
+                        {
+                            id: 2,
+                            name: '1mg',
+                            icon : ShopIcons.OneMg,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.1mg.com/search/all?name=laung'
+                        },
+                        {
+                            id: 3,
+                            name: 'Netmeds',
+                            icon : ShopIcons.Netmeds,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.netmeds.com/catalogsearch/result?q=laung'
+                        },
+                        {
+                            id: 4,
+                            name: 'Flipkart',
+                            icon : ShopIcons.Flipkart,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.flipkart.com/search?q=laung&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off'
+                        }
+                    ]
                 },
                 {
                     id: 2,
@@ -52,6 +113,36 @@ export const ChatSeed = [
                     createdAt: new Date().getTime(),
                     updatedAt: new Date().getTime(),
                     source: 'AyurAid',
+                    links:[
+                        {
+                            id: 1,
+                            name: 'Amazon',
+                            icon : ShopIcons.Amazon,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.amazon.in/s?k=ilaichi&ref=nb_sb_noss_2'
+                        },
+                        {
+                            id: 2,
+                            name: '1mg',
+                            icon : ShopIcons.OneMg,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.1mg.com/search/all?name=ilaichi'
+                        },
+                        {
+                            id: 3,
+                            name: 'Netmeds',
+                            icon : ShopIcons.Netmeds,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.netmeds.com/catalogsearch/result?q=ilaichi'
+                        },
+                        {
+                            id: 4,
+                            name: 'Flipkart',
+                            icon : ShopIcons.Flipkart,
+                            image: 'https://www.bigbasket.com/media/uploads/p/l/268013_2-mdh-powder-haldi.jpg',
+                            url: 'https://www.flipkart.com/search?q=ilaichi&otracker=search&otracker1=search&marketplace=FLIPKART&as-show=on&as=off'
+                        }
+                    ]
                 }
             ]
         },

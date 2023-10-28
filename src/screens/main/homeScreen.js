@@ -86,15 +86,15 @@ export default function ChatScreen({ navigation }) {
                         chat.type == 'bot' ?
                             <>
                                 <View key={chat.id} style={{ alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
-                                    <AppText style={{ color: 'white', fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>{chat.text}</AppText>
+                                    <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>{chat.text}</AppText>
                                     {
                                         chat.data?.sourceInfo &&
                                         <View style={{ padding: 10, marginVertical: 10,marginTop:15, backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
-                                            <AppText bold style={{ color: 'white', fontSize: 14, lineHeight: 24 }}>Trust Factors</AppText>
+                                            <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>Trust Factors</AppText>
 
                                             <View style={{marginTop:10}}>
-                                                <AppText style={{ color: 'white', fontSize: 14, lineHeight: 24 }}>- Source: {chat.data?.sourceInfo.source}</AppText>
-                                                <AppText style={{ color: 'white', fontSize: 14, lineHeight: 24 }}>- Trust : {chat.data?.sourceInfo.trustFactor}</AppText>
+                                                <AppText style={{  fontSize: 14, lineHeight: 24 }}>- Source: {chat.data?.sourceInfo.source}</AppText>
+                                                <AppText style={{  fontSize: 14, lineHeight: 24 }}>- Trust : {chat.data?.sourceInfo.trustFactor}</AppText>
                                             </View> 
                                         </View>
                                     }
@@ -103,12 +103,12 @@ export default function ChatScreen({ navigation }) {
                                 </View>
                                 {chat.data?.ingredients &&
                                     <View key={chat.id + 1} style={{ marginTop: 1, alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
-                                        <AppText style={{ color: 'white', fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>You can buy the ingredients here !</AppText>
+                                        <AppText style={{  fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>You can buy the ingredients here !</AppText>
 
-                                        <TouchableOpacity onPress={()=>openShop(chat)} style={{ padding: 10, marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
+                                        <TouchableOpacity onPress={()=>openShop(chat.data)} style={{ padding: 10, marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <FontAwesome name="shopping-cart" size={20} color="white" />
-                                                <AppText style={{ color: 'white', marginLeft: 12, fontSize: 14, lineHeight: 24 }}>View Shop</AppText>
+                                                <AppText style={{  marginLeft: 12, fontSize: 14, lineHeight: 24 }}>View Shop</AppText>
                                             </View>
 
                                             <FontAwesome name="caret-right" size={24} color="white" />
@@ -118,7 +118,7 @@ export default function ChatScreen({ navigation }) {
                             </>
                             :
                             <View key={chat.id} style={{ alignSelf: 'flex-end', maxWidth: '70%', backgroundColor: Colors.primary, borderRadius: 10, padding: 10, marginVertical: 10 }}>
-                                <AppText style={{ color: 'white', fontSize: Platform.OS == 'ios' ? 16 : 14 }}>{chat.text}</AppText>
+                                <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14 }}>{chat.text}</AppText>
                             </View>
                     ))}
                 </ScrollView>
@@ -160,7 +160,7 @@ export default function ChatScreen({ navigation }) {
                             </TouchableOpacity>
                             {
                                 isListening &&
-                                <AppText style={{ color: 'white', fontSize: 14, width: '100%', position: 'absolute', bottom: -20 }}>Listening..</AppText>
+                                <AppText style={{ fontSize: 14, width: '100%', position: 'absolute', bottom: -20 }}>Listening..</AppText>
                             }
 
                         </View>
@@ -241,7 +241,7 @@ const styles = StyleSheet.create({
         position: 'absolute',
         bottom: 0,
         padding: 15,
-        paddingTop: 25,
+        paddingTop: 20,
         paddingBottom: Platform.OS == 'ios' ? 40 : 20,
         width: '100%',
         flexDirection: 'row',

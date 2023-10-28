@@ -66,7 +66,7 @@ const LoginScreen = ({ navigation }) => {
           <FlatButton enableShadow={true} title="LOGIN" onPress={onLoginPress} />
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onRegister}>
-            <AppText style={{ color: "white", fontSize: 15 }}>
+            <AppText style={{  fontSize: 15 }}>
               Don’t have an Account ? Create Now !
             </AppText>
           </TouchableOpacity>

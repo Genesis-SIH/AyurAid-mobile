@@ -52,7 +52,7 @@ function RegisterScreen({ navigation }) {
           <FlatButton title="REGISTER" />
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onAlready}>
-            <AppText style={{ color: "white", fontSize: 15 }}>
+            <AppText style={{ fontSize: 15 }}>
               Already have an Account ? Login !
             </AppText>
           </TouchableOpacity>
