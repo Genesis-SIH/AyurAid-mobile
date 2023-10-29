@@ -28,7 +28,7 @@ const WelcomScreen = ({navigation}) => {
           />
 
           <AppText style={{ color: Colors.primary, fontSize: 35, marginBottom: 15 }}>AyurAid</AppText>
-          <AppText style={{ color: 'white', fontSize: 15, textAlign: 'center' }}>
+          <AppText style={{fontSize: 15, textAlign: 'center' }}>
             Bridging Ayurveda and Modern Healthcare for Personalized Well-being
           </AppText>
         </View>
