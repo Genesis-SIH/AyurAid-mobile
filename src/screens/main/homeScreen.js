@@ -149,7 +149,7 @@ export default function ChatScreen({ navigation }) {
                         style={styles.bottomPanelVoice}
                     >
 
-                        <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} >
+                        <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} onPress={()=>navigation.navigate(Routes.main.profileScreen)} >
                             <FontAwesome5 solid name={'user'} size={28} color={isListening ? Colors.seconday : Colors.primary} />
                         </TouchableOpacity>
 
