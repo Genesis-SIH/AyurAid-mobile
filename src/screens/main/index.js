@@ -104,11 +104,13 @@ export default function MainStackNavigator() {
             <Header
               title='Profile'
               rightElemnt={
-                <TouchableOpacity onPress={() => {
+                <TouchableOpacity 
+                style={{marginRight:10}}
+                onPress={() => {
                   dispatch(setUserLogOutState())
                   navigation.navigate(Routes.onBoarding.tag)
                 }}>
-                  <IonIcons name="exit" size={30} color="white" />
+                  <IonIcons name="exit-outline" size={28} color="white" />
                 </TouchableOpacity>
               }
 
