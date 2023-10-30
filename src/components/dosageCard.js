@@ -1,12 +1,20 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Border, Colors } from "../utils";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Border, Colors, Routes } from "../utils";
 import AppText from "./text";
-
 import ProgressCircle from "react-native-progress-circle";
+import { useNavigation } from "@react-navigation/core";
+
 function DosageCard({title,consumeDays,totalDays}) {
+
+  const navigation = useNavigation();
+
+  const onDosagePress = () => {
+    navigation.navigate(Routes.main.dosageScreen);
+  }
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity onPress={onDosagePress} style={styles.card}>
       <View >
         <AppText style={styles.diseaseText}>{title}</AppText>
         <AppText
@@ -45,7 +53,7 @@ function DosageCard({title,consumeDays,totalDays}) {
           <AppText style={{ fontSize: 12,color:'white' }}>{"30%"}</AppText>
         </ProgressCircle>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 

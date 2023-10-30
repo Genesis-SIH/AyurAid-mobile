@@ -11,11 +11,13 @@ import IonIcons from "react-native-vector-icons/Ionicons";
 import ProfileScreen from "./profileScreen";
 import { useDispatch } from "react-redux";
 import { setUserLogOutState } from "../../redux/features/userSlice";
+import DosageDetailScreen from "./dosageDetailScreen";
+import Header from "../../components/header";
 
 const MainStack = createNativeStackNavigator();
 
 export default function MainStackNavigator() {
-    const dispatch =useDispatch();
+  const dispatch = useDispatch();
   const user = User();
 
   return (
@@ -76,28 +78,14 @@ export default function MainStackNavigator() {
             backgroundColor: "black",
           },
           header: () => (
-            <LinearGradient
-              start={{ x: 0, y: 1 }}
-              end={{ x: 0, y: 0 }}
-              colors={["transparent", "#0008", "#0009", Colors.seconday]}
-              locations={[0, 0.3, 0.2, 0.9]}
-              style={{
-                width: "100%",
-                padding: 10,
-                paddingTop: 60,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <IonIcons name="chevron-back" size={28} color="white" />
-              </TouchableOpacity>
-              <AppText style={{ fontSize: 18, textAlign: "center" }}>
-                Ingredient Shop
-              </AppText>
-              <IonIcons name="help-circle" size={28} color="white" />
-            </LinearGradient>
+            <Header
+              title='Ingredient Shop'
+              rightElemnt={
+                <TouchableOpacity>
+                  <IonIcons name="help-circle" size={28} color="white" />
+                </TouchableOpacity>
+              }
+            />
           ),
         })}
       />
@@ -113,34 +101,36 @@ export default function MainStackNavigator() {
             backgroundColor: "black",
           },
           header: () => (
-            <LinearGradient
-              start={{ x: 0, y: 1 }}
-              end={{ x: 0, y: 0 }}
-              colors={["transparent", "#0008", "#0009", Colors.seconday]}
-              locations={[0, 0.1, 0.2, 0.9]}
-              style={{
-                width: "100%",
-                padding: 10,
-                paddingTop: 50,
-                flexDirection: "row",
-                justifyContent: "space-between",
-                alignItems: "center",
-              }}
-            >
-              <TouchableOpacity onPress={() => navigation.goBack()}>
-                <IonIcons name="chevron-back" size={28} color="white" />
-              </TouchableOpacity>
-              <AppText style={{ fontSize: 18, textAlign: "center" }}>
-                Profile
-              </AppText>
-              <TouchableOpacity onPress={()=>{
-                 dispatch(setUserLogOutState())
-                 navigation.navigate(Routes.onBoarding.tag)
+            <Header
+              title='Profile'
+              rightElemnt={
+                <TouchableOpacity onPress={() => {
+                  dispatch(setUserLogOutState())
+                  navigation.navigate(Routes.onBoarding.tag)
+                }}>
+                  <IonIcons name="exit" size={30} color="white" />
+                </TouchableOpacity>
+              }
 
-              }}>
-                <IonIcons name="exit" size={30} color="white" />
-              </TouchableOpacity>
-            </LinearGradient>
+            />
+
+          ),
+        })}
+      />
+
+
+      <MainStack.Screen
+        name={Routes.main.dosageScreen}
+        component={DosageDetailScreen}
+        options={({ route, navigation }) => ({
+          headerShown: true,
+          headerTintColor: "white",
+          headerTitle: "Dosage Detail",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          header: () => (
+            <Header title='Dosage' />
           ),
         })}
       />
