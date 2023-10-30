@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Image, Text, ScrollView } from "react-native";
 import { AppText } from "../../components";
 import { Border, Colors } from "../../utils";
@@ -8,6 +8,7 @@ import { DosageSeed } from "../../utils/db/seeds";
 import { User } from "../../redux/store/useStore";
 
 function ProfileScreen() {
+  const [dosages, setDosages] = useState(DosageSeed);
     const user = User();
   return (
     <View style={styles.container}>
@@ -41,7 +42,7 @@ function ProfileScreen() {
           </AppText>
 
           <ScrollView contentContainerStyle={styles.scrollViewContent}>
-            {DosageSeed.map((data) => (
+            {dosages.map((data) => (
               <View style={{ marginBottom: 25 }}>
                 <DosageCard
                   key={data.id}

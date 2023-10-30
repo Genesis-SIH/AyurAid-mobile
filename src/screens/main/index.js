@@ -135,7 +135,7 @@ export default function MainStackNavigator() {
               </AppText>
               <TouchableOpacity onPress={()=>{
                  dispatch(setUserLogOutState())
-                 navigation.navigate(Routes.onBoarding.welcomeScreen)
+                 navigation.navigate(Routes.onBoarding.tag)
 
               }}>
                 <IonIcons name="exit" size={30} color="white" />
