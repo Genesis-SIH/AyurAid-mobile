@@ -13,12 +13,15 @@ import { useDispatch } from "react-redux";
 import { setUserLogOutState } from "../../redux/features/userSlice";
 import DosageDetailScreen from "./dosageDetailScreen";
 import Header from "../../components/header";
+import { BottomSheet } from "../../components/bottomsheet";
 
 const MainStack = createNativeStackNavigator();
 
 export default function MainStackNavigator() {
   const dispatch = useDispatch();
   const user = User();
+
+  const bottomSheetRef = React.useRef(null);
 
   return (
     <MainStack.Navigator
@@ -78,14 +81,28 @@ export default function MainStackNavigator() {
             backgroundColor: "black",
           },
           header: () => (
+            <>
             <Header
               title='Ingredient Shop'
               rightElemnt={
-                <TouchableOpacity>
+                <TouchableOpacity style={{marginRight:10}} onPress={()=> bottomSheetRef?.current?.open()}>
                   <IonIcons name="help-circle" size={28} color="white" />
                 </TouchableOpacity>
               }
             />
+            <BottomSheet ref={bottomSheetRef} height={400} heading='What is Shop ?'>
+                <View style={{marginVertical:10,padding:10}}>
+                  <AppText style={{color:'lightgrey'}}>
+                    In our ingredient shop you can buy all ingredients for your recipes recommended by our App.
+                   
+                  </AppText>
+                  <AppText style={{color:'lightgrey',marginTop:15}}>
+                  We have a wide range of ingredients from different brands and stores, so you can choose the best for you.
+                  </AppText>
+                </View>
+            </BottomSheet>
+
+            </>
           ),
         })}
       />
