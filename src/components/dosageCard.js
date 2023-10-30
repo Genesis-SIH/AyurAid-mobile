@@ -10,12 +10,7 @@ function DosageCard({title,consumeDays,totalDays}) {
       <View >
         <AppText style={styles.diseaseText}>{title}</AppText>
         <AppText
-          style={{
-            fontSize: 12,
-            color: Colors.primary,
-            margin: 10,
-            marginTop: 15,
-          }}
+          style={{fontSize: 12,color: Colors.primary,margin: 10,marginTop: 15,          }}
         >
           Duration
         </AppText>
@@ -42,12 +37,12 @@ function DosageCard({title,consumeDays,totalDays}) {
       <View style={styles.circleContainer}>
         <ProgressCircle
           percent={70}
-          radius={28}
-          borderWidth={6}
+          radius={25}
+          borderWidth={5}
           color="#00BC8B"
-          bgColor="#fff"
+          bgColor={Colors.seconday}
         >
-          <Text style={{ fontSize: 10 }}>{"30%"}</Text>
+          <AppText style={{ fontSize: 12,color:'white' }}>{"30%"}</AppText>
         </ProgressCircle>
       </View>
     </View>
@@ -59,7 +54,7 @@ export default DosageCard;
 const styles = StyleSheet.create({
     circleContainer:{
      marginLeft:'25%',
-     margin:"8%"
+     margin:"8%",
     },
   diseaseText: {
     fontSize: 15,
@@ -68,6 +63,8 @@ const styles = StyleSheet.create({
   },
   card: {
     display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
     flexDirection:'row',
     backgroundColor: Colors.colorDarkslategray_100,
     borderRadius: Border.br_3xs,

@@ -108,7 +108,7 @@ export default function MainStackNavigator() {
         options={({ route, navigation }) => ({
           headerShown: true,
           headerTintColor: "white",
-          headerTitle: "Ingredient Shop",
+          headerTitle: "Profile",
           headerStyle: {
             backgroundColor: "black",
           },
@@ -121,7 +121,7 @@ export default function MainStackNavigator() {
               style={{
                 width: "100%",
                 padding: 10,
-                paddingTop: 60,
+                paddingTop: 50,
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
