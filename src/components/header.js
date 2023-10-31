@@ -1,5 +1,5 @@
 import { LinearGradient } from "expo-linear-gradient";
-import { TouchableOpacity, View } from "react-native";
+import { Platform, TouchableOpacity, View } from "react-native";
 import IonIcons from "react-native-vector-icons/Ionicons";
 import AppText from "./text";
 import { Colors } from "../utils";
@@ -18,7 +18,7 @@ export default function Header(props) {
             style={{
                 width: "100%",
                 padding: 10,
-                paddingTop: 50,
+                paddingTop: Platform.OS=='android' ? 40 :50,
                 flexDirection: "row",
                 justifyContent: "space-between",
                 alignItems: "center",
