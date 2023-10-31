@@ -29,7 +29,7 @@ const LoginScreen = ({ navigation }) => {
       profilePic: ''
     }
     dispatch(setActiveUser({ userToken: '1234567890', loggedIn: true, user: user }))
-    navigation.navigate(Routes.main.tag)
+    navigation.replace(Routes.main.tag)
   }
 
 

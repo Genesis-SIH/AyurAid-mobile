@@ -1,21 +1,24 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
-import { Border, Colors } from "../utils";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { Border, Colors, Routes } from "../utils";
 import AppText from "./text";
-
 import ProgressCircle from "react-native-progress-circle";
+import { useNavigation } from "@react-navigation/core";
+
 function DosageCard({title,consumeDays,totalDays}) {
+
+  const navigation = useNavigation();
+
+  const onDosagePress = () => {
+    navigation.navigate(Routes.main.dosageScreen);
+  }
+
   return (
-    <View style={styles.card}>
+    <TouchableOpacity onPress={onDosagePress} style={styles.card}>
       <View >
         <AppText style={styles.diseaseText}>{title}</AppText>
         <AppText
-          style={{
-            fontSize: 12,
-            color: Colors.primary,
-            margin: 10,
-            marginTop: 15,
-          }}
+          style={{fontSize: 12,color: Colors.primary,margin: 10,marginTop: 15,          }}
         >
           Duration
         </AppText>
@@ -42,15 +45,15 @@ function DosageCard({title,consumeDays,totalDays}) {
       <View style={styles.circleContainer}>
         <ProgressCircle
           percent={70}
-          radius={28}
-          borderWidth={6}
+          radius={25}
+          borderWidth={5}
           color="#00BC8B"
-          bgColor="#fff"
+          bgColor={Colors.seconday}
         >
-          <Text style={{ fontSize: 10 }}>{"30%"}</Text>
+          <AppText style={{ fontSize: 12,color:'white' }}>{"30%"}</AppText>
         </ProgressCircle>
       </View>
-    </View>
+    </TouchableOpacity>
   );
 }
 
@@ -59,7 +62,7 @@ export default DosageCard;
 const styles = StyleSheet.create({
     circleContainer:{
      marginLeft:'25%',
-     margin:"8%"
+     margin:"8%",
     },
   diseaseText: {
     fontSize: 15,
@@ -68,6 +71,8 @@ const styles = StyleSheet.create({
   },
   card: {
     display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
     flexDirection:'row',
     backgroundColor: Colors.colorDarkslategray_100,
     borderRadius: Border.br_3xs,
