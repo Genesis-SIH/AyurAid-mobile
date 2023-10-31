@@ -5,6 +5,8 @@ export const Routes = {
         welcomeScreen: 'Welcome',
         loginScreen: 'Login',
         registerScreen: 'Register',
+        ForgetScreen: 'Forget',
+        ResetScreen: 'Reset',
     },
     main:{
         tag: 'app',
