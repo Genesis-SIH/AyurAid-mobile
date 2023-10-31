@@ -66,7 +66,7 @@ export default function App() {
   if (!fontsLoaded && !error) {
     return (
       <View style={{ width: '100%', height: '100%', flex: 1, backgroundColor: 'black',justifyContent:'center',alignItems:'center' }}>
-        <Image source={SplashImage} />
+        <Image source={SplashImage}  style={{ width: '100%', height: '100%',resizeMode:'cover'}}/>
       </View>
     )
   }
