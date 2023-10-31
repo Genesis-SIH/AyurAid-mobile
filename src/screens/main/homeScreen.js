@@ -85,7 +85,7 @@ export default function ChatScreen({ navigation }) {
                     {chats.map((chat, index) => (
                         chat.type == 'bot' ?
                             <>
-                                <View key={chat.id} style={{ alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
+                                <View key={chat.id+880123123} style={{ alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
                                     <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>{chat.text}</AppText>
                                     {
                                         chat.data?.sourceInfo &&
@@ -102,7 +102,7 @@ export default function ChatScreen({ navigation }) {
 
                                 </View>
                                 {chat.data?.ingredients &&
-                                    <View key={chat.id + 1} style={{ marginTop: 1, alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
+                                    <View key={chat.id + 99923} style={{ marginTop: 1, alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
                                         <AppText style={{  fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>You can buy the ingredients here !</AppText>
 
                                         <TouchableOpacity onPress={()=>openShop(chat.data)} style={{ padding: 10, marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
@@ -117,7 +117,7 @@ export default function ChatScreen({ navigation }) {
                                 }
                             </>
                             :
-                            <View key={chat.id} style={{ alignSelf: 'flex-end', maxWidth: '70%', backgroundColor: Colors.primary, borderRadius: 10, padding: 10, marginVertical: 10 }}>
+                            <View key={chat.id+223123132123} style={{ alignSelf: 'flex-end', maxWidth: '70%', backgroundColor: Colors.primary, borderRadius: 10, padding: 10, marginVertical: 10 }}>
                                 <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14 }}>{chat.text}</AppText>
                             </View>
                     ))}

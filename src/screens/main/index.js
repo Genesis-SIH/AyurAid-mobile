@@ -62,7 +62,7 @@ export default function MainStackNavigator() {
                   👋🏻 Hey,
                 </AppText>
                 <AppText style={{ fontSize: 18, color: Colors.primary }}>
-                  {user.name}
+                  {user?.name}
                 </AppText>
               </View>
             </View>
@@ -125,7 +125,7 @@ export default function MainStackNavigator() {
                 style={{marginRight:10}}
                 onPress={() => {
                   dispatch(setUserLogOutState())
-                  navigation.navigate(Routes.onBoarding.tag)
+                  navigation.replace(Routes.onBoarding.tag)
                 }}>
                   <IonIcons name="exit-outline" size={28} color="white" />
                 </TouchableOpacity>

@@ -1,5 +1,5 @@
 
-import { Image, View } from 'react-native';
+import { Image, View,Text } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -13,6 +13,7 @@ import store from './src/redux/store/store';
 import { Routes } from './src/utils';
 import MainStackNavigator from './src/screens/main';
 import { LoggedIn } from './src/redux/store/useStore';
+import { AppText } from './src/components';
 
 const AppStack = createNativeStackNavigator();
 
@@ -64,7 +65,7 @@ export default function App() {
 
   if (!fontsLoaded && !error) {
     return (
-      <View style={{ width: '100%', height: '100%', flex: 1, backgroundColor: 'black' }}>
+      <View style={{ width: '100%', height: '100%', flex: 1, backgroundColor: 'black',justifyContent:'center',alignItems:'center' }}>
         <Image source={SplashImage} />
       </View>
     )
