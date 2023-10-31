@@ -20,9 +20,9 @@ const styles = StyleSheet.create({
         padding: 10,
         width:'100%',
         borderRadius: 8,
-        fontSize: 16,
+        fontSize: 14,
         color: 'white', 
-        paddingVertical: 14,
+        paddingVertical: 10,
 
     }
 })

@@ -65,9 +65,9 @@ function RegisterScreen({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "black",
-    flex: 1,
     alignItems: "center",
     justifyContent: "center",
+
   },
   gradient: {
     height: "100%",
@@ -75,6 +75,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     flex: 1,
+    paddingVertical: 50,
   },
 });
 

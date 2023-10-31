@@ -2,6 +2,7 @@
   "expo": {
     "name": "AyurAid",
     "slug": "AyurAid",
+    "owner": "genesis-sih",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -15,16 +16,23 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.ayuraid.mobile"
     },
     "android": {
+      "package": "com.ayuraid.mobile",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#000000"
       }
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "288e087e-b9ef-4154-936d-22e5e63cefe3"
+      }
     }
   }
 }

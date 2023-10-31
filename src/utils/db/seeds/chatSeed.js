@@ -3,7 +3,7 @@ import { ShopIcons } from "../../../images/shop/icons"
 
 export const ChatSeed = [
     {
-        id: 1123123,
+        id: 112312888883,
         text: 'Hi, I am AyurAid. How can I help you?',
         type: 'bot',
         timestamp: new Date().getTime(),
@@ -107,7 +107,7 @@ export const ChatSeed = [
                     ]
                 },
                 {
-                    id: 2,
+                    id: 29999999,
                     name: 'Ilaichi',
                     dosage: '5ml',
                     createdAt: new Date().getTime(),
