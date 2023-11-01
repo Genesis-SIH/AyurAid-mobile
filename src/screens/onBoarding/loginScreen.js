@@ -20,6 +20,9 @@ const LoginScreen = ({ navigation }) => {
   const onRegister = () => {
     navigation.navigate(Routes.onBoarding.registerScreen)
   }
+  const onForget = () => {
+    navigation.navigate(Routes.onBoarding.ForgetScreen)
+  }
 
   const onLoginPress = () => {
     const user = {
@@ -62,6 +65,11 @@ const LoginScreen = ({ navigation }) => {
           </AppText>
           <AppTextInput label="Username" placeholder="Ex- johndoe" />
           <AppTextInput label="Password" placeholder="Your Password" />
+          <TouchableOpacity style={{ marginTop: 30 }} onPress={onForget}>
+            <AppText style={{  fontSize: 15 }}>
+             Forget password?
+            </AppText>
+          </TouchableOpacity>
 
           <FlatButton enableShadow={true} title="LOGIN" onPress={onLoginPress} />
 
