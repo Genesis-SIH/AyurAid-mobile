@@ -2,6 +2,7 @@ import AppText from "./text";
 import { FlatButton, RoundButton } from "./button";
 import AppTextInput from "./textInput";
 import DosageCard from "./dosageCard";
+import LoadingModal from "./loadingmodal";
 
 export {
     AppText,
@@ -9,4 +10,5 @@ export {
     RoundButton,
     AppTextInput,
     DosageCard,
+    LoadingModal
 }

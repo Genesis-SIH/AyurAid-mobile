@@ -1,5 +1,5 @@
 
-import { Image, View,Text } from 'react-native';
+import { Image, View, Text } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
@@ -14,6 +14,9 @@ import { Routes } from './src/utils';
 import MainStackNavigator from './src/screens/main';
 import { LoggedIn } from './src/redux/store/useStore';
 import { AppText } from './src/components';
+import axios from 'axios';
+import { useEffect } from 'react';
+import { ApiCollection } from './src/config';
 
 const AppStack = createNativeStackNavigator();
 
@@ -57,6 +60,19 @@ const AppNavigator = () => {
 
 export default function App() {
 
+  useEffect(() => {
+    async () => {
+      await axios.get(ApiCollection.utils.wakeup)
+        .then((res) => {
+          console.log(res.data)
+        })
+        .catch((err) => {
+          console.log(err.response)
+        })
+    }
+
+  }, [])
+
 
   const [fontsLoaded, error] = useFonts({
     "ProductSans-Regular": require("./src/utils/fonts/productSans/productSans.ttf"),
@@ -65,8 +81,8 @@ export default function App() {
 
   if (!fontsLoaded && !error) {
     return (
-      <View style={{ width: '100%', height: '100%', flex: 1, backgroundColor: 'black',justifyContent:'center',alignItems:'center' }}>
-        <Image source={SplashImage}  style={{ width: '100%', height: '100%',resizeMode:'cover'}}/>
+      <View style={{ width: '100%', height: '100%', flex: 1, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+        <Image source={SplashImage} style={{ width: '100%', height: '100%', resizeMode: 'cover' }} />
       </View>
     )
   }

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "expo-image";
 import { Colors, Routes } from "../../utils";
@@ -12,10 +12,17 @@ import {
 import Logo from "../../images/logo/logo.png";
 import { useDispatch } from "react-redux";
 import { setActiveUser } from "../../redux/features/userSlice";
+import axios from "axios";
+import LoadingModal from "../../components/loadingmodal";
+import { ApiCollection } from "../../config";
 
 const LoginScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
+
+  const [username, setUsername] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(false)
 
   const onRegister = () => {
     navigation.navigate(Routes.onBoarding.registerScreen)
@@ -24,20 +31,43 @@ const LoginScreen = ({ navigation }) => {
     navigation.navigate(Routes.onBoarding.ForgetScreen)
   }
 
-  const onLoginPress = () => {
-    const user = {
-      name: 'John Doe',
-      email: '',
-      id: '1234567890',
-      profilePic: ''
+  const onLoginPress = async() => {
+
+    if(username == '' || password == ''){
+      Alert.alert('Login Error', 'Please fill all the fields')
+      return
     }
-    dispatch(setActiveUser({ userToken: '1234567890', loggedIn: true, user: user }))
-    navigation.replace(Routes.main.tag)
+
+    setIsLoading(true)
+    const data = {
+      identity: username,
+      password: password
+    }
+
+    await axios.post(ApiCollection.authController.login, data)
+      .then((res) => {
+        setIsLoading(false)
+        console.log(res.data)
+        // const user = {
+        //   name: res.data.data.name,
+        //   email: res.data.data.email,
+        //   id: res.data.data.id,
+        //   profilePic: res.data.data.profilePic
+        // }
+        // dispatch(setActiveUser({ userToken: res.data.data.token, loggedIn: true, user: user }))
+        // navigation.replace(Routes.main.tag)
+      })
+      .catch((err) => {
+        setIsLoading(false)
+        Alert.alert('Login Error', err.response.data.message)
+      })
+
   }
 
 
   return (
     <View style={styles.container}>
+      <LoadingModal modalVisible={isLoading} />
       <LinearGradient
         style={styles.gradient}
         locations={[0, 1]}
@@ -63,8 +93,8 @@ const LoginScreen = ({ navigation }) => {
           >
             Welcome Back
           </AppText>
-          <AppTextInput label="Username" placeholder="Ex- johndoe" />
-          <AppTextInput label="Password" placeholder="Your Password" />
+          <AppTextInput label="Username" placeholder="Ex- johndoe" onChangeText={(text) => setUsername(text)}/>
+          <AppTextInput type='password' label="Password" placeholder="Your Password" onChangeText={(text) => setPassword(text)}/>
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onForget}>
             <AppText style={{  fontSize: 15 }}>
              Forget password?
