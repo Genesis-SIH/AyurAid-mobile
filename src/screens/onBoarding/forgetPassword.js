@@ -1,20 +1,45 @@
 import { Image } from "expo-image";
 import React from "react";
-import { View, StyleSheet, TouchableOpacity } from "react-native";
-import {LinearGradient} from "expo-linear-gradient";
+import { View, StyleSheet, TouchableOpacity, Alert } from "react-native";
+import { LinearGradient } from "expo-linear-gradient";
 import { AppText, AppTextInput, FlatButton } from "../../components";
 import Forget from "../../images/custom/forget.png";
 import { Colors, Routes } from "../../utils";
-function ForgetPassword({navigation}) {
+import { LoadingModal } from "../../components";
+import axios from "axios";
+import { ApiCollection } from "../../config";
 
-    const onRegister = () => {
-        navigation.navigate(Routes.onBoarding.registerScreen)
-      }
-    const onReset = () => {
-        navigation.navigate(Routes.onBoarding.ResetScreen)
-      }
+function ForgetPassword({ navigation }) {
+
+  const [isLoading, setIsLoading] = React.useState(false)
+  const [email, setEmail] = React.useState('')
+
+  const onLogin = () => {
+    navigation.goBack()
+  }
+
+  const onReset = async () => {
+    if (email == '') {
+      Alert.alert('Error', 'Please fill all the fields')
+      return
+    }
+
+    setIsLoading(true)
+    await axios.post(ApiCollection.authController.forgetPassword, { identity: email })
+      .then((res) => {
+        setIsLoading(false)
+        console.log(res.data)
+        Alert.alert('Success', 'Password reset link has been sent to your email address')
+      })
+      .catch((err) => {
+        setIsLoading(false)
+        console.log(err.response.data)
+        Alert.alert('Error', err.response.data.message)
+      })
+  }
   return (
     <View style={styles.container}>
+      <LoadingModal modalVisible={isLoading} />
       <LinearGradient
         style={styles.gradient}
         locations={[0, 1]}
@@ -29,7 +54,7 @@ function ForgetPassword({navigation}) {
           }}
         >
           <Image
-            style={{ width: 50, height: 150,width:100, marginBottom: 10 }}
+            style={{ height: 100, width: 100, marginBottom: 10 }}
             contentFit="cover"
             source={Forget}
           />
@@ -38,15 +63,15 @@ function ForgetPassword({navigation}) {
             bold
             style={{ color: Colors.primary, fontSize: 30, marginBottom: 30 }}
           >
-           Forget Password
+            Forget Password
           </AppText>
-          <AppTextInput label="Email" placeholder="Enter Email id" />
+          <AppTextInput label="Email" placeholder="Enter Email id" onChangeText={(text) => setEmail(text)} />
 
           <FlatButton enableShadow={true} title="Continue" onPress={onReset} />
 
           <TouchableOpacity style={{ marginTop: 30 }} >
-            <AppText style={{ fontSize: 15 }} onPress={onRegister}>
-              Don’t have an Account ? Create Now !
+            <AppText style={{ fontSize: 15 }} onPress={onLogin}>
+              Back to Login !
             </AppText>
           </TouchableOpacity>
         </View>
