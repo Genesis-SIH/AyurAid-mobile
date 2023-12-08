@@ -2,7 +2,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Colors, Routes } from "../../utils";
 
-import { ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
 import { Image } from "expo-image";
 import {
   AppText,
@@ -12,13 +12,85 @@ import {
 } from "../../components";
 
 import Logo from "../../images/logo/logo.png";
+import axios from "axios";
+import { ApiCollection } from "../../config";
+import LoadingModal from "../../components/loadingmodal";
+
+
+
 function RegisterScreen({ navigation }) {
+
+
+  const [fullName, setFullName] = React.useState('')
+  const [email, setEmail] = React.useState('')
+  const [dob, setDob] = React.useState('')
+  const [country, setCountry] = React.useState('')
+  const [password, setPassword] = React.useState('')
+  const [confirmPassword, setConfirmPassword] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(false)
+
+  const onRegister = async () => {
+
+    if (fullName == '') {
+      Alert.alert('Register Error', 'Please enter your full name')
+      return
+    }
+
+    if (email == '') {
+      Alert.alert('Register Error', 'Please enter your email')
+      return
+    }
+
+    if (dob == '') {
+      Alert.alert('Register Error', 'Please enter your date of birth')
+      return
+    }
+
+    if (country == '') {
+      Alert.alert('Register Error', 'Please enter your country')
+      return
+    }
+
+    if (password == '') {
+      Alert.alert('Register Error', 'Please enter your password')
+      return
+    }
+
+    if (password !== confirmPassword) {
+      Alert.alert('Register Error', 'Password and confirm password does not match')
+      return
+    }
+
+    const data = {
+      "username": email.split('@')[0],
+      "email": email,
+      "password": password,
+      "fullName": fullName,
+      "dob": dob,
+      "country": country
+    }
+
+    setIsLoading(true)
+    await axios.post(ApiCollection.authController.signup, data)
+      .then((res) => {
+        setIsLoading(false)
+        console.log(res.data)
+        Alert.alert('Success', 'Account created successfully')
+        navigation.navigate(Routes.onBoarding.loginScreen)
+      })
+      .catch((err) => {
+        setIsLoading(false)
+        Alert.alert('Register Error', err.response.data.message)
+      })
+
+  }
 
   const onAlready = () => {
     navigation.navigate(Routes.onBoarding.loginScreen)
   }
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <LoadingModal modalVisible={isLoading} />
       <LinearGradient
         style={styles.gradient}
         locations={[0, 1]}
@@ -44,12 +116,13 @@ function RegisterScreen({ navigation }) {
           >
             Create Account !
           </AppText>
-          <AppTextInput label="Full Name" placeholder="Ex - John Doe" />
-          <AppTextInput label="Username" placeholder="Ex - johndoe" />
-          <AppTextInput label="Email" placeholder="Ex - some@gmail.com" />
-          <AppTextInput label="Date Of Birth" placeholder="Ex - 03 / 03 /2003" />
-          <AppTextInput label="Country" placeholder="Ex - India" />
-          <FlatButton title="REGISTER" />
+          <AppTextInput label="Full Name" placeholder="Ex - John Doe" onChangeText={(text) => setFullName(text)} />
+          <AppTextInput label="Email" placeholder="Ex - some@gmail.com" onChangeText={(text) => setEmail(text)} />
+          <AppTextInput label="Date Of Birth" placeholder="Ex - 03 / 03 /2003" onChangeText={(text) => setDob(text)} />
+          <AppTextInput label="Country" placeholder="Ex - India" onChangeText={(text) => setCountry(text)} />
+          <AppTextInput type='password' label="Password" placeholder="*****" onChangeText={(text) => setPassword(text)} />
+          <AppTextInput type='password' label="Confirim Password" placeholder="****" onChangeText={(text) => setConfirmPassword(text)} />
+          <FlatButton title="REGISTER" onPress={onRegister} />
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onAlready}>
             <AppText style={{ fontSize: 15 }}>
