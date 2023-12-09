@@ -10,7 +10,7 @@ function DosageCard({title,consumeDays,totalDays}) {
   const navigation = useNavigation();
 
   const onDosagePress = () => {
-    navigation.navigate(Routes.main.dosageScreen);
+    navigation.navigate(Routes.main.dosageStack.dosageDetailScreen);
   }
 
   return (

@@ -33,6 +33,16 @@ const LoginScreen = ({ navigation }) => {
 
   const onLoginPress = async() => {
 
+    // const user = {
+    //   name: 'Aman Kumar',
+    //   email: 'suyashvash@gmail.com',
+    //   id: '123',
+    //   profilePic: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww'
+    // }
+    // dispatch(setActiveUser({ userToken: 'res.data.data.token', loggedIn: true, user: user }))
+    // navigation.replace(Routes.main.tag)
+
+
     if(username == '' || password == ''){
       Alert.alert('Login Error', 'Please fill all the fields')
       return
@@ -48,17 +58,20 @@ const LoginScreen = ({ navigation }) => {
       .then((res) => {
         setIsLoading(false)
         console.log(res.data)
-        // const user = {
-        //   name: res.data.data.name,
-        //   email: res.data.data.email,
-        //   id: res.data.data.id,
-        //   profilePic: res.data.data.profilePic
-        // }
-        // dispatch(setActiveUser({ userToken: res.data.data.token, loggedIn: true, user: user }))
-        // navigation.replace(Routes.main.tag)
+        const user = {
+          name: res.data.data.user,
+          email: res.data.data.email,
+          id: res.data.data.id,
+          token: res.data.data.token,
+          profilePic: res.data.data.profilePic || 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww'
+        }
+
+        dispatch(setActiveUser({ userToken: res.data.data.token, loggedIn: true, user: user }))
+        navigation.replace(Routes.main.tag)
       })
       .catch((err) => {
         setIsLoading(false)
+        console.log(err.response.data);
         Alert.alert('Login Error', err.response.data.message)
       })
 

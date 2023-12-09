@@ -15,5 +15,15 @@ export const Routes = {
         profileScreen: 'Profile',
         dosageScreen: 'Dosage',
         settingScreen: 'Setting',
+        dosageStack:{
+            tag: 'dosageStack',
+            dosageListScreen: 'DosageList',
+            dosageDetailScreen: 'DosageDetail',
+        },
+        blogStack:{
+            tag: 'blogStack',
+            searchScreen: 'Search',
+            blogDetailScreen: 'BlogDetail',
+        }
     }
 }
