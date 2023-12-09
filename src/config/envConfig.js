@@ -11,10 +11,10 @@ export const ApiHead = config.env === 'prod' ? config.apiHeadProd : config.apiHe
 
 export const ApiCollection={
     authController:{
-        login:`${ApiHead}/api/login`,
-        signup:`${ApiHead}/api/signup`,
-        forgetPassword:`${ApiHead}/api/forgotPassword`,
-        resetPassword:`${ApiHead}/api/resetPassword`, // /id
+        login:`${ApiHead}/api/auth/login`,
+        signup:`${ApiHead}/api/auth/signup`,
+        forgetPassword:`${ApiHead}/api/auth/forgotPassword`,
+        resetPassword:`${ApiHead}/api/auth/resetPassword`, // /id
     },
     utils:{
         wakeup:`${ApiHead}/api/wakeup`,

@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Dimensions, ScrollView } from "react-native";
-import { AppText } from "../../components";
-import { Colors } from "../../utils";
+import { AppText } from "../../../components";
+import { Colors } from "../../../utils";
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
 
 
