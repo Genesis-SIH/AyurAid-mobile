@@ -2,7 +2,7 @@
 import { Image, View, Text } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-
+import { QueryClient, QueryClientProvider } from 'react-query';
 import { useFonts } from 'expo-font';
 import SplashImage from './assets/splash.png'
 import OnBoardingNavigator from './src/screens/onBoarding';
@@ -58,6 +58,8 @@ const AppNavigator = () => {
   );
 }
 
+const queryClient = new QueryClient();
+
 export default function App() {
 
   useEffect(() => {
@@ -90,10 +92,12 @@ export default function App() {
   let persistor = persistStore(store);
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor} >
-        <AppNavigator />
-      </PersistGate>
-    </Provider>
+    <QueryClientProvider client={queryClient}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor} >
+          <AppNavigator />
+        </PersistGate>
+      </Provider>
+    </QueryClientProvider>
   );
 }
