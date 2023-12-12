@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Dimensions, Animated, Image, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Dimensions, Animated, Image, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, Alert } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
@@ -7,6 +7,9 @@ import { Colors, Routes } from "../../utils";
 import { ShadowStyles } from "../../config";
 import { AppText, AppTextInput } from "../../components";
 import { ChatSeed } from "../../utils/db/seeds";
+import * as Speech from 'expo-speech';
+import Voice from "@react-native-voice/voice";
+import DeviceInfo from 'react-native-device-info';
 
 
 export default function ChatScreen({ navigation }) {
@@ -23,6 +26,8 @@ export default function ChatScreen({ navigation }) {
         }
     }
 
+
+
     const listeningOnEffect = () => {
         Animated.timing(micScaleValue, animationConfig(2)).start();
         Animated.timing(micOpacityValue, animationConfig(1)).start();
@@ -36,9 +41,75 @@ export default function ChatScreen({ navigation }) {
     };
 
 
+    React.useEffect(() => {
+
+
+        function onSpeechResults(e) {
+            setResults(e.value ?? []);
+
+            if(e?.value?.length > 0){
+                let message = {
+                    text: e.value[0],
+                    type: 'user',
+                    timestamp: new Date().getTime()
+                }
+        
+                setChats([...chats, message])
+                setText('')
+            }else{
+                Alert.alert('Voice Recognition Failed', 'Sorry, We could not recognize your voice. Please try again')
+            }
+            
+        }
+        function onSpeechError(e) {
+            console.error(e);
+        }
+        Voice.onSpeechError = onSpeechError;
+        Voice.onSpeechResults = onSpeechResults;
+        return function cleanup() {
+            Voice.destroy().then(Voice.removeAllListeners);
+        };
+    }, []);
+
+    async function toggleListening() {
+
+        
+
+        if (await DeviceInfo.isEmulator()) {
+            alert('Voice Recognition is not supported on Emulator')
+            return
+        }
+
+        if (Voice.isAvailable() == false) {
+            alert('Voice Recognition is not supported on this device')
+            return
+        }
+
+        if (Voice.getSpeechRecognitionServices().length == 0) {
+            alert('Voice Recognition is not supported on this device')
+            return
+        }
+
+        try {
+            if (isListening) {
+                setIsListening(false);
+                await Voice.stop();
+                listeningOffEffect()
+
+            } else {
+                setResults([]);
+                listeningOnEffect()
+                setIsListening(true);
+                await Voice.start("en-US")
+            }
+        } catch (e) {
+            console.error(e);
+        }
+    }
+
 
     const [isListening, setIsListening] = React.useState(false)
-    const [isGenerating, setIsGenerating] = React.useState(false)
+    const [results, setResults] = React.useState([]);
     const [text, setText] = React.useState('')
     const [mode, setMode] = React.useState('voice')
     const [chats, setChats] = React.useState(ChatSeed)
@@ -52,7 +123,7 @@ export default function ChatScreen({ navigation }) {
         setMode('voice')
     }
 
-    const onSendMessage = () => {
+    const onSendTextMessage = () => {
         let message = {
             text: text,
             type: 'user',
@@ -63,14 +134,11 @@ export default function ChatScreen({ navigation }) {
         setText('')
     }
 
-    const onStartMicPress = () => {
-        listeningOnEffect()
-        setIsListening(!isListening)
-        setTimeout(() => {
-            setIsListening(false)
-            listeningOffEffect()
-        }, 2000);
-    }
+
+    const speak = (data) => {
+        Speech.speak(data);
+    };
+
 
     const openShop = (data) => {
         navigation.navigate(Routes.main.shopScreen, { data: data })
@@ -85,17 +153,17 @@ export default function ChatScreen({ navigation }) {
                     {chats.map((chat, index) => (
                         chat.type == 'bot' ?
                             <>
-                                <View key={chat.id+880123123} style={{ alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
+                                <View key={chat.id + 880123123} style={{ alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
                                     <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>{chat.text}</AppText>
                                     {
                                         chat.data?.sourceInfo &&
-                                        <View style={{ padding: 10, marginVertical: 10,marginTop:15, backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
+                                        <View style={{ padding: 10, marginVertical: 10, marginTop: 15, backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
                                             <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>Trust Factors</AppText>
 
-                                            <View style={{marginTop:10}}>
-                                                <AppText style={{  fontSize: 14, lineHeight: 24 }}>- Source: {chat.data?.sourceInfo.source}</AppText>
-                                                <AppText style={{  fontSize: 14, lineHeight: 24 }}>- Trust : {chat.data?.sourceInfo.trustFactor}</AppText>
-                                            </View> 
+                                            <View style={{ marginTop: 10 }}>
+                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- Source: {chat.data?.sourceInfo.source}</AppText>
+                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- Trust : {chat.data?.sourceInfo.trustFactor}</AppText>
+                                            </View>
                                         </View>
                                     }
 
@@ -103,12 +171,12 @@ export default function ChatScreen({ navigation }) {
                                 </View>
                                 {chat.data?.ingredients &&
                                     <View key={chat.id + 99923} style={{ marginTop: 1, alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
-                                        <AppText style={{  fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>You can buy the ingredients here !</AppText>
+                                        <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>You can buy the ingredients here !</AppText>
 
-                                        <TouchableOpacity onPress={()=>openShop(chat.data)} style={{ padding: 10, marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
+                                        <TouchableOpacity onPress={() => openShop(chat.data)} style={{ padding: 10, marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <FontAwesome name="shopping-cart" size={20} color="white" />
-                                                <AppText style={{  marginLeft: 12, fontSize: 14, lineHeight: 24 }}>View Shop</AppText>
+                                                <AppText style={{ marginLeft: 12, fontSize: 14, lineHeight: 24 }}>View Shop</AppText>
                                             </View>
 
                                             <FontAwesome name="caret-right" size={24} color="white" />
@@ -117,7 +185,7 @@ export default function ChatScreen({ navigation }) {
                                 }
                             </>
                             :
-                            <View key={chat.id+223123132123} style={{ alignSelf: 'flex-end', maxWidth: '70%', backgroundColor: Colors.primary, borderRadius: 10, padding: 10, marginVertical: 10 }}>
+                            <View key={chat.id + 223123132123} style={{ alignSelf: 'flex-end', maxWidth: '70%', backgroundColor: Colors.primary, borderRadius: 10, padding: 10, marginVertical: 10 }}>
                                 <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14 }}>{chat.text}</AppText>
                             </View>
                     ))}
@@ -129,7 +197,7 @@ export default function ChatScreen({ navigation }) {
                         bold
                         style={{ color: Colors.primary, fontSize: 18, marginVertical: 10 }}
                     >
-                        Welcome to AyurAid !
+                        Welcome to the AyurAid
                     </AppText>
                     <AppText style={{ color: 'grey', fontSize: 13, textAlign: 'center', width: '80%' }}>
                         Start Typing Or use our Voice Based commands to get started
@@ -149,13 +217,13 @@ export default function ChatScreen({ navigation }) {
                         style={styles.bottomPanelVoice}
                     >
 
-                        <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} onPress={()=>navigation.navigate(Routes.main.profileScreen)} >
+                        <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} onPress={() => navigation.navigate(Routes.main.profileScreen)} >
                             <FontAwesome5 solid name={'user'} size={28} color={isListening ? Colors.seconday : Colors.primary} />
                         </TouchableOpacity>
 
                         <Animated.Image source={require('../../images/custom/listShadow.png')} style={{ width: 85, height: 85, resizeMode: 'contain', position: 'absolute', left: '43%', bottom: Platform.OS == 'ios' ? 35 : 10, transform: [{ scale: micScaleValue }], opacity: micOpacityValue }} />
                         <View >
-                            <TouchableOpacity disabled={isListening} onPress={onStartMicPress} style={[styles.micButtonBig, ShadowStyles.micShadow,]}>
+                            <TouchableOpacity onPress={toggleListening} style={[styles.micButtonBig, ShadowStyles.micShadow,]}>
                                 <FontAwesome5 solid name={'microphone'} size={28} color={'white'} />
                             </TouchableOpacity>
                             {
@@ -186,7 +254,7 @@ export default function ChatScreen({ navigation }) {
 
                         <TextInput onChangeText={(text) => setText(text)} placeholderTextColor={'lightgrey'} placeholder="Enter message...." style={styles.input} />
 
-                        <TouchableOpacity disabled={text == ''} onPress={onSendMessage} style={{ marginRight: 10 }}>
+                        <TouchableOpacity disabled={text == ''} onPress={onSendTextMessage} style={{ marginRight: 10 }}>
                             <FontAwesome solid name={'send'} size={20} color={text == '' ? 'grey' : 'white'} />
                         </TouchableOpacity>
 
