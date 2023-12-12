@@ -1,46 +1,51 @@
 import { LinearGradient } from "expo-linear-gradient";
-import React, { useState } from "react";
-import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity } from "react-native";
-import { AppText } from "../../../components";
-import { Border, Colors } from "../../../utils";
+import React, { useEffect, useState } from "react";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  ActivityIndicator,
+} from "react-native";
+
 import DosageCard from "../../../components/dosageCard";
-import { DosageSeed } from "../../../utils/db/seeds";
-import { User } from "../../../redux/store/useStore";
+
+import { useGetMyDosages } from "../../../hooks/reactQuery/dosageTracker/useGetMyDosages";
 
 function DosageListScreen() {
-  const [dosages, setDosages] = useState(DosageSeed);
-  const user = User();
-  return (
+  const { isLoading, data: dosages } = useGetMyDosages();
+
+  return !isLoading ? (
     <ScrollView contentContainerStyle={styles.container}>
-
-
-      {dosages.map((data) => (
+      {[dosages].map((data) => (
         <View style={{ marginBottom: 25 }}>
           <DosageCard
-            key={data.id}
-            title={data.title}
-            consumeDays={data.consumedDays}
-            totalDays={data.totalDays}
+            key={data._id}
+            title={data.description}
+            consumeDays={data.frequency}
+            totalDays={data.duration}
+            description={data.description}
+            timing={data.timing}
           />
         </View>
       ))}
-
     </ScrollView>
+  ) : (
+    <ActivityIndicator color={Colors.primary} size={"large"} />
   );
 }
 
 export default DosageListScreen;
 
 const styles = StyleSheet.create({
-
   container: {
     backgroundColor: "black",
-    width:'95%',
-    paddingTop:40,
-    paddingBottom:60,
+    width: "95%",
+    paddingTop: 40,
+    paddingBottom: 60,
     alignItems: "center",
     justifyContent: "center",
   },
-
-
 });

@@ -1,6 +1,13 @@
 import { LinearGradient } from "expo-linear-gradient";
 import React, { useState } from "react";
-import { View, StyleSheet, Image, Text, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+} from "react-native";
 import { AppText } from "../../components";
 import { Border, Colors, Routes } from "../../utils";
 import DosageCard from "../../components/dosageCard";
@@ -10,19 +17,17 @@ import GreenGradient from "../../images/gradients/green.jpeg";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 
-function ProfileScreen({navigation}) {
+function ProfileScreen({ navigation }) {
   const [dosages, setDosages] = useState(DosageSeed);
   const user = User();
 
+  const openDosageTracker = () => {
+    navigation.navigate(Routes.main.dosageStack.tag);
+  };
 
-
-  const openDosageTracker =()=>{
-    navigation.navigate(Routes.main.dosageStack.tag)
-  }
-
-  const openBlogs =()=>{
-    navigation.navigate(Routes.main.blogStack.tag)
-  }
+  const openBlogs = () => {
+    navigation.navigate(Routes.main.blogStack.tag);
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -37,62 +42,151 @@ function ProfileScreen({navigation}) {
               }}
             />
           </View>
-          <View style={{ justifyContent: 'center', alignItems: 'center', marginTop: 10 }}>
-            <AppText style={{ fontSize: 25, color: Colors.primary }}>{user.name}</AppText>
+          <View
+            style={{
+              justifyContent: "center",
+              alignItems: "center",
+              marginTop: 10,
+            }}
+          >
+            <AppText style={{ fontSize: 25, color: Colors.primary }}>
+              {user.name}
+            </AppText>
 
             <TouchableOpacity style={{ marginTop: 10 }}>
-              <AppText style={{ color: "lightgrey", fontSize: 14, marginBottom: 0 }}>Edit Profile</AppText>
-
+              <AppText
+                style={{ color: "lightgrey", fontSize: 14, marginBottom: 0 }}
+              >
+                Edit Profile
+              </AppText>
             </TouchableOpacity>
-
           </View>
         </View>
 
         <View style={styles.profileScreenChild}>
-
-          <TouchableOpacity onPress={openDosageTracker} style={{ marginTop: 20,width: '90%', height: 120, backgroundColor: 'green', borderRadius: 10, overflow: 'hidden' }}>
-            <Image source={GreenGradient} style={{ width: '100%', height: '100%' }} />
-            <View style={{ position: 'absolute',paddingHorizontal:20,  width: '100%', height: '100%',flexDirection:'row',justifyContent:'space-between',alignItems:'center' }}>
-              <View style={{width:'70%'}}>
-                <AppText bold style={{ color: 'white', fontSize: 20 }}>Dosage Tracker</AppText>
-                <AppText style={{ color: 'white', fontSize: 14,marginTop:10 }}>Manage and track you dosages and medications</AppText>
+          <TouchableOpacity
+            onPress={openDosageTracker}
+            style={{
+              marginTop: 20,
+              width: "90%",
+              height: 120,
+              backgroundColor: "green",
+              borderRadius: 10,
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              source={GreenGradient}
+              style={{ width: "100%", height: "100%" }}
+            />
+            <View
+              style={{
+                position: "absolute",
+                paddingHorizontal: 20,
+                width: "100%",
+                height: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View style={{ width: "70%" }}>
+                <AppText bold style={{ color: "white", fontSize: 20 }}>
+                  Dosage Tracker
+                </AppText>
+                <AppText
+                  style={{ color: "white", fontSize: 14, marginTop: 10 }}
+                >
+                  Manage and track you dosages and medications
+                </AppText>
               </View>
 
               <FontAwesome5 name="capsules" size={40} color="white" />
-
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={openBlogs} style={{ marginTop: 20,width: '90%', height: 120, backgroundColor: 'green', borderRadius: 10, overflow: 'hidden' }}>
-            <Image source={GreenGradient} style={{ width: '100%', height: '100%' }} />
-            <View style={{ position: 'absolute',paddingHorizontal:20,  width: '100%', height: '100%',flexDirection:'row',justifyContent:'space-between',alignItems:'center' }}>
-              <View style={{width:'70%'}}>
-                <AppText bold style={{ color: 'white', fontSize: 20 }}>Ayurveda Blogs</AppText>
-                <AppText style={{ color: 'white', fontSize: 14,marginTop:10 }}>Explore the world of research and community of Ayurveda enthusiast</AppText>
+          <TouchableOpacity
+            onPress={openBlogs}
+            style={{
+              marginTop: 20,
+              width: "90%",
+              height: 120,
+              backgroundColor: "green",
+              borderRadius: 10,
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              source={GreenGradient}
+              style={{ width: "100%", height: "100%" }}
+            />
+            <View
+              style={{
+                position: "absolute",
+                paddingHorizontal: 20,
+                width: "100%",
+                height: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View style={{ width: "70%" }}>
+                <AppText bold style={{ color: "white", fontSize: 20 }}>
+                  Ayurveda Blogs
+                </AppText>
+                <AppText
+                  style={{ color: "white", fontSize: 14, marginTop: 10 }}
+                >
+                  Explore the world of research and community of Ayurveda
+                  enthusiast
+                </AppText>
               </View>
 
               <FontAwesome5 name="book-open" size={40} color="white" />
-
             </View>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ marginTop: 20,width: '90%', height: 120, backgroundColor: 'green', borderRadius: 10, overflow: 'hidden' }}>
-            <Image source={GreenGradient} style={{ width: '100%', height: '100%' }} />
-            <View style={{ position: 'absolute',paddingHorizontal:20,  width: '100%', height: '100%',flexDirection:'row',justifyContent:'space-between',alignItems:'center' }}>
-              <View style={{width:'70%'}}>
-                <AppText bold style={{ color: 'white', fontSize: 20 }}>Settings</AppText>
-                <AppText style={{ color: 'white', fontSize: 14,marginTop:10 }}>Set your preferences and settings for the app</AppText>
+          <TouchableOpacity
+            style={{
+              marginTop: 20,
+              width: "90%",
+              height: 120,
+              backgroundColor: "green",
+              borderRadius: 10,
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              source={GreenGradient}
+              style={{ width: "100%", height: "100%" }}
+            />
+            <View
+              style={{
+                position: "absolute",
+                paddingHorizontal: 20,
+                width: "100%",
+                height: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View style={{ width: "70%" }}>
+                <AppText bold style={{ color: "white", fontSize: 20 }}>
+                  Settings
+                </AppText>
+                <AppText
+                  style={{ color: "white", fontSize: 14, marginTop: 10 }}
+                >
+                  Set your preferences and settings for the app
+                </AppText>
               </View>
 
               <FontAwesome name="gear" size={40} color="white" />
-
             </View>
           </TouchableOpacity>
-
-          
-
         </View>
-
       </View>
     </ScrollView>
   );
@@ -102,7 +196,6 @@ export default ProfileScreen;
 
 const styles = StyleSheet.create({
   scrollViewContent: {
-
     paddingBottom: 100, // Adjust this value to control the bottom padding
   },
   container: {
@@ -127,7 +220,6 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-
   },
   profileScreenChild: {
     width: "100%",

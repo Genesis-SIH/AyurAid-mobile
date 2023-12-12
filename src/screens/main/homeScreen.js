@@ -13,7 +13,6 @@ import DeviceInfo from 'react-native-device-info';
 import Clipboard from '@react-native-clipboard/clipboard';
 
 export default function ChatScreen({ navigation }) {
-
     const micScaleValue = React.useRef(new Animated.Value(1)).current;
     const micOpacityValue = React.useRef(new Animated.Value(0)).current;
     const sideBtnScaleValue = React.useRef(new Animated.Value(1)).current;
@@ -117,12 +116,12 @@ export default function ChatScreen({ navigation }) {
 
 
     const onKeyboardPress = () => {
-        setMode('text')
-    }
+        setMode("text");
+    };
 
     const onSmallMicPress = () => {
-        setMode('voice')
-    }
+        setMode("voice");
+    };
 
     const onSendTextMessage = () => {
         let message = {
@@ -152,8 +151,8 @@ export default function ChatScreen({ navigation }) {
 
 
     const openShop = (data) => {
-        navigation.navigate(Routes.main.shopScreen, { data: data })
-    }
+        navigation.navigate(Routes.main.shopScreen, { data: data });
+    };
 
     return (
         <View style={styles.container}>
@@ -179,15 +178,15 @@ export default function ChatScreen({ navigation }) {
                                     }
 
                                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                                        <TouchableOpacity onPress={()=>copyToClipboard(chat.text)} style={{ padding: 8,paddingHorizontal:12, marginVertical: 10,marginRight:10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
+                                        <TouchableOpacity onPress={() => copyToClipboard(chat.text)} style={{ padding: 8, paddingHorizontal: 12, marginVertical: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <FontAwesome name="copy" size={16} color="white" />
                                                 <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>Copy</AppText>
                                             </View>
                                         </TouchableOpacity>
-                                        <TouchableOpacity onPress={() => isSpeaking ? stopSpeech(): startSpeech(chat.text) } style={{ padding: 8,paddingHorizontal:12, marginVertical: 10,marginRight:10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
+                                        <TouchableOpacity onPress={() => isSpeaking ? stopSpeech() : startSpeech(chat.text)} style={{ padding: 8, paddingHorizontal: 12, marginVertical: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                                                <FontAwesome name={isSpeaking ? "stop" :"play"} size={14} color="white" />
+                                                <FontAwesome name={isSpeaking ? "stop" : "play"} size={14} color="white" />
                                                 <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>{isSpeaking ? 'Stop' : 'Play'}</AppText>
                                             </View>
                                         </TouchableOpacity>
@@ -234,63 +233,66 @@ export default function ChatScreen({ navigation }) {
 
             {
                 mode == 'voice' ?
-                    <LinearGradient
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 0, y: 1 }}
-                        colors={["transparent", "#0008", "#0009", Colors.seconday]}
-                        locations={[0, 0.3, 0.2, 0.9]}
-                        style={styles.bottomPanelVoice}
-                    >
+                    (
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 0, y: 1 }}
+                            colors={["transparent", "#0008", "#0009", Colors.seconday]}
+                            locations={[0, 0.3, 0.2, 0.9]}
+                            style={styles.bottomPanelVoice}
+                        >
 
-                        <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} onPress={() => navigation.navigate(Routes.main.profileScreen)} >
-                            <FontAwesome5 solid name={'user'} size={28} color={isListening ? Colors.seconday : Colors.primary} />
-                        </TouchableOpacity>
-
-                        <Animated.Image source={require('../../images/custom/listShadow.png')} style={{ width: 85, height: 85, resizeMode: 'contain', position: 'absolute', left: '43%', bottom: Platform.OS == 'ios' ? 35 : 10, transform: [{ scale: micScaleValue }], opacity: micOpacityValue }} />
-                        <View >
-                            <TouchableOpacity onPress={toggleListening} style={[styles.micButtonBig, ShadowStyles.micShadow,]}>
-                                <FontAwesome5 solid name={'microphone'} size={28} color={'white'} />
+                            <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} onPress={() => navigation.navigate(Routes.main.profileScreen)} >
+                                <FontAwesome5 solid name={'user'} size={28} color={isListening ? Colors.seconday : Colors.primary} />
                             </TouchableOpacity>
-                            {
-                                isListening &&
-                                <AppText style={{ fontSize: 14, width: '100%', position: 'absolute', bottom: -20 }}>Listening..</AppText>
-                            }
 
-                        </View>
+                            <Animated.Image source={require('../../images/custom/listShadow.png')} style={{ width: 85, height: 85, resizeMode: 'contain', position: 'absolute', left: '43%', bottom: Platform.OS == 'ios' ? 35 : 10, transform: [{ scale: micScaleValue }], opacity: micOpacityValue }} />
+                            <View >
+                                <TouchableOpacity onPress={toggleListening} style={[styles.micButtonBig, ShadowStyles.micShadow,]}>
+                                    <FontAwesome5 solid name={'microphone'} size={28} color={'white'} />
+                                </TouchableOpacity>
+                                {
+                                    isListening &&
+                                    <AppText style={{ fontSize: 14, width: '100%', position: 'absolute', bottom: -20 }}>Listening..</AppText>
+                                }
 
-                        <TouchableOpacity style={{ transform: [{ scale: sideBtnScaleValue }] }} onPress={onKeyboardPress} >
-                            <FontAwesome5 solid name={'keyboard'} size={28} color={isListening ? Colors.seconday : Colors.primary} />
-                        </TouchableOpacity>
+                            </View>
 
-                    </LinearGradient>
+                            <TouchableOpacity
+                                style={{ transform: [{ scale: sideBtnScaleValue }] }}
+                                onPress={onKeyboardPress}
+                            >
+                                <FontAwesome5
+                                    solid
+                                    name={"keyboard"}
+                                    size={28}
+                                    color={isListening ? Colors.seconday : Colors.primary}
+                                />
+                            </TouchableOpacity>
+                        </LinearGradient>
+                    ) : (
+                        <LinearGradient
+                            start={{ x: 0, y: 0 }}
+                            end={{ x: 0, y: 1 }}
+                            colors={["transparent", "#0008", "#0009", Colors.seconday]}
+                            locations={[0, 0.3, 0.2, 0.9]}
+                            style={styles.bottomPanelText}
+                        >
+                            <TouchableOpacity
+                                onPress={onSmallMicPress}
+                                style={[styles.micButtonSmall]}
+                            >
+                                <FontAwesome5 solid name={"microphone"} size={18} color={"white"} />
+                            </TouchableOpacity>
 
-                    :
-                    <LinearGradient
-                        start={{ x: 0, y: 0 }}
-                        end={{ x: 0, y: 1 }}
-                        colors={["transparent", "#0008", "#0009", Colors.seconday]}
-                        locations={[0, 0.3, 0.2, 0.9]}
-                        style={styles.bottomPanelText}
-                    >
+                            <TextInput onChangeText={(text) => setText(text)} placeholderTextColor={'lightgrey'} placeholder="Enter message...." style={styles.input} />
 
-                        <TouchableOpacity onPress={onSmallMicPress} style={[styles.micButtonSmall]}>
-                            <FontAwesome5 solid name={'microphone'} size={18} color={'white'} />
-                        </TouchableOpacity>
+                            <TouchableOpacity disabled={text == ''} onPress={onSendTextMessage} style={{ marginRight: 10 }}>
+                                <FontAwesome solid name={'send'} size={20} color={text == '' ? 'grey' : 'white'} />
+                            </TouchableOpacity>
 
-                        <TextInput onChangeText={(text) => setText(text)} placeholderTextColor={'lightgrey'} placeholder="Enter message...." style={styles.input} />
-
-                        <TouchableOpacity disabled={text == ''} onPress={onSendTextMessage} style={{ marginRight: 10 }}>
-                            <FontAwesome solid name={'send'} size={20} color={text == '' ? 'grey' : 'white'} />
-                        </TouchableOpacity>
-
-                    </LinearGradient>
-
-            }
-
-
-
-
-
+                        </LinearGradient>
+                    )}
 
         </View>
     );
@@ -309,17 +311,16 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     bottomPanelVoice: {
-        position: 'absolute',
+        position: "absolute",
         bottom: 0,
         padding: 15,
         paddingTop: 20,
-        paddingBottom: Platform.OS == 'ios' ? 50 : 30,
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        paddingBottom: Platform.OS == "ios" ? 50 : 30,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         paddingHorizontal: 20,
-
     },
 
     micButtonBig: {
@@ -327,19 +328,19 @@ const styles = StyleSheet.create({
         height: 65,
         borderRadius: 50,
         backgroundColor: Colors.primary,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     bottomPanelText: {
-        position: 'absolute',
+        position: "absolute",
         bottom: 0,
         padding: 15,
         paddingTop: 20,
-        paddingBottom: Platform.OS == 'ios' ? 40 : 20,
-        width: '100%',
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        alignItems: 'center',
+        paddingBottom: Platform.OS == "ios" ? 40 : 20,
+        width: "100%",
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
         paddingHorizontal: 20,
     },
 
@@ -348,18 +349,17 @@ const styles = StyleSheet.create({
         height: 35,
         borderRadius: 50,
         backgroundColor: Colors.primary,
-        justifyContent: 'center',
-        alignItems: 'center',
+        justifyContent: "center",
+        alignItems: "center",
     },
     input: {
-        backgroundColor: '#006B4F',
+        backgroundColor: "#006B4F",
         padding: 5,
-        paddingVertical: Platform.OS == 'ios' ? 10 : 5,
-        width: '70%',
+        paddingVertical: Platform.OS == "ios" ? 10 : 5,
+        width: "70%",
         borderRadius: 5,
         paddingHorizontal: 10,
         fontSize: 16,
-        color: 'white',
-
-    }
+        color: "white",
+    },
 });
