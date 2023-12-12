@@ -16,6 +16,7 @@ export const Routes = {
         dosageScreen: 'Dosage',
         settingScreen: 'Setting',
         dosageStack:{
+            dosageForm:'DosageForm',
             tag: 'dosageStack',
             dosageListScreen: 'DosageList',
             dosageDetailScreen: 'DosageDetail',
@@ -25,5 +26,6 @@ export const Routes = {
             searchScreen: 'Search',
             blogDetailScreen: 'BlogDetail',
         }
+        
     }
 }
