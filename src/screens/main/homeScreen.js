@@ -10,7 +10,7 @@ import { ChatSeed } from "../../utils/db/seeds";
 import * as Speech from 'expo-speech';
 import Voice from "@react-native-voice/voice";
 import DeviceInfo from 'react-native-device-info';
-
+import Clipboard from '@react-native-clipboard/clipboard';
 
 export default function ChatScreen({ navigation }) {
 
@@ -47,19 +47,19 @@ export default function ChatScreen({ navigation }) {
         function onSpeechResults(e) {
             setResults(e.value ?? []);
 
-            if(e?.value?.length > 0){
+            if (e?.value?.length > 0) {
                 let message = {
                     text: e.value[0],
                     type: 'user',
                     timestamp: new Date().getTime()
                 }
-        
+
                 setChats([...chats, message])
                 setText('')
-            }else{
+            } else {
                 Alert.alert('Voice Recognition Failed', 'Sorry, We could not recognize your voice. Please try again')
             }
-            
+
         }
         function onSpeechError(e) {
             console.error(e);
@@ -73,7 +73,7 @@ export default function ChatScreen({ navigation }) {
 
     async function toggleListening() {
 
-        
+
 
         if (await DeviceInfo.isEmulator()) {
             alert('Voice Recognition is not supported on Emulator')
@@ -113,6 +113,7 @@ export default function ChatScreen({ navigation }) {
     const [text, setText] = React.useState('')
     const [mode, setMode] = React.useState('voice')
     const [chats, setChats] = React.useState(ChatSeed)
+    const [isSpeaking, setIsSpeaking] = React.useState(false)
 
 
     const onKeyboardPress = () => {
@@ -135,9 +136,19 @@ export default function ChatScreen({ navigation }) {
     }
 
 
-    const speak = (data) => {
+    const startSpeech = (data) => {
+        setIsSpeaking(true)
         Speech.speak(data);
     };
+
+    const stopSpeech = () => {
+        Speech.stop();
+        setIsSpeaking(false)
+    };
+
+    const copyToClipboard = (data) => {
+        Clipboard.setString(data);
+    }
 
 
     const openShop = (data) => {
@@ -167,6 +178,20 @@ export default function ChatScreen({ navigation }) {
                                         </View>
                                     }
 
+                                    <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
+                                        <TouchableOpacity onPress={()=>copyToClipboard(chat.text)} style={{ padding: 8,paddingHorizontal:12, marginVertical: 10,marginRight:10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <FontAwesome name="copy" size={16} color="white" />
+                                                <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>Copy</AppText>
+                                            </View>
+                                        </TouchableOpacity>
+                                        <TouchableOpacity onPress={() => isSpeaking ? stopSpeech(): startSpeech(chat.text) } style={{ padding: 8,paddingHorizontal:12, marginVertical: 10,marginRight:10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                <FontAwesome name={isSpeaking ? "stop" :"play"} size={14} color="white" />
+                                                <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>{isSpeaking ? 'Stop' : 'Play'}</AppText>
+                                            </View>
+                                        </TouchableOpacity>
+                                    </View>
 
                                 </View>
                                 {chat.data?.ingredients &&
