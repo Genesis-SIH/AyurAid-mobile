@@ -10,16 +10,20 @@ import {
 } from "react-native";
 import { AppText } from "../../components";
 import { Border, Colors, Routes } from "../../utils";
-import DosageCard from "../../components/dosageCard";
-import { DosageSeed } from "../../utils/db/seeds";
+import { useDispatch } from "react-redux";
+import { setLanguage } from "../../redux/features/userSlice";
 import { User } from "../../redux/store/useStore";
 import GreenGradient from "../../images/gradients/green.jpeg";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
+import { useTranslation } from "../../hooks/translation";
 
 function ProfileScreen({ navigation }) {
-  const [dosages, setDosages] = useState(DosageSeed);
+
+
   const user = User();
+  const translation = useTranslation();
+  const dispatch = useDispatch();
 
   const openDosageTracker = () => {
     navigation.navigate(Routes.main.dosageStack.tag);
@@ -28,6 +32,10 @@ function ProfileScreen({ navigation }) {
   const openBlogs = () => {
     navigation.navigate(Routes.main.blogStack.tag);
   };
+
+  const changeLanguage = () => {
+    dispatch(setLanguage('hi'))
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -57,7 +65,7 @@ function ProfileScreen({ navigation }) {
               <AppText
                 style={{ color: "lightgrey", fontSize: 14, marginBottom: 0 }}
               >
-                Edit Profile
+                {translation.t('Edit Profile')}
               </AppText>
             </TouchableOpacity>
           </View>
@@ -92,12 +100,12 @@ function ProfileScreen({ navigation }) {
             >
               <View style={{ width: "70%" }}>
                 <AppText bold style={{ color: "white", fontSize: 20 }}>
-                  Dosage Tracker
+                  {translation.t('Dosage Tracker')}
                 </AppText>
                 <AppText
                   style={{ color: "white", fontSize: 14, marginTop: 10 }}
                 >
-                  Manage and track you dosages and medications
+                  {translation.t('Manage and track you dosages and medications')}
                 </AppText>
               </View>
 
@@ -133,13 +141,12 @@ function ProfileScreen({ navigation }) {
             >
               <View style={{ width: "70%" }}>
                 <AppText bold style={{ color: "white", fontSize: 20 }}>
-                  Ayurveda Blogs
+                  {translation.t('Ayurveda Blogs')}
                 </AppText>
                 <AppText
                   style={{ color: "white", fontSize: 14, marginTop: 10 }}
                 >
-                  Explore the world of research and community of Ayurveda
-                  enthusiast
+                  {translation.t('Explore the world of research and community of Ayurveda enthusiast')}
                 </AppText>
               </View>
 
@@ -148,6 +155,7 @@ function ProfileScreen({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={changeLanguage}
             style={{
               marginTop: 20,
               width: "90%",
@@ -174,12 +182,12 @@ function ProfileScreen({ navigation }) {
             >
               <View style={{ width: "70%" }}>
                 <AppText bold style={{ color: "white", fontSize: 20 }}>
-                  Settings
+                  {translation.t('Settings')}
                 </AppText>
                 <AppText
                   style={{ color: "white", fontSize: 14, marginTop: 10 }}
                 >
-                  Set your preferences and settings for the app
+                  {translation.t('Set your preferences and settings for the app')}
                 </AppText>
               </View>
 

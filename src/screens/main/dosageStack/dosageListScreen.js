@@ -21,19 +21,20 @@ function DosageListScreen() {
 
   return !isLoading ? (
     <ScrollView contentContainerStyle={styles.container}>
-      {dosages ? 
-      dosages.map((data) => (
-        <View style={{ marginBottom: 25 }}>
-          <DosageCard
-            key={data._id}
-            title={data.description}
-            consumeDays={data.frequency}
-            totalDays={data.duration}
-            description={data.description}
-            timing={data.timing}
-          />
-        </View>
-      ))
+      {dosages && dosages.length > 0 ?
+        dosages.map((data) => (
+          <View style={{ marginBottom: 25 }}>
+            <DosageCard
+              key={data._id}
+              title={data.title}
+              consumeDays={data.frequency}
+              totalDays={data.duration}
+              description={data.description}
+              timing={data.timing}
+              data={data}
+            />
+          </View>
+        ))
         :
         <View style={{ marginTop: 100, alignItems: "center", justifyContent: "center" }}>
           <Text style={{ color: "white" }}>No Dosages right now !</Text>

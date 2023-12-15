@@ -11,11 +11,13 @@ import { AppText, AppTextInput } from "../../../components";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Colors, Routes } from "../../../utils";
 import { useGetAllBlogs, useSearchBlog } from "../../../hooks/reactQuery/blogs";
+import { useTranslation } from "../../../hooks/translation";
 
 export default function SearchBlogScreen({ navigation }) {
   const [searchText, setSearchText] = React.useState("");
 
   const { isLoading, data } = useGetAllBlogs();
+  const translation = useTranslation();
 
   const url =
     "https://images.livemint.com/img/2022/05/08/1600x900/AJNH1I2U_1607526728718_1607526733019_1652004533234.jpg";
@@ -27,7 +29,7 @@ export default function SearchBlogScreen({ navigation }) {
   return (
     <ScrollView contentContainerStyle={{ padding: 20 }}>
       <AppTextInput
-        label="Search Topic"
+        label={translation.t("Search Topic")}
         placeholder="Cough blogs..."
         onChangeText={(text) => setSearchText(text)}
         rightElement={

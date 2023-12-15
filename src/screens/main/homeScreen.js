@@ -12,17 +12,19 @@ import Voice from "@react-native-voice/voice";
 import DeviceInfo from 'react-native-device-info';
 import Clipboard from '@react-native-clipboard/clipboard';
 import { useAxios } from "../../hooks/axios/useAxios";
+import { useTranslation } from "../../hooks/translation";
 
 export default function ChatScreen({ navigation }) {
 
     const axios = useAxios('ai')
     const scrollViewRef = React.useRef();
+    const translation = useTranslation()
 
     const [isListening, setIsListening] = React.useState(false)
     const [responseLoading, setResponseLoading] = React.useState(false)
     const [results, setResults] = React.useState([]);
     const [text, setText] = React.useState('')
-    const [mode, setMode] = React.useState('text')
+    const [mode, setMode] = React.useState('voice')
     const [chats, setChats] = React.useState([
         {
             id: 112312888883,
@@ -214,11 +216,11 @@ export default function ChatScreen({ navigation }) {
                                     {
                                         chat.data?.sourceInfo &&
                                         <View style={{ padding: 10, marginVertical: 10, marginTop: 15, backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
-                                            <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>Trust Factors</AppText>
+                                            <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>{translation.t('Trust Factors')}</AppText>
 
                                             <View style={{ marginTop: 10 }}>
-                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- Source: {chat.data?.sourceInfo.source}</AppText>
-                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- Author : {chat.data?.sourceInfo.author}</AppText>
+                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Source')}: {chat.data?.sourceInfo.source}</AppText>
+                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Author')} : {chat.data?.sourceInfo.author}</AppText>
                                             </View>
                                         </View>
                                     }
@@ -227,13 +229,13 @@ export default function ChatScreen({ navigation }) {
                                         <TouchableOpacity onPress={() => copyToClipboard(chat.text)} style={{ padding: 8, paddingHorizontal: 12, marginVertical: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <FontAwesome name="copy" size={16} color="white" />
-                                                <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>Copy</AppText>
+                                                <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>{translation.t('Copy')}</AppText>
                                             </View>
                                         </TouchableOpacity>
                                         <TouchableOpacity onPress={() => isSpeaking ? stopSpeech() : startSpeech(chat.text)} style={{ padding: 8, paddingHorizontal: 12, marginVertical: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                                                 <FontAwesome name={isSpeaking ? "stop" : "play"} size={14} color="white" />
-                                                <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>{isSpeaking ? 'Stop' : 'Play'}</AppText>
+                                                <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>{translation.t(isSpeaking ? 'Stop' : 'Play')}</AppText>
                                             </View>
                                         </TouchableOpacity>
                                     </View>
@@ -267,10 +269,10 @@ export default function ChatScreen({ navigation }) {
                         bold
                         style={{ color: Colors.primary, fontSize: 18, marginVertical: 10 }}
                     >
-                        Welcome to the AyurAid
+                        {translation.t('Welcome to the AyurAid')}
                     </AppText>
                     <AppText style={{ color: 'grey', fontSize: 13, textAlign: 'center', width: '80%' }}>
-                        Start Typing Or use our Voice Based commands to get started
+                        {translation.t('Start Typing Or use our Voice Based commands to get started')}
                     </AppText>
                 </View>
 
@@ -299,7 +301,7 @@ export default function ChatScreen({ navigation }) {
                                 </TouchableOpacity>
                                 {
                                     isListening &&
-                                    <AppText style={{ fontSize: 14, width: '100%', position: 'absolute', bottom: -20 }}>Listening..</AppText>
+                                    <AppText style={{ fontSize: 14, width: '100%', position: 'absolute', bottom: -20 }}>{translation.t('Listening')}..</AppText>
                                 }
 
                             </View>

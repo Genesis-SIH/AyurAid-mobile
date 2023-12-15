@@ -32,8 +32,10 @@ export const ApiCollection = {
   },
 
   dosage: {
-    logBlog: `${ApiHead}/api/dose/getDosageOfLogedIn`,
+    myDosages: `${ApiHead}/api/dose/dosages`,
     addDosage: `${ApiHead}/api/dose/add_dosage`,
+    getDosage: `${ApiHead}/api/dose/dosage`, // /id
+    markCompleted: `${ApiHead}/api/dose/mark_dosage_slot`, // /id
   },
   utils: {
     wakeup: `${ApiHead}/api/wakeup`,

@@ -11,6 +11,7 @@ const userSlice = createSlice({
             state.userToken = action.payload.userToken
             state.loggedIn = action.payload.loggedIn
             state.user = action.payload.user
+            state.language = 'en'
         },
         setUserLogOutState: (state) => {
             state.userToken = null
@@ -27,7 +28,7 @@ const userSlice = createSlice({
     }
 });
 
-export const { setActiveUser, setUserLogOutState } = userSlice.actions
+export const { setActiveUser, setUserLogOutState,setLanguage } = userSlice.actions
 export const selectUserToken = (state) => state.user.userToken
 export const selectLoggedIN = (state) => state.user.loggedIn
 export const selectUser = (state) => state.user.user

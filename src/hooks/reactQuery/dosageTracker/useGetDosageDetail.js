@@ -2,7 +2,15 @@ import { useQuery } from "react-query";
 import { useAxios } from "../../axios/useAxios";
 import { ApiCollection } from "../../../config/envConfig";
 
-export const useGetMyDosages = (
+export const useGetDosageDetail = (
+
+    /**
+     * @param id: string
+     * Dosage id
+     * */
+    id,
+
+
   /**
    * @param onSuccess: void
    * Callback function to be executed on success
@@ -17,7 +25,7 @@ export const useGetMyDosages = (
 ) => {
   const axios = useAxios();
 
-  const urlKey = ApiCollection.dosage.myDosages;
+  const urlKey = `${ApiCollection.dosage.getDosage}/${id}`;
 
   return useQuery({
     queryKey: [urlKey],

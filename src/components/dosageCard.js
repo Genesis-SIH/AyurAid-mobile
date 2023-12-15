@@ -11,59 +11,13 @@ import AppText from "./text";
 import ProgressCircle from "react-native-progress-circle";
 import { useNavigation } from "@react-navigation/core";
 
-function DosageCard({ title, consumeDays, totalDays, description, timing }) {
+function DosageCard({ title, totalDays,  data }) {
   const navigation = useNavigation();
-  const [slots, setSlots] = useState([]);
-  const [filter, setFilter] = useState();
-  const [filterNumber, setFilterNumber] = useState("");
-  const [tracker, setTracker] = useState();
-  useEffect(() => {
-    const generateSlots = () => {
-      let temp = [];
-      for (let index = 0; index < totalDays; index++) {
-        timing.forEach((item) => {
-          if (index === 4) {
-            let slot = {
-              //testing
-              slotId: "123",
-              title: `Day ${index + 1}`,
-              subTitle: `Time - ${item}`,
-              isCompleted: true,
-            };
-            temp.push(slot);
-          } else {
-            let slot = {
-              slotId: "123",
-              title: `Day ${index + 1}`,
-              subTitle: `Time - ${item}`,
-              isCompleted: true,
-            };
-            temp.push(slot);
-          }
-        });
-      }
 
-      setSlots(temp);
-    };
+  const markedSlots = data.slots.filter((slot) => slot.isCompleted === true);
+  const completedDays = Math.ceil(markedSlots?.length/data?.frequency);
 
-    generateSlots();
-  }, []);
-
-  useEffect(() => {
-    const filteredSlots = slots.filter((slot) => slot.isCompleted);
-    setFilter(filteredSlots);
-    setFilterNumber(filteredSlots.length / 2);
-    setTracker((filteredSlots.length / 2 / totalDays) * 100);
-    console.log((filteredSlots.length / 2 / totalDays) * 100);
-  }, [slots]);
   const onDosagePress = () => {
-    const data = {
-      title: title,
-      frequency: consumeDays,
-      duration: totalDays,
-      description: description,
-      timing: timing,
-    };
     navigation.navigate(Routes.main.dosageStack.dosageDetailScreen, {
       data,
     });
@@ -90,7 +44,7 @@ function DosageCard({ title, consumeDays, totalDays, description, timing }) {
               marginLeft: 10,
             }}
           >
-            0{filterNumber} / 0{totalDays}
+            {completedDays} / {totalDays}
           </AppText>
           <AppText
             style={{
@@ -105,13 +59,13 @@ function DosageCard({ title, consumeDays, totalDays, description, timing }) {
       </View>
       <View style={styles.circleContainer}>
         <ProgressCircle
-          percent={tracker}
+          percent={(completedDays / totalDays)*100}
           radius={25}
           borderWidth={5}
           color="#00BC8B"
           bgColor={Colors.seconday}
         >
-          <AppText style={{ fontSize: 12, color: "white" }}>{tracker}%</AppText>
+          <AppText style={{ fontSize: 12, color: "white" }}>{(completedDays / totalDays)*100}%</AppText>
         </ProgressCircle>
       </View>
     </TouchableOpacity>
@@ -136,8 +90,9 @@ const styles = StyleSheet.create({
     alignItems: "center",
     flexDirection: "row",
     backgroundColor: Colors.colorDarkslategray_100,
-    borderRadius: Border.br_3xs,
-    height: 112,
+    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 5,
     marginLeft: "3.7%",
     width: Dimensions.get("screen").width * 0.93,
   },
