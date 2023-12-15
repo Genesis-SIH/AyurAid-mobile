@@ -2,17 +2,20 @@
 
 
 import axios from 'axios';
-import { ApiHead } from '../../config';
+import { ApiHead,ApiHeadAi } from '../../config';
 import { UserToken } from '../../redux/store/useStore';
 
-export const useAxios = () => {
+
+
+export const useAxios = (apiType) => {
 
     const token = UserToken()
 
     const instance = axios.create({
-        baseURL: ApiHead,
+        baseURL: apiType ? ApiHead : ApiHeadAi,
         headers: {
             'Content-Type': 'application/json',
+            'Lang': 'en',
             'Token': token || '',
         },
     });

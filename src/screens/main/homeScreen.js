@@ -1,18 +1,41 @@
 import * as React from "react";
-import { Dimensions, Animated, Image, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, Alert } from "react-native";
+import { Dimensions, Animated, Image, Platform, ScrollView, StyleSheet, TextInput, TouchableOpacity, View, Alert, ActivityIndicator } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Colors, Routes } from "../../utils";
-import { ShadowStyles } from "../../config";
+import { ApiCollection, ShadowStyles } from "../../config";
 import { AppText, AppTextInput } from "../../components";
 import { ChatSeed } from "../../utils/db/seeds";
 import * as Speech from 'expo-speech';
 import Voice from "@react-native-voice/voice";
 import DeviceInfo from 'react-native-device-info';
 import Clipboard from '@react-native-clipboard/clipboard';
+import { useAxios } from "../../hooks/axios/useAxios";
 
 export default function ChatScreen({ navigation }) {
+
+    const axios = useAxios('ai')
+    const scrollViewRef = React.useRef();
+
+    const [isListening, setIsListening] = React.useState(false)
+    const [responseLoading, setResponseLoading] = React.useState(false)
+    const [results, setResults] = React.useState([]);
+    const [text, setText] = React.useState('')
+    const [mode, setMode] = React.useState('text')
+    const [chats, setChats] = React.useState([
+        {
+            id: 112312888883,
+            text: 'Hi, I am AyurAid. How can I help you?',
+            type: 'bot',
+            timestamp: new Date().getTime(),
+            data: null,
+        },
+    ])
+    const [isSpeaking, setIsSpeaking] = React.useState(false)
+
+
+
     const micScaleValue = React.useRef(new Animated.Value(1)).current;
     const micOpacityValue = React.useRef(new Animated.Value(0)).current;
     const sideBtnScaleValue = React.useRef(new Animated.Value(1)).current;
@@ -107,12 +130,31 @@ export default function ChatScreen({ navigation }) {
     }
 
 
-    const [isListening, setIsListening] = React.useState(false)
-    const [results, setResults] = React.useState([]);
-    const [text, setText] = React.useState('')
-    const [mode, setMode] = React.useState('voice')
-    const [chats, setChats] = React.useState(ChatSeed)
-    const [isSpeaking, setIsSpeaking] = React.useState(false)
+    const askChatBot = async (userMessage) => {
+        setResponseLoading(true)
+        await axios.post(ApiCollection.ai.askChatbot, { prompt: userMessage.text })
+            .then((response) => {
+                console.log(response.data)
+                let botMessage = {
+                    text: response.data.answer,
+                    type: 'bot',
+                    timestamp: new Date().getTime(),
+                    data: response.data
+                }
+                let temp = chats.splice(0)
+                temp.push(userMessage)
+                temp.push(botMessage)
+
+                setChats(temp)
+                scrollViewRef.current.scrollToEnd({ animated: true })
+                setResponseLoading(false)
+            })
+            .catch((error) => {
+                console.log(error)
+                setResponseLoading(false)
+                Alert.alert('Error', 'Something went wrong. Please try again')
+            })
+    }
 
 
     const onKeyboardPress = () => {
@@ -127,11 +169,13 @@ export default function ChatScreen({ navigation }) {
         let message = {
             text: text,
             type: 'user',
-            timestamp: new Date().getTime()
+            timestamp: new Date().getTime(),
+            id: new Date().getTime()
         }
-
-        setChats([...chats, message])
         setText('')
+        askChatBot(message)
+
+
     }
 
 
@@ -159,7 +203,9 @@ export default function ChatScreen({ navigation }) {
 
             {chats &&
                 chats.length > 0 ?
-                <ScrollView contentContainerStyle={{ paddingVertical: 20, paddingBottom: 180, width: Dimensions.get('screen').width * 0.9 }}>
+                <ScrollView
+                    ref={scrollViewRef}
+                    contentContainerStyle={{ paddingVertical: 20, paddingBottom: 100, width: Dimensions.get('screen').width * 0.9 }}>
                     {chats.map((chat, index) => (
                         chat.type == 'bot' ?
                             <>
@@ -172,7 +218,7 @@ export default function ChatScreen({ navigation }) {
 
                                             <View style={{ marginTop: 10 }}>
                                                 <AppText style={{ fontSize: 14, lineHeight: 24 }}>- Source: {chat.data?.sourceInfo.source}</AppText>
-                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- Trust : {chat.data?.sourceInfo.trustFactor}</AppText>
+                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- Author : {chat.data?.sourceInfo.author}</AppText>
                                             </View>
                                         </View>
                                     }
@@ -285,11 +331,17 @@ export default function ChatScreen({ navigation }) {
                                 <FontAwesome5 solid name={"microphone"} size={18} color={"white"} />
                             </TouchableOpacity>
 
-                            <TextInput onChangeText={(text) => setText(text)} placeholderTextColor={'lightgrey'} placeholder="Enter message...." style={styles.input} />
-
-                            <TouchableOpacity disabled={text == ''} onPress={onSendTextMessage} style={{ marginRight: 10 }}>
-                                <FontAwesome solid name={'send'} size={20} color={text == '' ? 'grey' : 'white'} />
-                            </TouchableOpacity>
+                            <TextInput value={text} onChangeText={(text) => setText(text)} placeholderTextColor={'lightgrey'} placeholder="Enter message...." style={styles.input} />
+                            {
+                                !responseLoading ?
+                                    <TouchableOpacity disabled={text == ''} onPress={onSendTextMessage} style={{ marginRight: 10 }}>
+                                        <FontAwesome solid name={'send'} size={20} color={text == '' ? 'grey' : 'white'} />
+                                    </TouchableOpacity>
+                                    :
+                                    <View>
+                                        <ActivityIndicator size={'small'} color={Colors.primary} />
+                                    </View>
+                            }
 
                         </LinearGradient>
                     )}

@@ -2,10 +2,18 @@ export const config = {
   apiHeadProd: "https://ayuraid.onrender.com",
   apiHeadDev: "https://ayuraid.onrender.com",
   env: "dev",
+  languages: [
+    {id:0,name:'English',code:'en'},
+    {id:1,name:'Hindi',code:'hi'},
+    {id:2,name:'Tamil',code:'ta'},
+    {id:3,name:'Spanish',code:'es'},
+  ]
 };
 
 export const ApiHead =
   config.env === "prod" ? config.apiHeadProd : config.apiHeadDev;
+
+export const ApiHeadAi = "https://fair-gray-python-garb.cyclic.app";
 
 export const ApiCollection = {
   authController: {
@@ -30,4 +38,7 @@ export const ApiCollection = {
   utils: {
     wakeup: `${ApiHead}/api/wakeup`,
   },
+  ai:{
+    askChatbot: `${ApiHeadAi}/chatbot/ask`,
+  }
 };

@@ -13,13 +13,16 @@ import {
 import DosageCard from "../../../components/dosageCard";
 
 import { useGetMyDosages } from "../../../hooks/reactQuery/dosageTracker/useGetMyDosages";
+import { Colors } from "../../../utils";
 
 function DosageListScreen() {
   const { isLoading, data: dosages } = useGetMyDosages();
 
+
   return !isLoading ? (
     <ScrollView contentContainerStyle={styles.container}>
-      {[dosages].map((data) => (
+      {dosages ? 
+      dosages.map((data) => (
         <View style={{ marginBottom: 25 }}>
           <DosageCard
             key={data._id}
@@ -30,7 +33,12 @@ function DosageListScreen() {
             timing={data.timing}
           />
         </View>
-      ))}
+      ))
+        :
+        <View style={{ marginTop: 100, alignItems: "center", justifyContent: "center" }}>
+          <Text style={{ color: "white" }}>No Dosages right now !</Text>
+        </View>
+      }
     </ScrollView>
   ) : (
     <ActivityIndicator color={Colors.primary} size={"large"} />
