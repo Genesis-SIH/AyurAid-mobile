@@ -69,7 +69,7 @@ function ProfileScreen({ navigation }) {
         </View>
 
         <View style={styles.profileScreenChild}>
-          {/* <TouchableOpacity
+          <TouchableOpacity
             onPress={() => navigation.navigate(Routes.main.encyclopedia)}
             style={{
               marginTop: 20,
@@ -108,7 +108,7 @@ function ProfileScreen({ navigation }) {
 
               <FontAwesome name="leanpub" size={40} color="white" />
             </View>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
           <TouchableOpacity
             onPress={openDosageTracker}
             style={{
