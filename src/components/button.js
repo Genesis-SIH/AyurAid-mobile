@@ -11,9 +11,9 @@ const commonButtonStyle = {
   width: "100%",
   width: 350,
   flexDirection: "row",
-  justifyContent:"space-between"
+  justifyContent: "space-between",
 };
-const commonButtonStyle1= {
+const commonButtonStyle1 = {
   marginTop: 15,
   padding: 10,
   alignItems: "center",
@@ -90,7 +90,6 @@ export function FlatButton(props) {
         style={{
           color: props.outline ? Colors.primary : "white",
           fontSize: 18,
-          
         }}
       >
         {props.title}
@@ -104,7 +103,6 @@ export function OutlinButton(props) {
         backgroundColor: "transparent",
         borderWidth: 1,
         borderColor: Colors.primary,
-
       }
     : {
         backgroundColor: Colors.primary,
