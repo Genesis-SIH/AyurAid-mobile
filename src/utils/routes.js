@@ -13,8 +13,11 @@ export const Routes = {
         chatScreen: 'Chat',
         shopScreen: 'Shop',
         profileScreen: 'Profile',
+        editProfileScreen: 'EditProfile',
         dosageScreen: 'Dosage',
         settingScreen: 'Setting',
+        languages:'Language',
+        encyclopedia:'Encyclopedia',
         dosageStack:{
             dosageForm:'DosageForm',
             tag: 'dosageStack',

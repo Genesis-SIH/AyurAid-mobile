@@ -10,70 +10,75 @@ import {
   RoundButton,
 } from "../../components";
 import Reset from "../../images/custom/reset.png";
-function ResetPassword({navigation}) {
-    const onRegister = () => {
-        navigation.navigate(Routes.onBoarding.registerScreen)
-      }
-    const onReset = () => {
-        navigation.navigate(Routes.onBoarding.welcomeScreen)
-      }
+function ResetPassword({ navigation }) {
+  const onRegister = () => {
+    navigation.navigate(Routes.onBoarding.registerScreen);
+  };
+  const onReset = () => {
+    navigation.navigate(Routes.onBoarding.welcomeScreen);
+  };
   return (
     <View style={styles.container}>
-    <LinearGradient
-      style={styles.gradient}
-      locations={[0, 1]}
-      colors={["rgba(0, 0, 0, 0)", "rgba(0, 188, 139, 0.2)"]}
-    >
-      <View
-        style={{
-          width: "80%",
-          padding: 10,
-          justifyContent: "center",
-          alignItems: "center",
-        }}
+      <LinearGradient
+        style={styles.gradient}
+        locations={[0, 1]}
+        colors={["rgba(0, 0, 0, 0)", "rgba(0, 188, 139, 0.2)"]}
       >
-        <Image
-          style={{ width: 50, height: 130,width:100, marginBottom: 10 }}
-          contentFit="cover"
-          source={Reset}
-        />
-
-        <AppText
-          bold
-          style={{ color: Colors.primary, fontSize: 30, marginBottom: 30 }}
+        <View
+          style={{
+            width: "80%",
+            padding: 10,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
         >
-          Reset Password
-        </AppText>
-        <AppTextInput label="Password" placeholder="Password" />
-        <AppTextInput label="Confirm Password" placeholder="Your Confirm Password" />
+          <Image
+            style={{ width: 50, height: 130, width: 100, marginBottom: 5 }}
+            contentFit="cover"
+            source={Reset}
+          />
 
-        <FlatButton enableShadow={true} title="Reset" onPress={onReset} />
-
-        <TouchableOpacity style={{ marginTop: 30 }} onPress={onRegister}>
-          <AppText style={{  fontSize: 15 }}>
-            Don’t have an Account ? Create Now !
+          <AppText
+            bold
+            style={{ color: Colors.primary, fontSize: 30, marginBottom: 18 }}
+          >
+            Reset Password
           </AppText>
-        </TouchableOpacity>
-      </View>
-    </LinearGradient>
-  </View>
-  )
+          <AppTextInput label="Old Password" placeholder="Old Password" />
+          <AppTextInput label="New Password" placeholder="Your New Password" />
+          <AppTextInput
+            label="Confirm Password"
+            placeholder="Your Confirm Password"
+          />
+
+          <FlatButton
+            enableShadow={true}
+            title="Reset"
+            onPress={onReset}
+            style={{
+              width: 300,
+            }}
+          />
+        </View>
+      </LinearGradient>
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      backgroundColor: "black",
-      flex: 1,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    gradient: {
-      height: "100%",
-      width: "100%",
-      alignItems: "center",
-      justifyContent: "center",
-      flex: 1,
-    },
-  });
+  container: {
+    backgroundColor: "black",
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  gradient: {
+    height: "100%",
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+});
 
-export default ResetPassword
+export default ResetPassword;

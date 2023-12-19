@@ -23,6 +23,7 @@ export const useGetAllBlogs = (
     queryKey: [urlKey],
     queryFn: async () => {
       const rpnse = await axios.get(urlKey);
+
       return rpnse.data.data.allBlogs;
     },
     onSuccess: data => {

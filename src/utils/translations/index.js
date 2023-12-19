@@ -180,3 +180,4 @@ export default translations = {
         "Back to Login": "Volver a iniciar sesión",
     },
 }
+
