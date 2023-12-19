@@ -16,6 +16,11 @@ import Header from "../../components/header";
 import { BottomSheet } from "../../components/bottomsheet";
 import DosageStackNavigator from "./dosageStack";
 import BlogStackNavigator from "./blogStack";
+import Settings from "./settings";
+import EditProfile from "./editProfile";
+import Languges from "./languges";
+import ResetPassword from "../onBoarding/resetPassword";
+import Encyclopedia from "./encyclopedia";
 
 const MainStack = createNativeStackNavigator();
 
@@ -85,25 +90,32 @@ export default function MainStackNavigator() {
           header: () => (
             <>
               <Header
-                title='Ingredient Shop'
+                title="Ingredient Shop"
                 rightElemnt={
-                  <TouchableOpacity style={{ marginRight: 10 }} onPress={() => bottomSheetRef?.current?.open()}>
+                  <TouchableOpacity
+                    style={{ marginRight: 10 }}
+                    onPress={() => bottomSheetRef?.current?.open()}
+                  >
                     <IonIcons name="help-circle" size={28} color="white" />
                   </TouchableOpacity>
                 }
               />
-              <BottomSheet ref={bottomSheetRef} height={400} heading='What is Shop ?'>
+              <BottomSheet
+                ref={bottomSheetRef}
+                height={400}
+                heading="What is Shop ?"
+              >
                 <View style={{ marginVertical: 10, padding: 10 }}>
-                  <AppText style={{ color: 'lightgrey' }}>
-                    In our ingredient shop you can buy all ingredients for your recipes recommended by our App.
-
+                  <AppText style={{ color: "lightgrey" }}>
+                    In our ingredient shop you can buy all ingredients for your
+                    recipes recommended by our App.
                   </AppText>
-                  <AppText style={{ color: 'lightgrey', marginTop: 15 }}>
-                    We have a wide range of ingredients from different brands and stores, so you can choose the best for you.
+                  <AppText style={{ color: "lightgrey", marginTop: 15 }}>
+                    We have a wide range of ingredients from different brands
+                    and stores, so you can choose the best for you.
                   </AppText>
                 </View>
               </BottomSheet>
-
             </>
           ),
         })}
@@ -121,24 +133,134 @@ export default function MainStackNavigator() {
           },
           header: () => (
             <Header
-              title='Profile'
+              title="Profile"
               rightElemnt={
                 <TouchableOpacity
                   style={{ marginRight: 10 }}
                   onPress={() => {
-                    dispatch(setUserLogOutState())
-                    navigation.replace(Routes.onBoarding.tag)
-                  }}>
+                    dispatch(setUserLogOutState());
+                    navigation.replace(Routes.onBoarding.tag);
+                  }}
+                >
                   <IonIcons name="exit-outline" size={28} color="white" />
                 </TouchableOpacity>
               }
-
             />
-
           ),
         })}
       />
-
+      <MainStack.Screen
+        name={Routes.main.settingScreen}
+        component={Settings}
+        options={({ route, navigation }) => ({
+          headerShown: true,
+          headerTintColor: "white",
+          headerTitle: "Settings",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          header: () => (
+            <Header
+              title="Settings"
+              // rightElemnt={
+              //   <TouchableOpacity
+              //     style={{ marginRight: 10 }}
+              //     onPress={() => {
+              //       dispatch(setUserLogOutState());
+              //       navigation.replace(Routes.onBoarding.tag);
+              //     }}
+              //   >
+              //     <IonIcons name="exit-outline" size={28} color="white" />
+              //   </TouchableOpacity>
+              // }
+            />
+          ),
+        })}
+      />
+      <MainStack.Screen
+        name={Routes.main.editProfileScreen}
+        component={EditProfile}
+        options={({ route, navigation }) => ({
+          headerShown: true,
+          headerTintColor: "white",
+          headerTitle: "Edit Profile",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          header: () => (
+            <Header
+              title="Edit Profile"
+              // rightElemnt={
+              //   <TouchableOpacity
+              //     style={{ marginRight: 10 }}
+              //     onPress={() => {
+              //       dispatch(setUserLogOutState());
+              //       navigation.replace(Routes.onBoarding.tag);
+              //     }}
+              //   >
+              //     <IonIcons name="exit-outline" size={28} color="white" />
+              //   </TouchableOpacity>
+              // }
+            />
+          ),
+        })}
+      />
+      <MainStack.Screen
+        name={Routes.main.languages}
+        component={Languges}
+        options={({ route, navigation }) => ({
+          headerShown: true,
+          headerTintColor: "white",
+          headerTitle: "Languages",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          header: () => (
+            <Header
+              title="Languages"
+              // rightElemnt={
+              //   <TouchableOpacity
+              //     style={{ marginRight: 10 }}
+              //     onPress={() => {
+              //       dispatch(setUserLogOutState());
+              //       navigation.replace(Routes.onBoarding.tag);
+              //     }}
+              //   >
+              //     <IonIcons name="exit-outline" size={28} color="white" />
+              //   </TouchableOpacity>
+              // }
+            />
+          ),
+        })}
+      />
+      <MainStack.Screen
+        name={Routes.main.encyclopedia}
+        component={Encyclopedia}
+        options={({ route, navigation }) => ({
+          headerShown: true,
+          headerTintColor: "white",
+          headerTitle: "Encyclopedia",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          header: () => (
+            <Header
+              title="Encyclopedia"
+              // rightElemnt={
+              //   <TouchableOpacity
+              //     style={{ marginRight: 10 }}
+              //     onPress={() => {
+              //       dispatch(setUserLogOutState());
+              //       navigation.replace(Routes.onBoarding.tag);
+              //     }}
+              //   >
+              //     <IonIcons name="exit-outline" size={28} color="white" />
+              //   </TouchableOpacity>
+              // }
+            />
+          ),
+        })}
+      />
 
       <MainStack.Screen
         name={Routes.main.dosageStack.tag}
@@ -148,6 +270,34 @@ export default function MainStackNavigator() {
         })}
       />
 
+      <MainStack.Screen
+        name={Routes.onBoarding.ResetScreen}
+        component={ResetPassword}
+        options={({ route, navigation }) => ({
+          headerShown: true,
+          headerTintColor: "white",
+          headerTitle: "Reset Password",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          header: () => (
+            <Header
+              title="Reset Password"
+              // rightElemnt={
+              //   <TouchableOpacity
+              //     style={{ marginRight: 10 }}
+              //     onPress={() => {
+              //       dispatch(setUserLogOutState());
+              //       navigation.replace(Routes.onBoarding.tag);
+              //     }}
+              //   >
+              //     <IonIcons name="exit-outline" size={28} color="white" />
+              //   </TouchableOpacity>
+              // }
+            />
+          ),
+        })}
+      />
       <MainStack.Screen
         name={Routes.main.blogStack.tag}
         component={BlogStackNavigator}

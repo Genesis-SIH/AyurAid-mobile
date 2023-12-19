@@ -19,8 +19,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useTranslation } from "../../hooks/translation";
 
 function ProfileScreen({ navigation }) {
-
-
   const user = User();
   const translation = useTranslation();
   const dispatch = useDispatch();
@@ -32,10 +30,6 @@ function ProfileScreen({ navigation }) {
   const openBlogs = () => {
     navigation.navigate(Routes.main.blogStack.tag);
   };
-
-  const changeLanguage = () => {
-    dispatch(setLanguage('hi'))
-  }
 
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
@@ -61,17 +55,60 @@ function ProfileScreen({ navigation }) {
               {user.name}
             </AppText>
 
-            <TouchableOpacity style={{ marginTop: 10 }}>
+            <TouchableOpacity
+              style={{ marginTop: 10 }}
+              onPress={() => navigation.navigate(Routes.main.editProfileScreen)}
+            >
               <AppText
                 style={{ color: "lightgrey", fontSize: 14, marginBottom: 0 }}
               >
-                {translation.t('Edit Profile')}
+                {translation.t("Edit Profile")}
               </AppText>
             </TouchableOpacity>
           </View>
         </View>
 
         <View style={styles.profileScreenChild}>
+          {/* <TouchableOpacity
+            onPress={() => navigation.navigate(Routes.main.encyclopedia)}
+            style={{
+              marginTop: 20,
+              width: "90%",
+              height: 120,
+              backgroundColor: "green",
+              borderRadius: 10,
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              source={GreenGradient}
+              style={{ width: "100%", height: "100%" }}
+            />
+            <View
+              style={{
+                position: "absolute",
+                paddingHorizontal: 20,
+                width: "100%",
+                height: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View style={{ width: "70%" }}>
+                <AppText bold style={{ color: "white", fontSize: 20 }}>
+                  {translation.t("Encyclopedia")}
+                </AppText>
+                <AppText
+                  style={{ color: "white", fontSize: 14, marginTop: 10 }}
+                >
+                  {translation.t("Show Summary of AyurAid")}
+                </AppText>
+              </View>
+
+              <FontAwesome name="leanpub" size={40} color="white" />
+            </View>
+          </TouchableOpacity> */}
           <TouchableOpacity
             onPress={openDosageTracker}
             style={{
@@ -100,12 +137,14 @@ function ProfileScreen({ navigation }) {
             >
               <View style={{ width: "70%" }}>
                 <AppText bold style={{ color: "white", fontSize: 20 }}>
-                  {translation.t('Dosage Tracker')}
+                  {translation.t("Dosage Tracker")}
                 </AppText>
                 <AppText
                   style={{ color: "white", fontSize: 14, marginTop: 10 }}
                 >
-                  {translation.t('Manage and track you dosages and medications')}
+                  {translation.t(
+                    "Manage and track you dosages and medications"
+                  )}
                 </AppText>
               </View>
 
@@ -141,12 +180,14 @@ function ProfileScreen({ navigation }) {
             >
               <View style={{ width: "70%" }}>
                 <AppText bold style={{ color: "white", fontSize: 20 }}>
-                  {translation.t('Ayurveda Blogs')}
+                  {translation.t("Ayurveda Blogs")}
                 </AppText>
                 <AppText
                   style={{ color: "white", fontSize: 14, marginTop: 10 }}
                 >
-                  {translation.t('Explore the world of research and community of Ayurveda enthusiast')}
+                  {translation.t(
+                    "Explore the world of research and community of Ayurveda enthusiast"
+                  )}
                 </AppText>
               </View>
 
@@ -155,6 +196,7 @@ function ProfileScreen({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
+            onPress={() => navigation.navigate(Routes.main.settingScreen)}
             style={{
               marginTop: 20,
               width: "90%",
@@ -181,12 +223,14 @@ function ProfileScreen({ navigation }) {
             >
               <View style={{ width: "70%" }}>
                 <AppText bold style={{ color: "white", fontSize: 20 }}>
-                  {translation.t('Settings')}
+                  {translation.t("Settings")}
                 </AppText>
                 <AppText
                   style={{ color: "white", fontSize: 14, marginTop: 10 }}
                 >
-                  {translation.t('Set your preferences and settings for the app')}
+                  {translation.t(
+                    "Set your preferences and settings for the app"
+                  )}
                 </AppText>
               </View>
 

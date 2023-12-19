@@ -12,11 +12,10 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Colors, Routes } from "../../../utils";
 import { useGetAllBlogs, useSearchBlog } from "../../../hooks/reactQuery/blogs";
 import { useTranslation } from "../../../hooks/translation";
-
 export default function SearchBlogScreen({ navigation }) {
   const [searchText, setSearchText] = React.useState("");
 
-  const { isLoading, data } = useGetAllBlogs();
+  const { data, isFetching } = useGetAllBlogs();
   const translation = useTranslation();
 
   const url =
@@ -36,12 +35,13 @@ export default function SearchBlogScreen({ navigation }) {
           <FontAwesome name="search" size={22} color={Colors.primary} />
         }
       />
-      {!isLoading ? (
+      {!isFetching ? (
         data?.length > 0 ? (
           data.map((blog, index) => (
             <TouchableOpacity
               style={styles.blogResult}
               onPress={() => openBlog(blog)}
+              id={blog.id}
             >
               <Image
                 source={{ uri: `data:image/png;base64,${blog.image}` }}

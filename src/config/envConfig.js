@@ -1,13 +1,13 @@
 export const config = {
-  apiHeadProd: "https://ayuraid.onrender.com",
-  apiHeadDev: "https://ayuraid.onrender.com",
+  apiHeadProd: "https://ayuraid-backend.cyclic.app",
+  apiHeadDev: "https://ayuraid-backend.cyclic.app",
   env: "dev",
   languages: [
-    {id:0,name:'English',code:'en'},
-    {id:1,name:'Hindi',code:'hi'},
-    {id:2,name:'Tamil',code:'ta'},
-    {id:3,name:'Spanish',code:'es'},
-  ]
+    { id: 0, name: "English", code: "en" },
+    { id: 1, name: "Hindi", code: "hi" },
+    { id: 2, name: "Tamil", code: "ta" },
+    { id: 3, name: "Spanish", code: "es" },
+  ],
 };
 
 export const ApiHead =
@@ -40,7 +40,7 @@ export const ApiCollection = {
   utils: {
     wakeup: `${ApiHead}/api/wakeup`,
   },
-  ai:{
+  ai: {
     askChatbot: `${ApiHeadAi}/chatbot/ask`,
-  }
+  },
 };
