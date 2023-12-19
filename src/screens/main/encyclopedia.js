@@ -2,68 +2,79 @@ import React, { useEffect, useState } from "react";
 import { View, StyleSheet } from "react-native";
 import PdfView from "../../components/pdfView";
 import axios from "axios";
+import { encode as base64Encode } from "base-64";
 
-const pdfs = [
-  {
-    id: 1,
-    uri: "http://samples.leanpub.com/thereactnativebook-sample.pdf",
-    author: "Author 1",
-    book: "Book 1",
-  },
-  {
-    id: 2,
-    uri: "http://samples.leanpub.com/thereactnativebook-sample.pdf",
-    author: "Author 2",
-    book: "Book 2",
-  },
-  {
-    id: 3,
-    uri: "http://samples.leanpub.com/thereactnativebook-sample.pdf",
-    author: "Author 3",
-    book: "Book 3",
-  },
-  {
-    id: 4,
-    uri: "http://samples.leanpub.com/thereactnativebook-sample.pdf",
-    author: "Author 4",
-    book: "Book 4",
-  },
-];
+function generateRandomAyurvedaName() {
+  const authors = [
+    "Dr. Vasant Lad",
+    "Dr. David Frawley",
+    "Dr. Robert Svoboda",
+    "Maya Tiwari",
+  ];
+
+  const books = [
+    "The Complete Book of Ayurvedic Home Remedies",
+    "Ayurveda: The Science of Self-Healing",
+    "Prakriti: Your Ayurvedic Constitution",
+    "The Ayurveda Bible",
+  ];
+
+  const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
+  const randomBook = books[Math.floor(Math.random() * books.length)];
+
+  return { author: randomAuthor, book: randomBook };
+}
 
 function Encyclopedia() {
-  const folderId =
-    "0BzHqSP5JtkQafnpiR2xBazFYSHFjRV96bzRRT2ZxN3VsaXFUSXF3bXdEbmpoamhpMXFfZ0U";
-  const apiKey = "AIzaSyCCMX7nNARMmCdSpquczCA__aW0Y-qiDAk";
-  const [files, setFiles] = useState([]);
+  const cloudName = "dcufd9un6"; // Replace with your Cloudinary cloud name
+  const apiKey = "919742514733152"; // Replace with your Cloudinary API key
+  const apiSecret = "y_PDMOw75GkwjfBu6p1X7qLWwiI"; // Replace with your Cloudinary API secret
+  const folderName = "pdfs"; // Replace with the folder name you want to fetch
+
+  const [resources, setResources] = useState([]);
+
   useEffect(() => {
-    const getFiles = async () => {
+    const fetchResources = async () => {
       try {
+        const credentials = `${apiKey}:${apiSecret}`;
+        const encodedCredentials = base64Encode(credentials);
+
         const response = await axios.get(
-          `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}`
+          `https://api.cloudinary.com/v1_1/${cloudName}/resources/image/upload?prefix=${folderName}`,
+          {
+            headers: {
+              Authorization: `Basic ${encodedCredentials}`,
+            },
+          }
         );
-        setFiles(response.data);
-        console.log(response.data);
+
+        setResources(response.data.resources);
+        console.log(response.data.resources);
       } catch (error) {
-        console.error("Error fetching files:", error);
+        console.error('Error fetching resources:', error);
       }
     };
 
-    getFiles();
-  }, [folderId, apiKey]);
+    fetchResources();
+  }, [cloudName, apiKey, apiSecret, folderName]);
+
   const renderRows = () => {
     const rows = [];
-    for (let i = 0; i < pdfs.length; i += 2) {
-      const pdfsInRow = pdfs.slice(i, i + 2);
+    for (let i = 0; i < resources.length; i += 2) {
+      const pdfsInRow = resources.slice(i, i + 2);
       rows.push(
         <View style={styles.row} key={i}>
-          {pdfsInRow.map((item) => (
-            <PdfView
-              key={item.id}
-              uri={item.uri}
-              author={item.author}
-              book={item.book}
-            />
-          ))}
+          {pdfsInRow.map((item) => {
+            const randomNames = generateRandomAyurvedaName();
+            return (
+              <PdfView
+                key={item.public_id}
+                uri={item.url}
+                author={randomNames.author}
+                book={randomNames.book}
+              />
+            );
+          })}
         </View>
       );
     }
