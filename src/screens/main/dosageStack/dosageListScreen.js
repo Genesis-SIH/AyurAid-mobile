@@ -18,14 +18,12 @@ import { Colors } from "../../../utils";
 function DosageListScreen() {
   const { isLoading, data: dosages } = useGetMyDosages();
 
-
   return !isLoading ? (
     <ScrollView contentContainerStyle={styles.container}>
-      {dosages && dosages.length > 0 ?
+      {dosages && dosages.length > 0 ? (
         dosages.map((data) => (
-          <View style={{ marginBottom: 25 }}>
+          <View style={{ marginBottom: 25 }} key={parseInt(data._id)}>
             <DosageCard
-              key={data._id}
               title={data.title}
               consumeDays={data.frequency}
               totalDays={data.duration}
@@ -35,11 +33,17 @@ function DosageListScreen() {
             />
           </View>
         ))
-        :
-        <View style={{ marginTop: 100, alignItems: "center", justifyContent: "center" }}>
+      ) : (
+        <View
+          style={{
+            marginTop: 100,
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
           <Text style={{ color: "white" }}>No Dosages right now !</Text>
         </View>
-      }
+      )}
     </ScrollView>
   ) : (
     <ActivityIndicator color={Colors.primary} size={"large"} />
