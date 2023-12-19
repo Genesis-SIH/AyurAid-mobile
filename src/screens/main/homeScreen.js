@@ -134,6 +134,7 @@ export default function ChatScreen({ navigation }) {
 
     const askChatBot = async (userMessage) => {
         setResponseLoading(true)
+        console.log(userMessage)
         await axios.post(ApiCollection.ai.askChatbot, { prompt: userMessage.text })
             .then((response) => {
                 console.log(response.data)
@@ -141,8 +142,9 @@ export default function ChatScreen({ navigation }) {
                     text: response.data.answer,
                     type: 'bot',
                     timestamp: new Date().getTime(),
-                    data: response.data
+                    data: null
                 }
+               
                 let temp = chats.splice(0)
                 temp.push(userMessage)
                 temp.push(botMessage)
@@ -152,7 +154,7 @@ export default function ChatScreen({ navigation }) {
                 setResponseLoading(false)
             })
             .catch((error) => {
-                console.log(error)
+                console.log(error.response.data)
                 setResponseLoading(false)
                 Alert.alert('Error', 'Something went wrong. Please try again')
             })
@@ -219,7 +221,7 @@ export default function ChatScreen({ navigation }) {
                                             <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>{translation.t('Trust Factors')}</AppText>
 
                                             <View style={{ marginTop: 10 }}>
-                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Source')}: {chat.data?.sourceInfo.source}</AppText>
+                                                <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Source')}: {chat.data?.sourceInfo.source[0]}</AppText>
                                                 <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Author')} : {chat.data?.sourceInfo.author}</AppText>
                                             </View>
                                         </View>
