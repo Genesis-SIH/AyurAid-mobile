@@ -155,6 +155,7 @@ function ProfileScreen({ navigation }) {
           </TouchableOpacity>
 
           <TouchableOpacity
+          onPress={changeLanguage}
             style={{
               marginTop: 20,
               width: "90%",

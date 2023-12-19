@@ -15,10 +15,12 @@ import { setActiveUser } from "../../redux/features/userSlice";
 import axios from "axios";
 import LoadingModal from "../../components/loadingmodal";
 import { ApiCollection } from "../../config";
+import { useTranslation } from "../../hooks/translation";
 
 const LoginScreen = ({ navigation }) => {
 
   const dispatch = useDispatch()
+  const translation = useTranslation()
 
   const [username, setUsername] = React.useState('')
   const [password, setPassword] = React.useState('')
@@ -77,6 +79,11 @@ const LoginScreen = ({ navigation }) => {
 
   }
 
+  const onDemoPress = () => {
+    setUsername('Aditya14')
+    setPassword('AyurAid')
+  }
+
 
   return (
     <View style={styles.container}>
@@ -104,21 +111,30 @@ const LoginScreen = ({ navigation }) => {
             bold
             style={{ color: Colors.primary, fontSize: 30, marginBottom: 30 }}
           >
-            Welcome Back
+            {translation.t('Welcome Back')}
           </AppText>
-          <AppTextInput label="Username" placeholder="Ex- johndoe" onChangeText={(text) => setUsername(text)}/>
-          <AppTextInput type='password' label="Password" placeholder="Your Password" onChangeText={(text) => setPassword(text)}/>
-          <TouchableOpacity style={{ marginTop: 30 }} onPress={onForget}>
-            <AppText style={{  fontSize: 15 }}>
-             Forget password?
+          <AppTextInput value={username} label="Username" placeholder="Ex- johndoe" onChangeText={(text) => setUsername(text)}/>
+          <AppTextInput value={password} type='password' label="Password" placeholder="Your Password" onChangeText={(text) => setPassword(text)}/>
+
+          <TouchableOpacity style={{ marginTop: 30 }} onPress={onDemoPress}>
+            <AppText style={{  fontSize: 20,color:'grey' }}>
+             Tap to Demo Login
             </AppText>
           </TouchableOpacity>
 
-          <FlatButton enableShadow={true} title="LOGIN" onPress={onLoginPress} />
+
+
+          <TouchableOpacity style={{ marginTop: 30 }} onPress={onForget}>
+            <AppText style={{  fontSize: 15 }}>
+             {translation.t('Forget password')}?
+            </AppText>
+          </TouchableOpacity>
+
+          <FlatButton enableShadow={true} title={translation.t("LOGIN")} onPress={onLoginPress} />
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onRegister}>
             <AppText style={{  fontSize: 15 }}>
-              Don’t have an Account ? Create Now !
+              {translation.t('Don’t have an Account ? Create Now')} !
             </AppText>
           </TouchableOpacity>
         </View>

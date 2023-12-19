@@ -2,23 +2,25 @@ import { LinearGradient } from "expo-linear-gradient";
 import React from "react";
 import { Colors, Routes } from "../../utils";
 
-import { Alert, ScrollView, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 import { Image } from "expo-image";
 import {
   AppText,
   AppTextInput,
   FlatButton,
-  RoundButton,
 } from "../../components";
 
 import Logo from "../../images/logo/logo.png";
 import axios from "axios";
 import { ApiCollection } from "../../config";
 import LoadingModal from "../../components/loadingmodal";
+import { useTranslation } from "../../hooks/translation";
 
 
 
 function RegisterScreen({ navigation }) {
+
+  const translation = useTranslation()
 
 
   const [fullName, setFullName] = React.useState('')
@@ -114,19 +116,19 @@ function RegisterScreen({ navigation }) {
             bold
             style={{ color: Colors.primary, fontSize: 30, marginBottom: 30 }}
           >
-            Create Account !
+           {translation.t('Create Account !')}
           </AppText>
-          <AppTextInput label="Full Name" placeholder="Ex - John Doe" onChangeText={(text) => setFullName(text)} />
-          <AppTextInput label="Email" placeholder="Ex - some@gmail.com" onChangeText={(text) => setEmail(text)} />
-          <AppTextInput label="Date Of Birth" placeholder="Ex - 03 / 03 /2003" onChangeText={(text) => setDob(text)} />
-          <AppTextInput label="Country" placeholder="Ex - India" onChangeText={(text) => setCountry(text)} />
-          <AppTextInput type='password' label="Password" placeholder="*****" onChangeText={(text) => setPassword(text)} />
-          <AppTextInput type='password' label="Confirim Password" placeholder="****" onChangeText={(text) => setConfirmPassword(text)} />
-          <FlatButton title="REGISTER" onPress={onRegister} />
+          <AppTextInput label={translation.t("Full Name")} placeholder="Ex - John Doe" onChangeText={(text) => setFullName(text)} />
+          <AppTextInput label={translation.t("Email")} placeholder="Ex - some@gmail.com" onChangeText={(text) => setEmail(text)} />
+          <AppTextInput label={translation.t("Date Of Birth")} placeholder="Ex - 03 / 03 /2003" onChangeText={(text) => setDob(text)} />
+          <AppTextInput label={translation.t('Country')} placeholder="Ex - India" onChangeText={(text) => setCountry(text)} />
+          <AppTextInput type={'password'} label={translation.t("Password")} placeholder="*****" onChangeText={(text) => setPassword(text)} />
+          <AppTextInput type={'password'} label={translation.t("Confirim Password")} placeholder="****" onChangeText={(text) => setConfirmPassword(text)} />
+          <FlatButton title={translation.t("REGISTER")} onPress={onRegister} />
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onAlready}>
             <AppText style={{ fontSize: 15 }}>
-              Already have an Account ? Login !
+              {translation.t('Already have an Account ? Login !')}
             </AppText>
           </TouchableOpacity>
         </View>

@@ -8,8 +8,11 @@ import { Colors, Routes } from "../../utils";
 import { LoadingModal } from "../../components";
 import axios from "axios";
 import { ApiCollection } from "../../config";
+import { useTranslation } from "../../hooks/translation";
 
 function ForgetPassword({ navigation }) {
+
+  const translation= useTranslation()
 
   const [isLoading, setIsLoading] = React.useState(false)
   const [email, setEmail] = React.useState('')
@@ -63,15 +66,15 @@ function ForgetPassword({ navigation }) {
             bold
             style={{ color: Colors.primary, fontSize: 30, marginBottom: 30 }}
           >
-            Forget Password
+            {translation.t('Forget Password')}
           </AppText>
-          <AppTextInput label="Email" placeholder="Enter Email id" onChangeText={(text) => setEmail(text)} />
+          <AppTextInput label={translation.t("Email")} placeholder="Enter Email id" onChangeText={(text) => setEmail(text)} />
 
-          <FlatButton enableShadow={true} title="Continue" onPress={onReset} />
+          <FlatButton enableShadow={true} title={translation.t("Continue")} onPress={onReset} />
 
           <TouchableOpacity style={{ marginTop: 30 }} >
             <AppText style={{ fontSize: 15 }} onPress={onLogin}>
-              Back to Login !
+              {translation.t('Back to Login')} !
             </AppText>
           </TouchableOpacity>
         </View>

@@ -11,13 +11,13 @@ const userSlice = createSlice({
             state.userToken = action.payload.userToken
             state.loggedIn = action.payload.loggedIn
             state.user = action.payload.user
-            state.language = 'en'
+ 
         },
         setUserLogOutState: (state) => {
             state.userToken = null
             state.loggedIn = false
             state.user = null
-            state.language = 'en'
+            // state.language = 'en'
         },
         setLanguage: (state, action) => {
             const langIndex = config.languages.findIndex((lang)=>lang.code === action.payload)
