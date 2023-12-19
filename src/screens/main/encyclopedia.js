@@ -37,7 +37,6 @@ function Encyclopedia() {
   const [files, setFiles] = useState([]);
   useEffect(() => {
     const getFiles = async () => {
-      // https://drive.google.com/drive/folders/0BzHqSP5JtkQafnpiR2xBazFYSHFjRV96bzRRT2ZxN3VsaXFUSXF3bXdEbmpoamhpMXFfZ0U?resourcekey=0-lK5Y_bEl1ylQ6uM-eGYicw&usp=drive_link
       try {
         const response = await axios.get(
           `https://www.googleapis.com/drive/v3/files?q='${folderId}'+in+parents&key=${apiKey}`
