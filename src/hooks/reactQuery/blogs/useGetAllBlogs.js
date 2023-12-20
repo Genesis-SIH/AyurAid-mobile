@@ -18,6 +18,7 @@ export const useGetAllBlogs = (
   const axios = useAxios();
 
   const urlKey = ApiCollection.blogs.allBlogs;
+  console.log("urlKey", urlKey);
 
   return useQuery({
     queryKey: [urlKey],

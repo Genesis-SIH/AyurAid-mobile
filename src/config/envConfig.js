@@ -1,6 +1,6 @@
 export const config = {
-  apiHeadProd: "https://ayuraid-backend.cyclic.app",
-  apiHeadDev: "https://ayuraid-backend.cyclic.app",
+  apiHeadProd: "https://witty-sadly-piranha.ngrok-free.app",
+  apiHeadDev: "https://witty-sadly-piranha.ngrok-free.app",
   env: "dev",
   languages: [
     { id: 0, name: "English", code: "en" },
