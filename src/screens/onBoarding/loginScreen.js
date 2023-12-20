@@ -154,7 +154,7 @@ const LoginScreen = ({ navigation }) => {
             title={translation.t("LOGIN")}
             onPress={onLoginPress}
             style={{
-              width:"100%"
+              width: "100%",
             }}
           />
 

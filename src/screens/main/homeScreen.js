@@ -27,6 +27,7 @@ import { useAxios } from "../../hooks/axios/useAxios";
 import { useTranslation } from "../../hooks/translation";
 import { User } from "../../redux/store/useStore";
 
+
 export default function ChatScreen({ navigation }) {
   const axios = useAxios("ai");
   const scrollViewRef = React.useRef();
