@@ -21,7 +21,7 @@ function PdfView({ uri, book, author }) {
   const [pages, setPages] = useState();
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+
       <TouchableOpacity
         style={{
           width: 150,
@@ -73,36 +73,17 @@ function PdfView({ uri, book, author }) {
               backgroundColor: Colors.seconday,
             }}
           >
-            <AppText bold>{book}</AppText>
-            <AppText style={{ fontSize: 12, marginTop: 5 }}>
+            <AppText eclipseMode='tail' numberOfLines={2} bold>{book}</AppText>
+            <AppText style={{ fontSize: 12, marginTop: 10 }}>
               By- {author}
             </AppText>
             <AppText style={{ fontSize: 12, marginTop: 5 }}>
-              No.pages- {pages}
+               {pages} Pages
             </AppText>
           </View>
         </View>
       </TouchableOpacity>
 
-      {/* <Grid>
-        <Row size={50}>
-          <Col sm={6}>
-            <Pdf source={{ uri: pdfUris[0], cache: true }} />
-          </Col>
-          <Col sm={6}>
-            <Pdf source={{ uri: pdfUris[0], cache: true }} />
-          </Col>
-        </Row>
-        <Row size={50}>
-          <Col sm={6}>
-            <Pdf source={{ uri: pdfUris[0], cache: true }} />
-          </Col>
-          <Col sm={6}>
-            <Pdf source={{ uri: pdfUris[0], cache: true }} />
-          </Col>
-        </Row>
-      </Grid> */}
-    </ScrollView>
   );
 }
 

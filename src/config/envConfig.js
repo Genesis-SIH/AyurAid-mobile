@@ -5,6 +5,7 @@ export const config = {
   languages: [
     { id: 0, name: "English", code: "en" },
     { id: 1, name: "Hindi", code: "hi" },
+    { id: 4, name: "Marathi", code: "mr" },
     { id: 2, name: "Tamil", code: "ta" },
     { id: 3, name: "Spanish", code: "es" },
     { id: 4, name: "Marathi", code: "mr" },
@@ -42,6 +43,7 @@ export const ApiCollection = {
     wakeup: `${ApiHead}/api/wakeup`,
   },
   ai: {
-    askChatbot: `${ApiHeadAi}/chatbot/ask`,
-  },
+    askChatbot: `https://ayuraid-ai-y2sw.onrender.com/chatbot/ask`,
+    getChats: `https://ayuraid-ai-y2sw.onrender.com/chatbot/get`,
+  }
 };

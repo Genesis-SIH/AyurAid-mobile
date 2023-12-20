@@ -1,5 +1,5 @@
 
-import { Image, View, Text } from 'react-native';
+import { Image, LogBox, View } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -22,6 +22,8 @@ import { ApiCollection } from './src/config';
 const AppStack = createNativeStackNavigator();
 
 const AppNavigator = () => {
+
+  LogBox.ignoreAllLogs(true)
 
   const loggedIn = LoggedIn()
 

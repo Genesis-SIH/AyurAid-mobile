@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, ScrollView } from "react-native";
 import PdfView from "../../components/pdfView";
 import axios from "axios";
 import { encode as base64Encode } from "base-64";
@@ -81,18 +81,20 @@ function Encyclopedia() {
     return rows;
   };
 
-  return <View style={styles.container}>{renderRows()}</View>;
+  return <ScrollView contentContainerStyle={styles.container}>{renderRows()}</ScrollView>;
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    
     padding: 10,
+
   },
   row: {
     flexDirection: "row",
     justifyContent: "space-between",
     marginBottom: 10,
+    marginHorizontal: 15,
   },
 });
 
