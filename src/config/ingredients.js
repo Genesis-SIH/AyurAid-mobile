@@ -130,6 +130,7 @@ const temp = [
   "Keshara",
   "Kolamajja",
   "Laja",
+  "Honey",
   "Priyangu",
   "Cyperus",
   "Sandalwood",

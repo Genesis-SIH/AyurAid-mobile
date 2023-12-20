@@ -11,6 +11,7 @@ import {
   View,
   Alert,
   ActivityIndicator,
+  Linking,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
@@ -27,6 +28,7 @@ import { useAxios } from "../../hooks/axios/useAxios";
 import { useTranslation } from "../../hooks/translation";
 import { User } from "../../redux/store/useStore";
 import LottieView from 'lottie-react-native';
+import { config } from "../../config";
 
 export default function ChatScreen({ navigation }) {
   const axios = useAxios("ai");
@@ -59,7 +61,7 @@ export default function ChatScreen({ navigation }) {
           setChats([
             {
               id: new Date().getTime(),
-              text: 'We are unable to fetch your previous chats right now. Please try again later',
+              text: 'Hey there ! Start by asking me a question 👋🏻',
               type: 'bot',
               timestamp: new Date().getTime(),
               data: null,
@@ -241,6 +243,39 @@ export default function ChatScreen({ navigation }) {
     return temp
   }
 
+
+  const getSource = (string) => {
+    let sour = string.split('SOURCES:')[1]
+    if (sour) {
+      if (sour.includes('by')) {
+        let b = sour.split('by')
+        if (b[0]) {
+          if(b[0].includes('"')){
+            return b[0].split('"')[1]
+          }else{
+            return b[0].trim()
+          }
+       
+        }
+      } else {
+        return sour.split('"')[1]
+      }
+
+    }
+  }
+
+  const getSourceLink = (string) => {
+    config.books.forEach(book => {
+      if (book.bookName.toLowerCase() == string.toLowerCase()) {
+        Linking.openURL(book.url)
+        return
+      }else{
+        console.log(string)
+        console.warn(config.books[6].bookName);
+      }
+    })
+  }
+
   return (
     <View style={styles.container}>
 
@@ -260,13 +295,15 @@ export default function ChatScreen({ navigation }) {
                       <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>{chat.text}</AppText>
 
                       {
-                        chat.data?.sourceInfo &&
+                        getSource(chat.text) !== undefined &&
                         <View style={{ padding: 10, marginVertical: 10, marginTop: 15, backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
-                          <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>{translation.t('Trust Factors')}</AppText>
+                          <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>{('Trust Factor')}</AppText>
 
-                          <View style={{ marginTop: 10 }}>
-                            <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Source')}: {chat.data?.sourceInfo.source[0]}</AppText>
-                            <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Author')} : {chat.data?.sourceInfo.author}</AppText>
+                          <View style={{ marginTop: 10, flexDirection: 'column', alignItems: 'flex-start' }}>
+                            <AppText style={{ fontSize: 14, lineHeight: 24 }}>{translation.t('Source')}: {getSource(chat.text)}</AppText>
+                            <TouchableOpacity onPress={() => getSourceLink(getSource(chat.text))} style={{ backgroundColor: Colors.primary, padding: 5, paddingHorizontal: 10, borderRadius: 5, marginVertical: 10 }}>
+                              <AppText>View Book</AppText>
+                            </TouchableOpacity>
                           </View>
                         </View>
                       }
@@ -287,11 +324,11 @@ export default function ChatScreen({ navigation }) {
                       </View>
 
                     </View>
-                    {chat.data?.ingredients &&
+                    {getIngredients(chat.text).length>0 &&
                       <View key={chat.id + 99923} style={{ marginTop: 1, alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
                         <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>You can buy the ingredients here !</AppText>
 
-                        <TouchableOpacity onPress={() => openShop(chat.data)} style={{ padding: 10, marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
+                        <TouchableOpacity onPress={() => openShop(getIngredients(chat.text))} style={{ padding: 10, marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
                           <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                             <FontAwesome name="shopping-cart" size={20} color="white" />
                             <AppText style={{ marginLeft: 12, fontSize: 14, lineHeight: 24 }}>View Shop</AppText>
@@ -310,7 +347,7 @@ export default function ChatScreen({ navigation }) {
 
             {
               responseLoading &&
-              <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%',marginTop:20 }}>
+              <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', marginTop: 20 }}>
                 <LottieView style={{ width: 50, height: 50 }} source={require('../../utils/lottie/leafLoading.json')} autoPlay loop />
                 <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
                   Generating response ...
