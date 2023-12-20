@@ -9,7 +9,7 @@ import {
   ActivityIndicator,
   Button,
 } from "react-native";
-import { AppText, AppTextInput, FlatButton } from "../../components";
+import { AppText, AppTextInput, FlatButton, LoadingModal } from "../../components";
 import { User } from "../../redux/store/useStore";
 import { Border, Colors, Routes } from "../../utils";
 import axios from "axios";
@@ -124,10 +124,9 @@ function EditProfile() {
   const [country, setCountry] = useState("");
   const [loading, setLoading] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-  return loading ? (
-    <ActivityIndicator />
-  ) : (
+  return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
+      <LoadingModal modalVisible={loading} />
       <View style={styles.top}>
         <View>
           {selectedImage && (

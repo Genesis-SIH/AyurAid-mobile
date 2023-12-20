@@ -26,7 +26,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { useAxios } from "../../hooks/axios/useAxios";
 import { useTranslation } from "../../hooks/translation";
 import { User } from "../../redux/store/useStore";
-
+import LottieView from 'lottie-react-native';
 
 export default function ChatScreen({ navigation }) {
   const axios = useAxios("ai");
@@ -179,7 +179,7 @@ export default function ChatScreen({ navigation }) {
         temp.push(botMessage)
 
         setChats(temp)
-        scrollViewRef.current.scrollToEnd({ animated: true })
+
         setResponseLoading(false)
       })
       .catch((error) => {
@@ -249,7 +249,8 @@ export default function ChatScreen({ navigation }) {
           chats.length > 0 ?
           <ScrollView
             ref={scrollViewRef}
-            contentContainerStyle={{ paddingVertical: 20, paddingBottom: 100, width: Dimensions.get('screen').width * 0.9 }}>
+            onContentSizeChange={() => scrollViewRef.current.scrollToEnd({ animated: true })}
+            contentContainerStyle={{ paddingVertical: 20, paddingBottom: 110, width: Dimensions.get('screen').width * 0.9 }}>
             {
               chats.map((chat, index) => (
 
@@ -306,6 +307,16 @@ export default function ChatScreen({ navigation }) {
                     <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14 }}>{chat.text}</AppText>
                   </View>
               ))}
+
+            {
+              responseLoading &&
+              <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%',marginTop:20 }}>
+                <LottieView style={{ width: 50, height: 50 }} source={require('../../utils/lottie/leafLoading.json')} autoPlay loop />
+                <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
+                  Generating response ...
+                </AppText>
+              </View>
+            }
           </ScrollView>
           :
           <View style={{ justifyContent: 'center', alignItems: 'center', width: '90%', marginBottom: 70 }}>
@@ -322,7 +333,10 @@ export default function ChatScreen({ navigation }) {
           </View>
         :
         <View style={{ justifyContent: 'center', alignItems: 'center', width: '90%', marginBottom: 70 }}>
-          <ActivityIndicator size={"large"} color={Colors.primary} />
+          <LottieView style={{ width: 150, height: 150 }} source={require('../../utils/lottie/botLoading.json')} autoPlay loop />
+          <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
+            Fetching your chats ...
+          </AppText>
         </View>
 
       }

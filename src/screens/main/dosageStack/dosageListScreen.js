@@ -14,6 +14,8 @@ import DosageCard from "../../../components/dosageCard";
 
 import { useGetMyDosages } from "../../../hooks/reactQuery/dosageTracker/useGetMyDosages";
 import { Colors } from "../../../utils";
+import LottieView from "lottie-react-native";
+import { AppText } from "../../../components";
 
 function DosageListScreen() {
   const { isLoading, data: dosages } = useGetMyDosages();
@@ -46,7 +48,12 @@ function DosageListScreen() {
       )}
     </ScrollView>
   ) : (
-    <ActivityIndicator color={Colors.primary} size={"large"} />
+    <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', flex: 1, height: 500 }}>
+      <LottieView style={{ width: 50, height: 50 }} source={require('../../../utils/lottie/leafLoading.json')} autoPlay loop />
+      <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
+        Fetching blogs...
+      </AppText>
+    </View>
   );
 }
 

@@ -5,6 +5,7 @@ import { Colors } from "../../../utils";
 import App from "../../../../App";
 import { useGetBlogById } from "../../../hooks/reactQuery/blogs";
 import { LinearGradient } from "expo-linear-gradient";
+import LottieView from "lottie-react-native";
 
 
 
@@ -38,7 +39,7 @@ export default function BlogDetailScreen({ route, navigation }) {
                     <AppText style={{ color: 'grey', fontSize: 14 }}>Date Posted - {blog.publishDate}</AppText>
                 </LinearGradient>
 
-                <View style={{padding:15}}>
+                <View style={{ padding: 15 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                         {
                             [blog.tag].map((item, index) => (
@@ -67,8 +68,11 @@ export default function BlogDetailScreen({ route, navigation }) {
 
             </ScrollView>
             :
-            <View style={{ padding: 20 }}>
-                <ActivityIndicator size="large" color={Colors.primary} />
+            <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', flex: 1 }}>
+                <LottieView style={{ width: 50, height: 50 }} source={require('../../../utils/lottie/leafLoading.json')} autoPlay loop />
+                <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
+                    Loading..
+                </AppText>
             </View>
 
     )
