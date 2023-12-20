@@ -7,7 +7,11 @@ import axios from "axios";
 import { ApiCollection } from "../../config";
 
 function SelectMode({ route, navigation }) {
-  const { data } = route.params;
+  let { data } = route.params;
+  data = {
+    ...data,
+    role: "practitioner",
+  };
   const [isLoading, setIsLoading] = useState(false);
 
   console.log(data);
@@ -17,6 +21,7 @@ function SelectMode({ route, navigation }) {
     });
   };
   const onContinuePractitioner = async () => {
+    setIsLoading(true);
     await axios
       .post(ApiCollection.authController.signup, data)
       .then((res) => {
@@ -39,14 +44,14 @@ function SelectMode({ route, navigation }) {
         style={{
           fontSize: 45,
           color: Colors.primary,
-          
+
           paddingBottom: 200,
           paddingTop: 50,
         }}
       >
         Choose Role
       </AppText>
-      
+
       <FlatButton
         title="Normal user"
         onPress={onContinueUser}

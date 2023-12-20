@@ -26,6 +26,7 @@ import Clipboard from "@react-native-clipboard/clipboard";
 import { useAxios } from "../../hooks/axios/useAxios";
 import { useTranslation } from "../../hooks/translation";
 
+
 export default function ChatScreen({ navigation }) {
   const axios = useAxios("ai");
   const scrollViewRef = React.useRef();

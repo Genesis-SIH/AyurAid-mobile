@@ -38,6 +38,7 @@ const QndaScreen = ({ route, navigation }) => {
       liver,
       allergies: allergiesArray,
       bmi,
+      role: "user",
     };
     const data1 = { ...data, ...newData };
     console.log(data1);
