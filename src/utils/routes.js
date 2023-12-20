@@ -7,6 +7,8 @@ export const Routes = {
         registerScreen: 'Register',
         ForgetScreen: 'Forget',
         ResetScreen: 'Reset',
+        QandA: 'QandA',
+        SelectMode:'SelectMode'
     },
     main:{
         tag: 'app',

@@ -7,40 +7,14 @@ export const config = {
     { id: 1, name: "Hindi", code: "hi" },
     { id: 2, name: "Tamil", code: "ta" },
     { id: 3, name: "Spanish", code: "es" },
+    { id: 4, name: "Marathi", code: "mr" },
   ],
 };
-
-export const structureResponse = (data) => {
-
-  const sectionRegex = /([A-Z]+):\n([\s\S]*?)(?=\n[A-Z]+:|\n$)/g;
-
-  // Extract sections using the regular expression
-  const sections = [];
-
-  let match;
-  console.log(sectionRegex.exec(data));
-
-  while ((match = sectionRegex.exec(data)) !== null) {
-    const heading = match[1];
-    const content = match[2].trim().split('\n').map(line => line.trim());
-
-
-
-    // Extract sources for the "SOURCES" section
-    const sources = heading === 'SOURCES' ? content.map(source => source.slice(2)) : [];
-  
-    sections.push({ heading, content, sources });
-  }
-
-  // Output the result
-  return sections;
-
-}
 
 export const ApiHead =
   config.env === "prod" ? config.apiHeadProd : config.apiHeadDev;
 
-export const ApiHeadAi = "https://ayuraid-ai-y2sw.onrender.com/chatbot/ask";
+export const ApiHeadAi = "https://fair-gray-python-garb.cyclic.app";
 
 export const ApiCollection = {
   authController: {
@@ -68,6 +42,6 @@ export const ApiCollection = {
     wakeup: `${ApiHead}/api/wakeup`,
   },
   ai: {
-    askChatbot: `https://ayuraid-ai-y2sw.onrender.com/chatbot/ask`,
-  }
+    askChatbot: `${ApiHeadAi}/chatbot/ask`,
+  },
 };

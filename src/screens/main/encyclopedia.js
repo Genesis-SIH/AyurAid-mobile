@@ -49,9 +49,9 @@ function Encyclopedia() {
         );
 
         setResources(response.data.resources);
-        console.log(response.data.resources);
+  
       } catch (error) {
-        console.error('Error fetching resources:', error);
+        console.error("Error fetching resources:", error);
       }
     };
 

@@ -1,5 +1,11 @@
 import * as React from "react";
-import { Alert, StyleSheet, TextInput, TouchableOpacity, View } from "react-native";
+import {
+  Alert,
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import { Image } from "expo-image";
 import { Colors, Routes } from "../../utils";
@@ -18,23 +24,21 @@ import { ApiCollection } from "../../config";
 import { useTranslation } from "../../hooks/translation";
 
 const LoginScreen = ({ navigation }) => {
+  const dispatch = useDispatch();
+  const translation = useTranslation();
 
-  const dispatch = useDispatch()
-  const translation = useTranslation()
-
-  const [username, setUsername] = React.useState('')
-  const [password, setPassword] = React.useState('')
-  const [isLoading, setIsLoading] = React.useState(false)
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+  const [isLoading, setIsLoading] = React.useState(false);
 
   const onRegister = () => {
-    navigation.navigate(Routes.onBoarding.registerScreen)
-  }
+    navigation.navigate(Routes.onBoarding.registerScreen);
+  };
   const onForget = () => {
-    navigation.navigate(Routes.onBoarding.ForgetScreen)
-  }
+    navigation.navigate(Routes.onBoarding.ForgetScreen);
+  };
 
-  const onLoginPress = async() => {
-
+  const onLoginPress = async () => {
     // const user = {
     //   name: 'Aman Kumar',
     //   email: 'suyashvash@gmail.com',
@@ -44,46 +48,52 @@ const LoginScreen = ({ navigation }) => {
     // dispatch(setActiveUser({ userToken: 'res.data.data.token', loggedIn: true, user: user }))
     // navigation.replace(Routes.main.tag)
 
-
-    if(username == '' || password == ''){
-      Alert.alert('Login Error', 'Please fill all the fields')
-      return
+    if (username == "" || password == "") {
+      Alert.alert("Login Error", "Please fill all the fields");
+      return;
     }
 
-    setIsLoading(true)
+    setIsLoading(true);
     const data = {
       identity: username,
-      password: password
-    }
+      password: password,
+    };
 
-    await axios.post(ApiCollection.authController.login, data)
+    await axios
+      .post(ApiCollection.authController.login, data)
       .then((res) => {
-        setIsLoading(false)
-        console.log(res.data)
+        setIsLoading(false);
+        console.log(res.data);
         const user = {
           name: res.data.data.user,
           email: res.data.data.email,
           id: res.data.data.id,
           token: res.data.data.token,
-          profilePic: res.data.data.profilePic || 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww'
-        }
+          profilePic:
+            res.data.data.profilePic ||
+            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
+        };
 
-        dispatch(setActiveUser({ userToken: res.data.data.token, loggedIn: true, user: user }))
-        navigation.replace(Routes.main.tag)
+        dispatch(
+          setActiveUser({
+            userToken: res.data.data.token,
+            loggedIn: true,
+            user: user,
+          })
+        );
+        navigation.replace(Routes.main.tag);
       })
       .catch((err) => {
-        setIsLoading(false)
+        setIsLoading(false);
         console.log(err.response.data);
-        Alert.alert('Login Error', err.response.data.message)
-      })
-
-  }
+        Alert.alert("Login Error", err.response.data.message);
+      });
+  };
 
   const onDemoPress = () => {
-    setUsername('Aditya14')
-    setPassword('AyurAid')
-  }
-
+    setUsername("Aditya14");
+    setPassword("AyurAid");
+  };
 
   return (
     <View style={styles.container}>
@@ -111,30 +121,46 @@ const LoginScreen = ({ navigation }) => {
             bold
             style={{ color: Colors.primary, fontSize: 30, marginBottom: 30 }}
           >
-            {translation.t('Welcome Back')}
+            {translation.t("Welcome Back")}
           </AppText>
-          <AppTextInput value={username} label="Username" placeholder="Ex- johndoe" onChangeText={(text) => setUsername(text)}/>
-          <AppTextInput value={password} type='password' label="Password" placeholder="Your Password" onChangeText={(text) => setPassword(text)}/>
+          <AppTextInput
+            value={username}
+            label="Username"
+            placeholder="Ex- johndoe"
+            onChangeText={(text) => setUsername(text)}
+          />
+          <AppTextInput
+            value={password}
+            type="password"
+            label="Password"
+            placeholder="Your Password"
+            onChangeText={(text) => setPassword(text)}
+          />
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onDemoPress}>
-            <AppText style={{  fontSize: 20,color:'grey' }}>
-             Tap to Demo Login
+            <AppText style={{ fontSize: 20, color: "grey" }}>
+              Tap to Demo Login
             </AppText>
           </TouchableOpacity>
-
-
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onForget}>
-            <AppText style={{  fontSize: 15 }}>
-             {translation.t('Forget password')}?
+            <AppText style={{ fontSize: 15 }}>
+              {translation.t("Forget password")}?
             </AppText>
           </TouchableOpacity>
 
-          <FlatButton enableShadow={true} title={translation.t("LOGIN")} onPress={onLoginPress} />
+          <FlatButton
+            enableShadow={true}
+            title={translation.t("LOGIN")}
+            onPress={onLoginPress}
+            style={{
+              width:"100%"
+            }}
+          />
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onRegister}>
-            <AppText style={{  fontSize: 15 }}>
-              {translation.t('Don’t have an Account ? Create Now')} !
+            <AppText style={{ fontSize: 15 }}>
+              {translation.t("Don’t have an Account ? Create Now")} !
             </AppText>
           </TouchableOpacity>
         </View>
