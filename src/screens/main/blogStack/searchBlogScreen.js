@@ -44,7 +44,7 @@ export default function SearchBlogScreen({ navigation }) {
               id={blog.id}
             >
               <Image
-                source={{ uri: `data:image/png;base64,${blog.image}` }}
+                source={{ uri:blog.image }}
                 style={{ width: 60, height: 60, borderRadius: 5 }}
               />
               <View

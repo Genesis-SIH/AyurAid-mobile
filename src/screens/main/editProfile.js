@@ -83,7 +83,7 @@ function EditProfile() {
       setLoading(true);
 
       const res = await axios.patch(
-        "https://ayuraid.onrender.com/api/user/update/",
+        "https://witty-sadly-piranha.ngrok-free.app/api/user/update/",
         {
           fullName: name,
           dob: dob,
@@ -104,7 +104,7 @@ function EditProfile() {
     const getUserData = async () => {
       setLoading(true);
       await axios
-        .get("https://ayuraid.onrender.com/api/user/user")
+        .get("https://witty-sadly-piranha.ngrok-free.app//api/user/user")
         .then((res) => {
           setName(res.data.data.user.fullName);
           setDob(res.data.data.user.dob);

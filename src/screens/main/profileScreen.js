@@ -26,7 +26,6 @@ function ProfileScreen({ navigation }) {
   const openDosageTracker = () => {
     navigation.navigate(Routes.main.dosageStack.tag);
   };
-
   const openBlogs = () => {
     navigation.navigate(Routes.main.blogStack.tag);
   };

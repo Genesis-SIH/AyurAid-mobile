@@ -1,11 +1,12 @@
 export const config = {
   apiHeadProd: "https://witty-sadly-piranha.ngrok-free.app",
   apiHeadDev: "https://witty-sadly-piranha.ngrok-free.app",
+  // apiHeadProd: "https://witty-sadly-piranha.ngrok-free.app",
+  // apiHeadDev: "https://witty-sadly-piranha.ngrok-free.app",
   env: "dev",
   languages: [
     { id: 0, name: "English", code: "en" },
     { id: 1, name: "Hindi", code: "hi" },
-    { id: 4, name: "Marathi", code: "mr" },
     { id: 2, name: "Tamil", code: "ta" },
     { id: 3, name: "Spanish", code: "es" },
     { id: 4, name: "Marathi", code: "mr" },

@@ -16,7 +16,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Colors, Routes } from "../../utils";
-import { ApiCollection, ShadowStyles, ayurvedicIngredients } from "../../config";
+import { ApiCollection, ShadowStyles } from "../../config";
 import { AppText, AppTextInput } from "../../components";
 import { ChatSeed } from "../../utils/db/seeds";
 import * as Speech from "expo-speech";
@@ -25,56 +25,27 @@ import DeviceInfo from "react-native-device-info";
 import Clipboard from "@react-native-clipboard/clipboard";
 import { useAxios } from "../../hooks/axios/useAxios";
 import { useTranslation } from "../../hooks/translation";
-import { User } from "../../redux/store/useStore";
-
 
 export default function ChatScreen({ navigation }) {
   const axios = useAxios("ai");
   const scrollViewRef = React.useRef();
   const translation = useTranslation();
-  const user = User()
 
-
-  const [isListening, setIsListening] = React.useState(false)
-  const [responseLoading, setResponseLoading] = React.useState(false)
+  const [isListening, setIsListening] = React.useState(false);
+  const [responseLoading, setResponseLoading] = React.useState(false);
   const [results, setResults] = React.useState([]);
-  const [text, setText] = React.useState('')
-  const [mode, setMode] = React.useState('voice')
-  const [chats, setChats] = React.useState([])
-  const [isSpeaking, setIsSpeaking] = React.useState(false)
-
-
-  const [chatLoading, setChatLoading] = React.useState(false)
-
-  React.useEffect(() => {
-    const getChats = async () => {
-      setChatLoading(true)
-      let chats = await axios.post(ApiCollection.ai.getChats, { "chatId": user.id })
-        .then((response) => {
-          setChatLoading(false)
-          setChats([...response.data.chats])
-        })
-        .catch((error) => {
-          setChatLoading(false)
-          setChats([
-            {
-              id: new Date().getTime(),
-              text: 'We are unable to fetch your previous chats right now. Please try again later',
-              type: 'bot',
-              timestamp: new Date().getTime(),
-              data: null,
-            }
-          ])
-          console.log(error.response.data)
-        })
-
-
-
-    }
-    getChats()
-  }, [])
-
-
+  const [text, setText] = React.useState("");
+  const [mode, setMode] = React.useState("voice");
+  const [chats, setChats] = React.useState([
+    {
+      id: 112312888883,
+      text: "Hi, I am AyurAid. How can I help you?",
+      type: "bot",
+      timestamp: new Date().getTime(),
+      data: null,
+    },
+  ]);
+  const [isSpeaking, setIsSpeaking] = React.useState(false);
 
   const micScaleValue = React.useRef(new Animated.Value(1)).current;
   const micOpacityValue = React.useRef(new Animated.Value(0)).current;
@@ -107,17 +78,18 @@ export default function ChatScreen({ navigation }) {
       if (e?.value?.length > 0) {
         let message = {
           text: e.value[0],
-          type: 'user',
+          type: "user",
           timestamp: new Date().getTime(),
-          id: new Date().getTime()
-        }
-        setText('')
-        askChatBot(message)
+        };
 
+        setChats([...chats, message]);
+        setText("");
       } else {
-        Alert.alert('Voice Recognition Failed', 'Sorry, We could not recognize your voice. Please try again')
+        Alert.alert(
+          "Voice Recognition Failed",
+          "Sorry, We could not recognize your voice. Please try again"
+        );
       }
-
     }
     function onSpeechError(e) {
       console.error(e);
@@ -162,33 +134,33 @@ export default function ChatScreen({ navigation }) {
   }
 
   const askChatBot = async (userMessage) => {
-    setResponseLoading(true)
-    console.log(userMessage)
-    await axios.post(ApiCollection.ai.askChatbot, { prompt: userMessage.text, "chatId": user?.id })
+    setResponseLoading(true);
+    console.log(userMessage);
+    await axios
+      .post(ApiCollection.ai.askChatbot, { prompt: userMessage.text })
       .then((response) => {
-        console.log(response.data)
+        console.log(response.data);
         let botMessage = {
           text: response.data.answer,
-          type: 'bot',
+          type: "bot",
           timestamp: new Date().getTime(),
-          data: null
-        }
+          data: null,
+        };
 
-        let temp = chats.splice(0)
-        temp.push(userMessage)
-        temp.push(botMessage)
+        let temp = chats.splice(0);
+        temp.push(userMessage);
+        temp.push(botMessage);
 
-        setChats(temp)
-        scrollViewRef.current.scrollToEnd({ animated: true })
-        setResponseLoading(false)
+        setChats(temp);
+        scrollViewRef.current.scrollToEnd({ animated: true });
+        setResponseLoading(false);
       })
       .catch((error) => {
-        console.log(error.response.data)
-        setResponseLoading(false)
-        Alert.alert('Error', 'Something went wrong. Please try again')
-      })
-  }
-
+        console.log(error.response.data);
+        setResponseLoading(false);
+        Alert.alert("Error", "Something went wrong. Please try again");
+      });
+  };
 
   const onKeyboardPress = () => {
     setMode("text");
@@ -227,105 +199,258 @@ export default function ChatScreen({ navigation }) {
     navigation.navigate(Routes.main.shopScreen, { data: data });
   };
 
-  const getIngredients = (string) => {
-    let temp = []
-    let brokenString = string.split(' ')
-    brokenString.forEach(word => {
-      ayurvedicIngredients.forEach(ingredient => {
-        if (word.toLowerCase() == ingredient.toLowerCase()) {
-          temp.push(ingredient)
-        }
-      })
-    })
-
-    return temp
-  }
-
   return (
     <View style={styles.container}>
+      {chats && chats.length > 0 ? (
+        <ScrollView
+          ref={scrollViewRef}
+          contentContainerStyle={{
+            paddingVertical: 20,
+            paddingBottom: 100,
+            width: Dimensions.get("screen").width * 0.9,
+          }}
+        >
+          {chats.map((chat, index) =>
+            chat.type == "bot" ? (
+              <>
+                <View
+                  key={parseInt(chat._id)}
+                  style={{
+                    alignSelf: "flex-start",
+                    maxWidth: "80%",
+                    backgroundColor: Colors.seconday,
+                    borderRadius: 10,
+                    padding: 14,
+                    marginVertical: 10,
+                  }}
+                >
+                  <AppText
+                    style={{
+                      fontSize: Platform.OS == "ios" ? 16 : 14,
+                      lineHeight: 24,
+                    }}
+                  >
+                    {chat.text}
+                  </AppText>
+                  {chat.data?.sourceInfo && (
+                    <View
+                      style={{
+                        padding: 10,
+                        marginVertical: 10,
+                        marginTop: 15,
+                        backgroundColor: Colors.darkGreen,
+                        borderRadius: 10,
+                      }}
+                    >
+                      <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>
+                        {translation.t("Trust Factors")}
+                      </AppText>
 
-      {!chatLoading ?
-        chats &&
-          chats.length > 0 ?
-          <ScrollView
-            ref={scrollViewRef}
-            contentContainerStyle={{ paddingVertical: 20, paddingBottom: 100, width: Dimensions.get('screen').width * 0.9 }}>
-            {
-              chats.map((chat, index) => (
-
-                chat.type == 'bot' ?
-                  <View key={chat.id}>
-                    <View style={{ alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
-                      <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>{chat.text}</AppText>
-
-                      {
-                        chat.data?.sourceInfo &&
-                        <View style={{ padding: 10, marginVertical: 10, marginTop: 15, backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
-                          <AppText bold style={{ fontSize: 14, lineHeight: 24 }}>{translation.t('Trust Factors')}</AppText>
-
-                          <View style={{ marginTop: 10 }}>
-                            <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Source')}: {chat.data?.sourceInfo.source[0]}</AppText>
-                            <AppText style={{ fontSize: 14, lineHeight: 24 }}>- {translation.t('Author')} : {chat.data?.sourceInfo.author}</AppText>
-                          </View>
-                        </View>
-                      }
-
-                      <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
-                        <TouchableOpacity onPress={() => copyToClipboard(chat.text)} style={{ padding: 8, paddingHorizontal: 12, marginVertical: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
-                          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <FontAwesome name="copy" size={16} color="white" />
-                            <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>{translation.t('Copy')}</AppText>
-                          </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => isSpeaking ? stopSpeech() : startSpeech(chat.text)} style={{ padding: 8, paddingHorizontal: 12, marginVertical: 10, marginRight: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
-                          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <FontAwesome name={isSpeaking ? "stop" : "play"} size={14} color="white" />
-                            <AppText style={{ marginLeft: 12, fontSize: 12, lineHeight: 24 }}>{translation.t(isSpeaking ? 'Stop' : 'Play')}</AppText>
-                          </View>
-                        </TouchableOpacity>
+                      <View style={{ marginTop: 10 }}>
+                        <AppText style={{ fontSize: 14, lineHeight: 24 }}>
+                          - {translation.t("Source")}:{" "}
+                          {chat.data?.sourceInfo.source[0]}
+                        </AppText>
+                        <AppText style={{ fontSize: 14, lineHeight: 24 }}>
+                          - {translation.t("Author")} :{" "}
+                          {chat.data?.sourceInfo.author}
+                        </AppText>
                       </View>
-
                     </View>
-                    {chat.data?.ingredients &&
-                      <View key={chat.id + 99923} style={{ marginTop: 1, alignSelf: 'flex-start', maxWidth: '80%', backgroundColor: Colors.seconday, borderRadius: 10, padding: 14, marginVertical: 10 }}>
-                        <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14, lineHeight: 24 }}>You can buy the ingredients here !</AppText>
+                  )}
 
-                        <TouchableOpacity onPress={() => openShop(chat.data)} style={{ padding: 10, marginVertical: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: Colors.darkGreen, borderRadius: 10 }}>
-                          <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
-                            <FontAwesome name="shopping-cart" size={20} color="white" />
-                            <AppText style={{ marginLeft: 12, fontSize: 14, lineHeight: 24 }}>View Shop</AppText>
-                          </View>
-
-                          <FontAwesome name="caret-right" size={24} color="white" />
-                        </TouchableOpacity>
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      justifyContent: "flex-start",
+                      alignItems: "center",
+                    }}
+                  >
+                    <TouchableOpacity
+                      onPress={() => copyToClipboard(chat.text)}
+                      style={{
+                        padding: 8,
+                        paddingHorizontal: 12,
+                        marginVertical: 10,
+                        marginRight: 10,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        backgroundColor: Colors.darkGreen,
+                        borderRadius: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <FontAwesome name="copy" size={16} color="white" />
+                        <AppText
+                          style={{
+                            marginLeft: 12,
+                            fontSize: 12,
+                            lineHeight: 24,
+                          }}
+                        >
+                          {translation.t("Copy")}
+                        </AppText>
                       </View>
-                    }
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() =>
+                        isSpeaking ? stopSpeech() : startSpeech(chat.text)
+                      }
+                      style={{
+                        padding: 8,
+                        paddingHorizontal: 12,
+                        marginVertical: 10,
+                        marginRight: 10,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        backgroundColor: Colors.darkGreen,
+                        borderRadius: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <FontAwesome
+                          name={isSpeaking ? "stop" : "play"}
+                          size={14}
+                          color="white"
+                        />
+                        <AppText
+                          style={{
+                            marginLeft: 12,
+                            fontSize: 12,
+                            lineHeight: 24,
+                          }}
+                        >
+                          {translation.t(isSpeaking ? "Stop" : "Play")}
+                        </AppText>
+                      </View>
+                    </TouchableOpacity>
                   </View>
-                  :
-                  <View key={chat.id + 223123132123} style={{ alignSelf: 'flex-end', maxWidth: '70%', backgroundColor: Colors.primary, borderRadius: 10, padding: 10, marginVertical: 10 }}>
-                    <AppText style={{ fontSize: Platform.OS == 'ios' ? 16 : 14 }}>{chat.text}</AppText>
-                  </View>
-              ))}
-          </ScrollView>
-          :
-          <View style={{ justifyContent: 'center', alignItems: 'center', width: '90%', marginBottom: 70 }}>
-            <AppText style={{ fontSize: 30 }}>👋🏻</AppText>
-            <AppText
-              bold
-              style={{ color: Colors.primary, fontSize: 18, marginVertical: 10 }}
-            >
-              {translation.t('Welcome to the AyurAid')}
-            </AppText>
-            <AppText style={{ color: 'grey', fontSize: 13, textAlign: 'center', width: '80%' }}>
-              {translation.t('Start Typing Or use our Voice Based commands to get started')}
-            </AppText>
-          </View>
-        :
-        <View style={{ justifyContent: 'center', alignItems: 'center', width: '90%', marginBottom: 70 }}>
-          <ActivityIndicator size={"large"} color={Colors.primary} />
-        </View>
+                </View>
+                {chat.data?.ingredients && (
+                  <View
+                    key={chat.id + 99923}
+                    style={{
+                      marginTop: 1,
+                      alignSelf: "flex-start",
+                      maxWidth: "80%",
+                      backgroundColor: Colors.seconday,
+                      borderRadius: 10,
+                      padding: 14,
+                      marginVertical: 10,
+                    }}
+                  >
+                    <AppText
+                      style={{
+                        fontSize: Platform.OS == "ios" ? 16 : 14,
+                        lineHeight: 24,
+                      }}
+                    >
+                      You can buy the ingredients here !
+                    </AppText>
 
-      }
+                    <TouchableOpacity
+                      onPress={() => openShop(chat.data)}
+                      style={{
+                        padding: 10,
+                        marginVertical: 10,
+                        flexDirection: "row",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        backgroundColor: Colors.darkGreen,
+                        borderRadius: 10,
+                      }}
+                    >
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                        }}
+                      >
+                        <FontAwesome
+                          name="shopping-cart"
+                          size={20}
+                          color="white"
+                        />
+                        <AppText
+                          style={{
+                            marginLeft: 12,
+                            fontSize: 14,
+                            lineHeight: 24,
+                          }}
+                        >
+                          View Shop
+                        </AppText>
+                      </View>
+
+                      <FontAwesome name="caret-right" size={24} color="white" />
+                    </TouchableOpacity>
+                  </View>
+                )}
+              </>
+            ) : (
+              <View
+                key={chat.id + 223123132123}
+                style={{
+                  alignSelf: "flex-end",
+                  maxWidth: "70%",
+                  backgroundColor: Colors.primary,
+                  borderRadius: 10,
+                  padding: 10,
+                  marginVertical: 10,
+                }}
+              >
+                <AppText style={{ fontSize: Platform.OS == "ios" ? 16 : 14 }}>
+                  {chat.text}
+                </AppText>
+              </View>
+            )
+          )}
+        </ScrollView>
+      ) : (
+        <View
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            width: "90%",
+            marginBottom: 70,
+          }}
+        >
+          <AppText style={{ fontSize: 30 }}>👋🏻</AppText>
+          <AppText
+            bold
+            style={{ color: Colors.primary, fontSize: 18, marginVertical: 10 }}
+          >
+            {translation.t("Welcome to the AyurAid")}
+          </AppText>
+          <AppText
+            style={{
+              color: "grey",
+              fontSize: 13,
+              textAlign: "center",
+              width: "80%",
+            }}
+          >
+            {translation.t(
+              "Start Typing Or use our Voice Based commands to get started"
+            )}
+          </AppText>
+        </View>
+      )}
 
       {mode == "voice" ? (
         <LinearGradient

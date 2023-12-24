@@ -46,7 +46,7 @@ function Settings({ navigation }) {
     },
     {
       label: translation.t("Reset Password"),
-      description: translation.t("Reset your password here.."),
+      description: translation.t("Reset your password here"),
       icon: <MaterialCommunityIcons name="lock-reset" size={40} color="white" />,
       onPress: (navigation) => navigation.navigate(Routes.onBoarding.ResetScreen),
     },

@@ -17,6 +17,7 @@ function generateRandomAyurvedaName() {
     "Ayurveda: The Science of Self-Healing",
     "Prakriti: Your Ayurvedic Constitution",
     "The Ayurveda Bible",
+
   ];
 
   const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
@@ -49,6 +50,11 @@ function Encyclopedia() {
         );
 
         setResources(response.data.resources);
+        console.log(response.data.resources.length)
+    
+        for(let i=0;i<10;i++){
+        console.log(response.data.resources[i].secure_url)
+        }
   
       } catch (error) {
         console.error("Error fetching resources:", error);

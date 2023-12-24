@@ -5,6 +5,8 @@ export default translations = {
         "Edit Profile": 'Edit Profile',
         "Change Password": 'Change Password',
         "Change Language":'Change Language',
+        "Manage your chat history and customize chat-related preferences":
+        "Manage your chat history and customize chat-related preferences",
         "Customize your app language preference and connect with a global community":'Customize your app language preference and connect with a global community',
         "Clear Chat":'Clear Chat',
         "Reset Password":'Reset Password',
@@ -56,6 +58,8 @@ export default translations = {
     // Hindi
     hi: {
         "Edit Profile": 'प्रोफ़ाइल संपादित करें',
+        "Manage your chat history and customize chat-related preferences":
+        "अपने चैट इतिहास को प्रबंधित करें और चैट संबंधित पसंद विकल्प को अनुकूलित करें।",
         "Change Password": 'पासवर्ड बदलें',
         "Change Language": 'भाषा बदलें',
         "Customize your app language preference and connect with a global community": 'अपनी ऐप भाषा प्राथमिकता को अनुकूलित करें और एक वैश्विक समुदाय से जुड़ें',
@@ -109,6 +113,7 @@ export default translations = {
     // Tamil
     ta: {
         "Edit Profile": 'சுயவிவரத்தைத் திருத்து',
+        "Manage your chat history and customize chat-related preferences":"உங்கள் உரை வரலாறை நிர்வகிக்கவும் உங்கள் உரையாடலுக்கு குறிப்பிட்ட விருப்பங்களை குறிக்கின்றனர்.",        
         "Change Password": 'கடவுச்சொல்லை மாற்றவும்',
         "Change Language": 'மொழியை மாற்றவும்',
         "Customize your app language preference and connect with a global community": 'உங்கள் பயன்பாட்டிற்கு மொழி விருப்பத்தை குறிக்கவும் மற்றும் உலகநாடு சமூகத்துடன் இணையுங்கள்',
@@ -164,6 +169,7 @@ export default translations = {
         "Edit Profile": 'Editar perfil',
         "Change Password": 'Cambiar contraseña',
         "Change Language": 'Cambiar idioma',
+        "Manage your chat history and customize chat-related preferences":"Administra tu historial de chat y personaliza las preferencias relacionadas con el chat.",
         "Customize your app language preference and connect with a global community": 'Personaliza la preferencia de idioma de tu aplicación y conéctate con una comunidad global',
         "Clear Chat": 'Limpiar chat',
         "Reset Password": 'Restablecer contraseña',
@@ -214,6 +220,7 @@ export default translations = {
       
       mr: {
         "Edit Profile": 'प्रोफाइल संपादित करा',
+        "Manage your chat history and customize chat-related preferences"   :"अपने चैट इतिहास को प्रबंधित करें और चैट संबंधित पसंद विकल्प को अनुकूलित करें।",
         "Change Password": 'पासवर्ड बदला',
         "Change Language": 'भाषा बदला',
         "Customize your app language preference and connect with a global community": 'तुमचं अॅपचं भाषा प्राधिकृत्य विविधीकरण करा आणि जगभरातील समुदायाशी संपर्क साधा',

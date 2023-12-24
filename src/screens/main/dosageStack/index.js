@@ -32,7 +32,10 @@ export default function DosageStackNavigator({ navigation }) {
             <Header
               title="Dosage Tracker"
               rightElemnt={
-                <TouchableOpacity style={{ marginRight: 10 }}  onPress={dosageForm}>
+                <TouchableOpacity
+                  style={{ marginRight: 10 }}
+                  onPress={dosageForm}
+                >
                   <AntDesign name="plus" size={28} color="white" />
                 </TouchableOpacity>
               }
@@ -57,9 +60,7 @@ export default function DosageStackNavigator({ navigation }) {
                 <TouchableOpacity
                   style={{ marginRight: 10 }}
                   onPress={dosageForm}
-                >
-                  
-                </TouchableOpacity>
+                ></TouchableOpacity>
               }
             />
           ),

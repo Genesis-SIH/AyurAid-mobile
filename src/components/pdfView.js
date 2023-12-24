@@ -13,15 +13,14 @@ import Pdf from "react-native-pdf";
 import AppText from "./text";
 
 function PdfView({ uri, book, author }) {
-    const folderId = '0BzHqSP5JtkQafnpiR2xBazFYSHFjRV96bzRRT2ZxN3VsaXFUSXF3bXdEbmpoamhpMXFfZ0U';
-    const apiKey = 'AIzaSyCCMX7nNARMmCdSpquczCA__aW0Y-qiDAk'
+   
   const handleOpenPdf = (uri) => {
     Linking.openURL(uri);
   };
   const [pages, setPages] = useState();
 
   return (
-
+    <ScrollView contentContainerStyle={styles.container}>
       <TouchableOpacity
         style={{
           width: 150,
@@ -73,17 +72,36 @@ function PdfView({ uri, book, author }) {
               backgroundColor: Colors.seconday,
             }}
           >
-            <AppText eclipseMode='tail' numberOfLines={2} bold>{book}</AppText>
-            <AppText style={{ fontSize: 12, marginTop: 10 }}>
+            <AppText bold>{book}</AppText>
+            <AppText style={{ fontSize: 12, marginTop: 5 }}>
               By- {author}
             </AppText>
             <AppText style={{ fontSize: 12, marginTop: 5 }}>
-               {pages} Pages
+              No.pages- {pages}
             </AppText>
           </View>
         </View>
       </TouchableOpacity>
 
+      {/* <Grid>
+        <Row size={50}>
+          <Col sm={6}>
+            <Pdf source={{ uri: pdfUris[0], cache: true }} />
+          </Col>
+          <Col sm={6}>
+            <Pdf source={{ uri: pdfUris[0], cache: true }} />
+          </Col>
+        </Row>
+        <Row size={50}>
+          <Col sm={6}>
+            <Pdf source={{ uri: pdfUris[0], cache: true }} />
+          </Col>
+          <Col sm={6}>
+            <Pdf source={{ uri: pdfUris[0], cache: true }} />
+          </Col>
+        </Row>
+      </Grid> */}
+    </ScrollView>
   );
 }
 

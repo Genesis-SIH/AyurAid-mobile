@@ -91,7 +91,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const onDemoPress = () => {
-    setUsername("Aditya14");
+    setUsername("AyurUser");
     setPassword("AyurAid");
   };
 
