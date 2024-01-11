@@ -7,6 +7,7 @@ import { useGetDosageDetail } from "../../../hooks/reactQuery/dosageTracker/useG
 import { useAxios } from "../../../hooks/axios/useAxios";
 import { ApiCollection } from "../../../config";
 import { useQueryClient } from "react-query";
+import LottieView from "lottie-react-native";
 
 
 
@@ -17,7 +18,7 @@ export default function DosageDetailScreen({ route }) {
   const queryClient = useQueryClient()
 
   const markedSlots = dosage?.slots.filter((slot) => slot.isCompleted === true);
-  const completedDays = Math.ceil(markedSlots?.length/dosage?.frequency);
+  const completedDays = Math.ceil(markedSlots?.length / dosage?.frequency);
   const percentage = (completedDays / dosage?.duration) * 100;
 
   const [isLoading, setIsLoading] = useState(false)
@@ -25,18 +26,18 @@ export default function DosageDetailScreen({ route }) {
   const markSlotCompleted = async (slotId) => {
     setIsLoading(true)
     await axios.patch(ApiCollection.dosage.markCompleted, { dosageID: dosage._id, slotID: slotId, isCompleted: true })
-    .then((res) => {
-      setIsLoading(false)
-      queryClient.invalidateQueries(`${ApiCollection.dosage.getDosage}/${dosage._id}`)
-      queryClient.invalidateQueries(ApiCollection.dosage.myDosages)
+      .then((res) => {
+        setIsLoading(false)
+        queryClient.invalidateQueries(`${ApiCollection.dosage.getDosage}/${dosage._id}`)
+        queryClient.invalidateQueries(ApiCollection.dosage.myDosages)
 
 
-    })
-    .catch((err) => {
-      setIsLoading(false)
-      console.log(err.response.data)
-      Alert.alert("Error", "Something went wrong")
-    })
+      })
+      .catch((err) => {
+        setIsLoading(false)
+        console.log(err.response.data)
+        Alert.alert("Error", "Something went wrong")
+      })
   }
 
   return (
@@ -139,7 +140,7 @@ export default function DosageDetailScreen({ route }) {
                 backgroundColor: Colors.seconday,
               }}
             >
-              <TouchableOpacity disabled={slot.isCompleted} onPress={()=>markSlotCompleted(slot._id)}>
+              <TouchableOpacity disabled={slot.isCompleted} onPress={() => markSlotCompleted(slot._id)}>
                 <Ionicons
                   name="checkmark-done-circle-sharp"
                   size={30}
@@ -162,8 +163,11 @@ export default function DosageDetailScreen({ route }) {
         </View>
       </ScrollView>
       :
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator color={Colors.primary} size={"large"} />
+      <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', flex: 1 }}>
+        <LottieView style={{ width: 50, height: 50 }} source={require('../../../utils/lottie/leafLoading.json')} autoPlay loop />
+        <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
+          Searching for Dosage...
+        </AppText>
       </View>
   );
 }

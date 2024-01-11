@@ -12,6 +12,7 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { Colors, Routes } from "../../../utils";
 import { useGetAllBlogs, useSearchBlog } from "../../../hooks/reactQuery/blogs";
 import { useTranslation } from "../../../hooks/translation";
+import LottieView from "lottie-react-native";
 export default function SearchBlogScreen({ navigation }) {
   const [searchText, setSearchText] = React.useState("");
 
@@ -44,7 +45,7 @@ export default function SearchBlogScreen({ navigation }) {
               id={blog.id}
             >
               <Image
-                source={{ uri:blog.image }}
+                source={{ uri: blog.image }}
                 style={{ width: 60, height: 60, borderRadius: 5 }}
               />
               <View
@@ -78,8 +79,11 @@ export default function SearchBlogScreen({ navigation }) {
           </View>
         )
       ) : (
-        <View style={{ paddingTop: 20 }}>
-          <ActivityIndicator size="large" color={Colors.primary} />
+        <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', flex: 1,height:500 }}>
+          <LottieView style={{ width: 50, height: 50 }} source={require('../../../utils/lottie/leafLoading.json')} autoPlay loop />
+          <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
+            Fetching blogs...
+          </AppText>
         </View>
       )}
     </ScrollView>

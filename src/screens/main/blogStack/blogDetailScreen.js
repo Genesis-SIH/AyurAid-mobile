@@ -5,6 +5,7 @@ import { Colors } from "../../../utils";
 import App from "../../../../App";
 import { useGetBlogById } from "../../../hooks/reactQuery/blogs";
 import { LinearGradient } from "expo-linear-gradient";
+import LottieView from "lottie-react-native";
 
 
 
@@ -13,6 +14,7 @@ export default function BlogDetailScreen({ route, navigation }) {
     const blogId = route.params.blog._id
 
     const { isLoading, data: blog } = useGetBlogById(blogId)
+    console.log(blog)
 
 
 
@@ -20,7 +22,7 @@ export default function BlogDetailScreen({ route, navigation }) {
         !isLoading ?
             blog &&
             <ScrollView contentContainerStyle={{ paddingBottom: 50 }}>
-                <Image source={{ uri: `data:image/png;base64,${blog.image}` }} style={{ width: '100%', height: 200, borderRadius: 0 }} />
+                <Image source={{ uri: blog.image }} style={{ width: '100%', height: 200, borderRadius: 0 }} />
                 <LinearGradient
                     style={{
                         position: "absolute",
@@ -38,7 +40,7 @@ export default function BlogDetailScreen({ route, navigation }) {
                     <AppText style={{ color: 'grey', fontSize: 14 }}>Date Posted - {blog.publishDate}</AppText>
                 </LinearGradient>
 
-                <View style={{padding:15}}>
+                <View style={{ padding: 15 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center' }}>
                         {
                             [blog.tag].map((item, index) => (
@@ -54,7 +56,7 @@ export default function BlogDetailScreen({ route, navigation }) {
                     </View>
 
                     <View style={{ flexDirection: 'row', justifyContent: 'flex-start', alignItems: 'center', marginTop: 20 }}>
-                        <Image source={{ uri: `data:image/png;base64,${blog.authorImage}` }} style={{ width: 30, height: 30, borderRadius: 50 }} />
+                        <Image source={{ uri: blog.authorImage }} style={{ width: 30, height: 30, borderRadius: 50 }} />
                         <View style={{ marginLeft: 10 }}>
                             <AppText style={{ color: 'grey', fontSize: 14, marginTop: 5 }}>By,</AppText>
                             <AppText style={{ color: Colors.primary, fontSize: 16 }}>{blog.authorName}</AppText>
@@ -67,8 +69,11 @@ export default function BlogDetailScreen({ route, navigation }) {
 
             </ScrollView>
             :
-            <View style={{ padding: 20 }}>
-                <ActivityIndicator size="large" color={Colors.primary} />
+            <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', flex: 1 }}>
+                <LottieView style={{ width: 50, height: 50 }} source={require('../../../utils/lottie/leafLoading.json')} autoPlay loop />
+                <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
+                    Loading..
+                </AppText>
             </View>
 
     )

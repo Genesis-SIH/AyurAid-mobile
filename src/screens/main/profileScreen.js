@@ -39,7 +39,9 @@ function ProfileScreen({ navigation }) {
               style={styles.profile}
               contentFit="cover"
               source={{
-                uri: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
+                uri: user.profileImage
+                  ? `data:image/jpeg;base64,${user.profileImage}`
+                  : "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
               }}
             />
           </View>
@@ -51,7 +53,7 @@ function ProfileScreen({ navigation }) {
             }}
           >
             <AppText style={{ fontSize: 25, color: Colors.primary }}>
-              {user.name}
+              {user.fullName}
             </AppText>
 
             <TouchableOpacity

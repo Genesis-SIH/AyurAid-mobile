@@ -11,35 +11,38 @@ import { ApiCollection } from "../../config";
 import { useTranslation } from "../../hooks/translation";
 
 function ForgetPassword({ navigation }) {
+  const translation = useTranslation();
 
-  const translation= useTranslation()
-
-  const [isLoading, setIsLoading] = React.useState(false)
-  const [email, setEmail] = React.useState('')
+  const [isLoading, setIsLoading] = React.useState(false);
+  const [email, setEmail] = React.useState("");
 
   const onLogin = () => {
-    navigation.goBack()
-  }
+    navigation.goBack();
+  };
 
   const onReset = async () => {
-    if (email == '') {
-      Alert.alert('Error', 'Please fill all the fields')
-      return
+    if (email == "") {
+      Alert.alert("Error", "Please fill all the fields");
+      return;
     }
 
-    setIsLoading(true)
-    await axios.post(ApiCollection.authController.forgetPassword, { identity: email })
+    setIsLoading(true);
+    await axios
+      .post(ApiCollection.authController.forgetPassword, { identity: email })
       .then((res) => {
-        setIsLoading(false)
-        console.log(res.data)
-        Alert.alert('Success', 'Password reset link has been sent to your email address')
+        setIsLoading(false);
+        console.log(res.data);
+        Alert.alert(
+          "Success",
+          "Password reset link has been sent to your email address"
+        );
       })
       .catch((err) => {
-        setIsLoading(false)
-        console.log(err.response.data)
-        Alert.alert('Error', err.response.data.message)
-      })
-  }
+        setIsLoading(false);
+        console.log(err.response.data);
+        Alert.alert("Error", err.response.data.message);
+      });
+  };
   return (
     <View style={styles.container}>
       <LoadingModal modalVisible={isLoading} />
@@ -66,15 +69,24 @@ function ForgetPassword({ navigation }) {
             bold
             style={{ color: Colors.primary, fontSize: 30, marginBottom: 30 }}
           >
-            {translation.t('Forget Password')}
+            {translation.t("Forget Password")}
           </AppText>
-          <AppTextInput label={translation.t("Email")} placeholder="Enter Email id" onChangeText={(text) => setEmail(text)} />
+          <AppTextInput
+            label={translation.t("Email")}
+            placeholder="Enter Email id"
+            onChangeText={(text) => setEmail(text)}
+          />
 
-          <FlatButton enableShadow={true} title={translation.t("Continue")} onPress={onReset} />
+          <FlatButton
+            enableShadow={true}
+            title={translation.t("Continue")}
+            onPress={onReset}
+            style={{ width: "100%" }}
+          />
 
-          <TouchableOpacity style={{ marginTop: 30 }} >
+          <TouchableOpacity style={{ marginTop: 30 }}>
             <AppText style={{ fontSize: 15 }} onPress={onLogin}>
-              {translation.t('Back to Login')} !
+              {translation.t("Back to Login")} !
             </AppText>
           </TouchableOpacity>
         </View>

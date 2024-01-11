@@ -20,9 +20,7 @@ import { setLanguage } from "../../redux/features/userSlice";
 import { User } from "../../redux/store/useStore";
 import { AppText } from "../../components";
 
-
 function Settings({ navigation }) {
-  
   const user = User();
   const translation = useTranslation();
   const settingsOptions = [
@@ -30,25 +28,36 @@ function Settings({ navigation }) {
       label: translation.t("Edit Profile"),
       description: translation.t("Edit and update your profile"),
       icon: <FontAwesome5 name="edit" size={40} color="white" />,
-      onPress: (navigation) => navigation.navigate(Routes.main.editProfileScreen),
+      onPress: (navigation) =>
+        navigation.navigate(Routes.main.editProfileScreen),
     },
     {
       label: translation.t("Change Language"),
-      description: translation.t("Customize your app language preference and connect with a global community"),
+      description: translation.t(
+        "Customize your app language preference and connect with a global community"
+      ),
       icon: <FontAwesome5 name="language" size={40} color="white" />,
       onPress: (navigation) => navigation.navigate(Routes.main.languages),
     },
-    {
-      label: translation.t("Clear Chat"),
-      description: translation.t("Manage your chat history and customize chat-related preferences"),
-      icon: <Ionicons name="chatbox-ellipses-outline" size={40} color="white" />,
-      onPress: (navigation) => navigation.navigate(Routes.onBoarding.ResetScreen),
-    },
+    // {
+    //   label: translation.t("Clear Chat"),
+    //   description: translation.t(
+    //     "Manage your chat history and customize chat-related preferences"
+    //   ),
+    //   icon: (
+    //     <Ionicons name="chatbox-ellipses-outline" size={40} color="white" />
+    //   ),
+    //   onPress: (navigation) =>
+    //     navigation.navigate(Routes.onBoarding.ResetScreen),
+    // },
     {
       label: translation.t("Reset Password"),
       description: translation.t("Reset your password here"),
-      icon: <MaterialCommunityIcons name="lock-reset" size={40} color="white" />,
-      onPress: (navigation) => navigation.navigate(Routes.onBoarding.ResetScreen),
+      icon: (
+        <MaterialCommunityIcons name="lock-reset" size={40} color="white" />
+      ),
+      onPress: (navigation) =>
+        navigation.navigate(Routes.onBoarding.ResetScreen),
     },
   ];
   const dispatch = useDispatch();

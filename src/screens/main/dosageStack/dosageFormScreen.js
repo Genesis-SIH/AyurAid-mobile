@@ -76,9 +76,7 @@ function DosageForm({ navigation}) {
 
   };
 
-  return loading ? (
-    <ActivityIndicator />
-  ) : (
+  return (
     <ScrollView
       contentContainerStyle={{
         paddingVertical: 20,

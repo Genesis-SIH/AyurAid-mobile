@@ -3,6 +3,8 @@ import { View, StyleSheet, ScrollView } from "react-native";
 import PdfView from "../../components/pdfView";
 import axios from "axios";
 import { encode as base64Encode } from "base-64";
+import LottieView from "lottie-react-native";
+import { AppText } from "../../components";
 
 function generateRandomAyurvedaName() {
   const authors = [
@@ -17,7 +19,6 @@ function generateRandomAyurvedaName() {
     "Ayurveda: The Science of Self-Healing",
     "Prakriti: Your Ayurvedic Constitution",
     "The Ayurveda Bible",
-
   ];
 
   const randomAuthor = authors[Math.floor(Math.random() * authors.length)];
@@ -34,9 +35,12 @@ function Encyclopedia() {
 
   const [resources, setResources] = useState([]);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     const fetchResources = async () => {
       try {
+        setIsLoading(true);
         const credentials = `${apiKey}:${apiSecret}`;
         const encodedCredentials = base64Encode(credentials);
 
@@ -50,12 +54,8 @@ function Encyclopedia() {
         );
 
         setResources(response.data.resources);
-        console.log(response.data.resources.length)
-    
-        for(let i=0;i<10;i++){
-        console.log(response.data.resources[i].secure_url)
-        }
-  
+        setIsLoading(false);
+
       } catch (error) {
         console.error("Error fetching resources:", error);
       }
@@ -87,12 +87,22 @@ function Encyclopedia() {
     return rows;
   };
 
-  return <ScrollView contentContainerStyle={styles.container}>{renderRows()}</ScrollView>;
+  return (
+    !isLoading ?
+      <ScrollView contentContainerStyle={styles.container}>{renderRows()}</ScrollView>
+      :
+      <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', flex:1 }}>
+        <LottieView style={{ width: 50, height: 50 }} source={require('../../utils/lottie/leafLoading.json')} autoPlay loop />
+        <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
+          Searching for Ayurveda books...
+        </AppText>
+      </View>
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    
+
     padding: 10,
 
   },

@@ -25,7 +25,6 @@ const MainStack = createNativeStackNavigator();
 export default function MainStackNavigator() {
   const dispatch = useDispatch();
   const user = User();
-
   const bottomSheetRef = React.useRef(null);
 
   return (
@@ -44,7 +43,7 @@ export default function MainStackNavigator() {
             backgroundColor: "black",
           },
           headerLeft: () => (
-            <View
+            <TouchableOpacity
               style={{
                 marginLeft: 10,
                 marginTop: Platform.OS == "ios" ? -10 : 20,
@@ -53,10 +52,13 @@ export default function MainStackNavigator() {
                 alignItems: "center",
                 paddingBottom: 10,
               }}
+              onPress={()=>navigation.navigate(Routes.main.profileScreen)}
             >
               <Image
                 source={{
-                  uri: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
+                  uri: user.profileImage
+                    ? `data:image/jpeg;base64,${user.profileImage}`
+                    : "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
                 }}
                 style={{ width: 40, height: 40, borderRadius: 50 }}
               />
@@ -67,10 +69,10 @@ export default function MainStackNavigator() {
                   👋🏻 Hey,
                 </AppText>
                 <AppText style={{ fontSize: 18, color: Colors.primary }}>
-                  {user?.name}
+                  {user?.fullName}
                 </AppText>
               </View>
-            </View>
+            </TouchableOpacity>
           ),
         })}
       />

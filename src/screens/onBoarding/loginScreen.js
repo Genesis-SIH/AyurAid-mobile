@@ -59,20 +59,21 @@ const LoginScreen = ({ navigation }) => {
       password: password,
     };
 
+    console.log(data);
+
     await axios
       .post(ApiCollection.authController.login, data)
       .then((res) => {
         setIsLoading(false);
-        console.log(res.data);
         const user = {
-          name: res.data.data.user,
+          fullName: res.data.data.fullname,
           email: res.data.data.email,
-          id: res.data.data.id,
+          _id: res.data.data.id,
           token: res.data.data.token,
-          profilePic:
-            res.data.data.profilePic ||
-            "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
+          profileImage: res.data.data.profileImage,
         };
+
+        console.log(user)
 
         dispatch(
           setActiveUser({
@@ -91,7 +92,7 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const onDemoPress = () => {
-    setUsername("AyurUser");
+    setUsername("UserPrac");
     setPassword("AyurAid");
   };
 

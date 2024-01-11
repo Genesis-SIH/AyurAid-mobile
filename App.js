@@ -65,18 +65,7 @@ const queryClient = new QueryClient();
 
 export default function App() {
 
-  useEffect(() => {
-    async () => {
-      await axios.get(ApiCollection.utils.wakeup)
-        .then((res) => {
-          console.log(res.data)
-        })
-        .catch((err) => {
-          console.log(err.response)
-        })
-    }
 
-  }, [])
 
 
   const [fontsLoaded, error] = useFonts({
