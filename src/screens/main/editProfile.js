@@ -9,7 +9,12 @@ import {
   ActivityIndicator,
   Button,
 } from "react-native";
-import { AppText, AppTextInput, FlatButton, LoadingModal } from "../../components";
+import {
+  AppText,
+  AppTextInput,
+  FlatButton,
+  LoadingModal,
+} from "../../components";
 import { User } from "../../redux/store/useStore";
 import { Border, Colors, Routes } from "../../utils";
 import axios from "axios";
@@ -17,7 +22,12 @@ import { useAxios } from "../../hooks/axios/useAxios";
 import { OutlinButton } from "../../components/button";
 import * as ImagePicker from "expo-image-picker";
 import Entypo from "react-native-vector-icons/Entypo";
-function EditProfile() {
+import { setActiveUser } from "../../redux/features/userSlice";
+import { useDispatch } from "react-redux";
+function EditProfile({ navigation }) {
+  const dispatch = useDispatch();
+  const user1 = User();
+
   useEffect(() => {
     // Request permission to access the camera roll
     (async () => {
@@ -83,7 +93,7 @@ function EditProfile() {
       setLoading(true);
 
       const res = await axios.patch(
-        "https://ayuraid.onrender.com/api/user/update/",
+        "https://backend2114.azurewebsites.net/api/user/update/",
         {
           fullName: name,
           dob: dob,
@@ -94,8 +104,17 @@ function EditProfile() {
       setName(res.data.data.updatedUser.fullName);
       setCountry(res.data.data.updatedUser.country);
       setDob(res.data.data.updatedUser.dob);
-      console.log(res.data);
+      console.log(res.data.data.updatedUser);
+
+      dispatch(
+        setActiveUser({
+          userToken: user1.token,
+          loggedIn: true,
+          user: res.data.data.updatedUser,
+        })
+      );
       setLoading(false);
+      navigation.navigate(Routes.main.profileScreen);
     } catch (error) {
       console.log(error);
     }
@@ -104,7 +123,7 @@ function EditProfile() {
     const getUserData = async () => {
       setLoading(true);
       await axios
-        .get("https://ayuraid.onrender.com/api/user/user")
+        .get("https://backend2114.azurewebsites.net/api/user/user")
         .then((res) => {
           setName(res.data.data.user.fullName);
           setDob(res.data.data.user.dob);
@@ -159,7 +178,7 @@ function EditProfile() {
           }}
         >
           <AppText style={{ fontSize: 25, color: Colors.primary }}>
-            {user.name}
+            {user.fullName}
           </AppText>
         </View>
       </View>

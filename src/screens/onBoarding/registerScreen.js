@@ -70,6 +70,7 @@ function RegisterScreen({ navigation }) {
       fullName: fullName,
       dob: dob,
       country: country,
+      
     };
     navigation.navigate(Routes.onBoarding.SelectMode, {
       data: data,
