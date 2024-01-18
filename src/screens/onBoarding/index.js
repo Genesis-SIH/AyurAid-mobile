@@ -8,6 +8,7 @@ import ForgetPassword from "./forgetPassword";
 import ResetPassword from "./resetPassword";
 import QndaScreen from "./qndaScreen";
 import SelectMode from "./selectMode";
+import AgreeScreen from "./agreeScreen";
 
 const OnBoardingStack = createNativeStackNavigator();
 
@@ -50,6 +51,11 @@ export default function OnBoardingNavigator() {
       <OnBoardingStack.Screen
         name={Routes.onBoarding.SelectMode}
         component={SelectMode}
+        options={{ headerShown: false }}
+      />
+      <OnBoardingStack.Screen
+        name={Routes.onBoarding.agreeScreen}
+        component={AgreeScreen}
         options={{ headerShown: false }}
       />
     </OnBoardingStack.Navigator>

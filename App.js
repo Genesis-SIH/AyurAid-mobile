@@ -16,16 +16,18 @@ import { LoggedIn } from './src/redux/store/useStore';
 import { AppText } from './src/components';
 import axios from 'axios';
 import { useEffect } from 'react';
-import { ApiCollection } from './src/config';
+import { ApiCollection, config } from './src/config';
 
 
 const AppStack = createNativeStackNavigator();
 
 const AppNavigator = () => {
 
+
   LogBox.ignoreAllLogs(true)
 
   const loggedIn = LoggedIn()
+
 
   const MyTheme = {
     dark: false,
@@ -67,6 +69,27 @@ export default function App() {
 
 
 
+  
+
+  axios.get(ApiCollection.ai.wakeup)
+    .then(res => {
+      console.log(res.data);
+      // setAiServerStarted(true)
+    })
+    .catch(err => {
+      console.log(res.data);
+      // setAiServerStarted(true)
+    })
+
+  axios.get(config.apiHeadProd)
+    .then(res => {
+      console.log(res.data);
+      // setAiServerStarted(true)
+    })
+    .catch(err => {
+      console.log(res.data);
+      // setAiServerStarted(true)
+    })
 
   const [fontsLoaded, error] = useFonts({
     "ProductSans-Regular": require("./src/utils/fonts/productSans/productSans.ttf"),
@@ -80,6 +103,14 @@ export default function App() {
       </View>
     )
   }
+
+  // if (!aiServerStarted) {
+  //   return (
+  //     <View style={{ width: '100%', height: '100%', flex: 1, backgroundColor: 'black', justifyContent: 'center', alignItems: 'center' }}>
+  //       <Image source={SplashImage} style={{ width: '100%', height: '100%', resizeMode: 'cover' }} />
+  //     </View>
+  //   )
+  // }
 
   let persistor = persistStore(store);
 

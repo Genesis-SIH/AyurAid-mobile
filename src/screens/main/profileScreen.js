@@ -17,11 +17,12 @@ import GreenGradient from "../../images/gradients/green.jpeg";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useTranslation } from "../../hooks/translation";
+import { useUserData } from "../../hooks/reactQuery/user/useUserData";
 
 function ProfileScreen({ navigation }) {
   const user = User();
   const translation = useTranslation();
-  const dispatch = useDispatch();
+  const { data: apiUser, isLoading } = useUserData()
 
   const openDosageTracker = () => {
     navigation.navigate(Routes.main.dosageStack.tag);
@@ -39,9 +40,7 @@ function ProfileScreen({ navigation }) {
               style={styles.profile}
               contentFit="cover"
               source={{
-                uri: user.profileImage
-                  ? `data:image/jpeg;base64,${user.profileImage}`
-                  : "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
+                uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKaiKiPcLJj7ufrj6M2KaPwyCT4lDSFA5oog&usqp=CAU'
               }}
             />
           </View>
@@ -53,7 +52,12 @@ function ProfileScreen({ navigation }) {
             }}
           >
             <AppText style={{ fontSize: 25, color: Colors.primary }}>
-              {user.fullName}
+              {
+                apiUser ?
+                  apiUser.fullName
+                  :
+                  user.fullName
+              }
             </AppText>
 
             <TouchableOpacity
@@ -236,6 +240,50 @@ function ProfileScreen({ navigation }) {
               </View>
 
               <FontAwesome name="gear" size={40} color="white" />
+            </View>
+          </TouchableOpacity>
+
+
+          <TouchableOpacity
+            onPress={() => navigation.navigate(Routes.main.aboutUsScreen)}
+            style={{
+              marginTop: 20,
+              width: "90%",
+              height: 120,
+              backgroundColor: "green",
+              borderRadius: 10,
+              overflow: "hidden",
+            }}
+          >
+            <Image
+              source={GreenGradient}
+              style={{ width: "100%", height: "100%" }}
+            />
+            <View
+              style={{
+                position: "absolute",
+                paddingHorizontal: 20,
+                width: "100%",
+                height: "100%",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+              }}
+            >
+              <View style={{ width: "70%" }}>
+                <AppText bold style={{ color: "white", fontSize: 20 }}>
+                  {translation.t("About Us")}
+                </AppText>
+                <AppText
+                  style={{ color: "white", fontSize: 14, marginTop: 10 }}
+                >
+                  {translation.t(
+                    "About us and our mission to help people with Ayurveda"
+                  )}
+                </AppText>
+              </View>
+
+              <FontAwesome name="info-circle" size={40} color="white" />
             </View>
           </TouchableOpacity>
         </View>

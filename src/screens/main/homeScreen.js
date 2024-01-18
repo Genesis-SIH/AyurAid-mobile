@@ -36,6 +36,11 @@ import { config } from "../../config";
 import Translate from "translate-google-api";
 
 export default function ChatScreen({ navigation }) {
+
+
+
+
+
   const axios = useAxios("ai");
   const scrollViewRef = React.useRef();
   const translation = useTranslation();
@@ -67,13 +72,13 @@ export default function ChatScreen({ navigation }) {
           setChats([
             {
               id: new Date().getTime(),
-              text: "Hey there ! Start by asking me a question 👋🏻",
+              text: "Hey there ! \nStart by asking me a question 👋🏻 \n\nFor Example - \nTell me the remedies for cough !",
               type: "bot",
               timestamp: new Date().getTime(),
               data: null,
             },
           ]);
-          console.log(error.response.data);
+          console.log(error?.response?.data);
         });
     };
     getChats();
@@ -193,7 +198,21 @@ export default function ChatScreen({ navigation }) {
       .catch((error) => {
         console.log(error.response.data);
         setResponseLoading(false);
-        Alert.alert("Error", "Something went wrong. Please try again");
+        let botMessage = {
+          text: 'Sorry something went wrong and we are trying to fix it.\n\n Please try again later !',
+          type: "bot",
+          timestamp: new Date().getTime(),
+          data: 'error',
+        };
+
+        let temp = chats.splice(0);
+        temp.push(userMessage);
+        temp.push(botMessage);
+
+        setChats(temp);
+
+        setResponseLoading(false);
+
       });
   };
 
@@ -272,7 +291,6 @@ export default function ChatScreen({ navigation }) {
         Linking.openURL(book.url);
         return;
       } else {
-        console.log(string);
         console.warn(config.books[6].bookName);
       }
     });
@@ -354,87 +372,90 @@ export default function ChatScreen({ navigation }) {
                         </View>
                       </View>
                     )}
+                    {
+                      chat.data !== 'error' &&
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                        }}
+                      >
+                        <TouchableOpacity
+                          onPress={() => copyToClipboard(chat.text)}
+                          style={{
+                            padding: 8,
+                            paddingHorizontal: 12,
+                            marginVertical: 10,
+                            marginRight: 10,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            backgroundColor: Colors.darkGreen,
+                            borderRadius: 10,
+                          }}
+                        >
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                          >
+                            <FontAwesome name="copy" size={16} color="white" />
+                            <AppText
+                              style={{
+                                marginLeft: 12,
+                                fontSize: 12,
+                                lineHeight: 24,
+                              }}
+                            >
+                              {translation.t("Copy")}
+                            </AppText>
+                          </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() =>
+                            isSpeaking ? stopSpeech() : startSpeech(chat.text)
+                          }
+                          style={{
+                            padding: 8,
+                            paddingHorizontal: 12,
+                            marginVertical: 10,
+                            marginRight: 10,
+                            flexDirection: "row",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                            backgroundColor: Colors.darkGreen,
+                            borderRadius: 10,
+                          }}
+                        >
+                          <View
+                            style={{
+                              flexDirection: "row",
+                              justifyContent: "space-between",
+                              alignItems: "center",
+                            }}
+                          >
+                            <FontAwesome
+                              name={isSpeaking ? "stop" : "play"}
+                              size={14}
+                              color="white"
+                            />
+                            <AppText
+                              style={{
+                                marginLeft: 12,
+                                fontSize: 12,
+                                lineHeight: 24,
+                              }}
+                            >
+                              {translation.t(isSpeaking ? "Stop" : "Play")}
+                            </AppText>
+                          </View>
+                        </TouchableOpacity>
+                      </View>
+                    }
 
-                    <View
-                      style={{
-                        flexDirection: "row",
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                      }}
-                    >
-                      <TouchableOpacity
-                        onPress={() => copyToClipboard(chat.text)}
-                        style={{
-                          padding: 8,
-                          paddingHorizontal: 12,
-                          marginVertical: 10,
-                          marginRight: 10,
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          backgroundColor: Colors.darkGreen,
-                          borderRadius: 10,
-                        }}
-                      >
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <FontAwesome name="copy" size={16} color="white" />
-                          <AppText
-                            style={{
-                              marginLeft: 12,
-                              fontSize: 12,
-                              lineHeight: 24,
-                            }}
-                          >
-                            {translation.t("Copy")}
-                          </AppText>
-                        </View>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        onPress={() =>
-                          isSpeaking ? stopSpeech() : startSpeech(chat.text)
-                        }
-                        style={{
-                          padding: 8,
-                          paddingHorizontal: 12,
-                          marginVertical: 10,
-                          marginRight: 10,
-                          flexDirection: "row",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          backgroundColor: Colors.darkGreen,
-                          borderRadius: 10,
-                        }}
-                      >
-                        <View
-                          style={{
-                            flexDirection: "row",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                          }}
-                        >
-                          <FontAwesome
-                            name={isSpeaking ? "stop" : "play"}
-                            size={14}
-                            color="white"
-                          />
-                          <AppText
-                            style={{
-                              marginLeft: 12,
-                              fontSize: 12,
-                              lineHeight: 24,
-                            }}
-                          >
-                            {translation.t(isSpeaking ? "Stop" : "Play")}
-                          </AppText>
-                        </View>
-                      </TouchableOpacity>
-                    </View>
                   </View>
                   {getIngredients(chat.text).length > 0 && (
                     <View
@@ -646,15 +667,22 @@ export default function ChatScreen({ navigation }) {
           />
           <View>
             <TouchableOpacity
+              disabled={responseLoading}
               onPress={toggleListening}
-              style={[styles.micButtonBig, ShadowStyles.micShadow]}
+              style={[styles.micButtonBig, ShadowStyles.micShadow,]}
             >
-              <FontAwesome5
-                solid
-                name={"microphone"}
-                size={28}
-                color={"white"}
-              />
+              {
+                responseLoading ?
+                  <ActivityIndicator size={'small'} color={'white'} />
+                  :
+                  <FontAwesome5
+                    solid
+                    name={"microphone"}
+                    size={28}
+                    color={"white"}
+                  />
+              }
+
             </TouchableOpacity>
             {isListening && (
               <AppText
@@ -691,8 +719,9 @@ export default function ChatScreen({ navigation }) {
           style={styles.bottomPanelText}
         >
           <TouchableOpacity
+            disabled={responseLoading}
             onPress={onSmallMicPress}
-            style={[styles.micButtonSmall]}
+            style={[styles.micButtonSmall, responseLoading && { backgroundColor: 'darkgray' }]}
           >
             <FontAwesome5 solid name={"microphone"} size={18} color={"white"} />
           </TouchableOpacity>

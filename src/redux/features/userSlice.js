@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import { config } from '../../config';
 
-const initialState = { userToken: null, loggedIn: false,user:null,language:'en'}
+const initialState = { userToken: null, loggedIn: false,user:null,language:'en',firstTimeLogin:true}
 
 const userSlice = createSlice({
     name: "user",
@@ -11,12 +11,12 @@ const userSlice = createSlice({
             state.userToken = action.payload.userToken
             state.loggedIn = action.payload.loggedIn
             state.user = action.payload.user
- 
         },
         setUserLogOutState: (state) => {
             state.userToken = null
             state.loggedIn = false
             state.user = null
+            state.firstTimeLogin = false
             // state.language = 'en'
         },
         setLanguage: (state, action) => {
@@ -30,6 +30,7 @@ const userSlice = createSlice({
 
 export const { setActiveUser, setUserLogOutState,setLanguage } = userSlice.actions
 export const selectUserToken = (state) => state.user.userToken
+export const selectFirstTimeLogin = (state) => state.user.firstTimeLogin
 export const selectLoggedIN = (state) => state.user.loggedIn
 export const selectUser = (state) => state.user.user
 export const selectLanguage = (state) => state.user.language

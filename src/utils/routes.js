@@ -8,7 +8,8 @@ export const Routes = {
         ForgetScreen: 'Forget',
         ResetScreen: 'Reset',
         QandA: 'QandA',
-        SelectMode:'SelectMode'
+        SelectMode:'SelectMode',
+        agreeScreen: 'Agree',
     },
     main:{
         tag: 'app',
@@ -20,6 +21,7 @@ export const Routes = {
         settingScreen: 'Setting',
         languages:'Language',
         encyclopedia:'Encyclopedia',
+        aboutUsScreen: 'AboutUs',
         dosageStack:{
             dosageForm:'DosageForm',
             tag: 'dosageStack',

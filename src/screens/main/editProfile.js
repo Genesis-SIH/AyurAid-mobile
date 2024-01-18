@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Button,
+  Alert,
 } from "react-native";
 import {
   AppText,
@@ -24,8 +25,28 @@ import * as ImagePicker from "expo-image-picker";
 import Entypo from "react-native-vector-icons/Entypo";
 import { setActiveUser } from "../../redux/features/userSlice";
 import { useDispatch } from "react-redux";
+import { ApiCollection } from "../../config";
+import { useUserData } from "../../hooks/reactQuery/user/useUserData";
+import { useQueryClient } from "react-query";
+
+
 function EditProfile({ navigation }) {
+
+  const { data: user } = useUserData(
+    (data) => {
+      console.warn(data);
+      setName(data.fullName);
+      setCountry(data.country);
+      setDob(data.dob);
+      setLoading(false)
+    },
+    (err) => {
+      console.warn(err);
+      setLoading(false)
+    }
+  );
   const dispatch = useDispatch();
+  const queryClient = useQueryClient()
   const user1 = User();
 
   useEffect(() => {
@@ -39,146 +60,84 @@ function EditProfile({ navigation }) {
     })();
   }, []);
   const axios = useAxios();
-  const convertImageToBase64 = async (imageUri) => {
-    try {
-      console.log("Fetching image from:", imageUri);
 
-      const response = await fetch(imageUri);
-
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
-
-      const blob = await response.blob();
-
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          const base64data = reader.result.split(",")[1];
-          resolve(base64data);
-        };
-        reader.onerror = (error) => {
-          reject(error);
-        };
-        reader.readAsDataURL(blob);
-      });
-    } catch (error) {
-      console.error("Error converting image to base64:", error);
-      throw error;
-    }
-  };
-
-  const selectImageFromGallery = async () => {
-    try {
-      const result = await ImagePicker.launchImageLibraryAsync({
-        mediaTypes: ImagePicker.MediaTypeOptions.Images,
-        allowsEditing: true,
-        aspect: [4, 3],
-        quality: 1,
-      });
-
-      if (!result.cancelled) {
-        console.log("Selected Image URI:", result.assets[0].uri);
-        const base64Image = await convertImageToBase64(result.assets[0].uri);
-
-        setSelectedImage({ uri: result.uri, base64: base64Image });
-      }
-    } catch (error) {
-      console.error("ImagePicker Error:", error);
-    }
-  };
 
   const handleSubmission = async () => {
+
+    if(name ==""){
+      Alert.alert("Edit Profile","Name cannot be empty")
+      return
+    }
+
+    if(dob ==""){
+      Alert.alert("Edit Profile","Date of birth cannot be empty")
+      return
+    }
+
+    if(country ==""){
+      Alert.alert("Edit Profile","Country cannot be empty")
+      return
+    }
+
+
+
     try {
       setLoading(true);
 
       const res = await axios.patch(
-        "https://backend2114.azurewebsites.net/api/user/update/",
+        ApiCollection.user.updateUser,
         {
           fullName: name,
           dob: dob,
           country: country,
-          profileImage: selectedImage.base64,
+          profileImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKaiKiPcLJj7ufrj6M2KaPwyCT4lDSFA5oog&usqp=CAU',
         }
       );
       setName(res.data.data.updatedUser.fullName);
       setCountry(res.data.data.updatedUser.country);
       setDob(res.data.data.updatedUser.dob);
-      console.log(res.data.data.updatedUser);
-
-      dispatch(
-        setActiveUser({
-          userToken: user1.token,
-          loggedIn: true,
-          user: res.data.data.updatedUser,
-        })
-      );
+      queryClient.invalidateQueries(ApiCollection.user.getUser)
+      // dispatch(
+      //   setActiveUser({
+      //     userToken: user1.token,
+      //     loggedIn: true,
+      //     user: res.data.data.updatedUser,
+      //   })
+      // );
       setLoading(false);
       navigation.navigate(Routes.main.profileScreen);
     } catch (error) {
       console.log(error);
     }
   };
-  useEffect(() => {
-    const getUserData = async () => {
-      setLoading(true);
-      await axios
-        .get("https://backend2114.azurewebsites.net/api/user/user")
-        .then((res) => {
-          setName(res.data.data.user.fullName);
-          setDob(res.data.data.user.dob);
-          setCountry(res.data.data.user.country);
-          setSelectedImage({ base64: res.data.data.user.profileImage });
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-      setLoading(false);
-    };
-    getUserData();
-  }, []);
-  const user = User();
+
   const [name, setName] = useState("");
   const [dob, setDob] = useState("");
   const [country, setCountry] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+
   return (
     <ScrollView contentContainerStyle={styles.scrollViewContent}>
       <LoadingModal modalVisible={loading} />
       <View style={styles.top}>
-        <View>
-          {selectedImage && (
-            <Image
-              style={styles.profile}
-              contentFit="cover"
-              source={{
-                uri: `data:image/jpeg;base64,${selectedImage.base64}`,
-              }}
-            />
-          )}
-          <Entypo
-            name="edit"
-            onPress={selectImageFromGallery}
-            style={{
-              color: "#00BC8B",
-              top: -30,
-              left: 65,
-            }}
-            size={24}
-            color="#00BC8B"
-          />
-        </View>
+        <Image
+          style={styles.profile}
+          contentFit="cover"
+          source={{
+            uri: user.profileImage,
+          }}
+        />
 
         <View
           style={{
             justifyContent: "center",
             alignItems: "center",
-            marginTop: -20,
+            marginTop: 20,
           }}
         >
           <AppText style={{ fontSize: 25, color: Colors.primary }}>
-            {user.fullName}
+            {name}
           </AppText>
         </View>
       </View>
@@ -187,7 +146,7 @@ function EditProfile({ navigation }) {
         <View style={styles.container}>
           <AppTextInput
             label="Name"
-            placeholder="name"
+            placeholder="Ex - John Doe"
             style={styles.title}
             value={name}
             onChangeText={(text) => setName(text)}
@@ -195,20 +154,20 @@ function EditProfile({ navigation }) {
           <View style={styles.rowContainer}>
             <AppTextInput
               label="Date of Birth"
-              placeholder="5"
+              placeholder="DD-MM-YYYY"
               style={[styles.input, { flex: 2 }]}
               value={dob}
               onChangeText={(text) => setDob(text)}
             />
             <AppTextInput
               label="Country"
-              placeholder="2"
+              placeholder="Ex- India"
               style={[styles.input, { flex: 2 }]}
               value={country}
               onChangeText={(text) => setCountry(text)}
             />
           </View>
-          <View style={{ marginLeft: -180, marginTop: 20 }}>
+          <View style={{ width: '100%', marginTop: 20 }}>
             <AppText
               style={{ color: Colors.primary, marginBottom: 2, fontSize: 15 }}
             >
@@ -276,13 +235,14 @@ const styles = StyleSheet.create({
     borderRadius: 45,
   },
   top: {
+    marginTop:50,
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
   },
   profileScreenChild: {
     width: "100%",
-    marginTop: 20,
+
     justifyContent: "center",
     alignItems: "center",
   },

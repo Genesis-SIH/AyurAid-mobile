@@ -70,24 +70,24 @@ function RegisterScreen({ navigation }) {
       fullName: fullName,
       dob: dob,
       country: country,
-      
+      role: "practitioner",
     };
-    navigation.navigate(Routes.onBoarding.SelectMode, {
-      data: data,
-    });
+    // navigation.navigate(Routes.onBoarding.SelectMode, {
+    //   data: data,
+    // });
     setIsLoading(true);
-    // await axios
-    //   .post(ApiCollection.authController.signup, data)
-    //   .then((res) => {
-    //     setIsLoading(false);
-    //     console.log(res.data);
-    //     Alert.alert("Success", "Account created successfully");
-    //     navigation.navigate(Routes.onBoarding.loginScreen);
-    //   })
-    //   .catch((err) => {
-    //     setIsLoading(false);
-    //     Alert.alert("Register Error", err.response.data.message);
-    //   });
+    await axios
+      .post(ApiCollection.authController.signup, data)
+      .then((res) => {
+        setIsLoading(false);
+        console.log(res.data);
+        Alert.alert("Success", "Account created successfully");
+        navigation.navigate(Routes.onBoarding.loginScreen);
+      })
+      .catch((err) => {
+        setIsLoading(false);
+        Alert.alert("Register Error", err?.response?.data?.message || "Something went wrong");
+      });
   };
 
   const onAlready = () => {
@@ -95,6 +95,7 @@ function RegisterScreen({ navigation }) {
   };
   return (
     <ScrollView contentContainerStyle={styles.container}>
+      <LoadingModal modalVisible={isLoading} />
       <LinearGradient
         style={styles.gradient}
         locations={[0, 1]}

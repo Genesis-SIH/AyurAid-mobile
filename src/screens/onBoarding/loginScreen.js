@@ -22,10 +22,12 @@ import axios from "axios";
 import LoadingModal from "../../components/loadingmodal";
 import { ApiCollection } from "../../config";
 import { useTranslation } from "../../hooks/translation";
+import { FirstTimeLogin } from "../../redux/store/useStore";
 
 const LoginScreen = ({ navigation }) => {
   const dispatch = useDispatch();
   const translation = useTranslation();
+  const isFirstTimeLogin = FirstTimeLogin()
 
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
@@ -70,10 +72,8 @@ const LoginScreen = ({ navigation }) => {
           email: res.data.data.email,
           _id: res.data.data.id,
           token: res.data.data.token,
-          profileImage: res.data.data.profileImage,
+          profileImage: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKaiKiPcLJj7ufrj6M2KaPwyCT4lDSFA5oog&usqp=CAU',
         };
-
-        console.log(user)
 
         dispatch(
           setActiveUser({
@@ -82,7 +82,13 @@ const LoginScreen = ({ navigation }) => {
             user: user,
           })
         );
-        navigation.replace(Routes.main.tag);
+        if(isFirstTimeLogin){
+          navigation.navigate(Routes.onBoarding.agreeScreen)
+        }
+        else{
+          navigation.replace(Routes.main.tag);
+        }
+        
       })
       .catch((err) => {
         setIsLoading(false);
@@ -92,8 +98,8 @@ const LoginScreen = ({ navigation }) => {
   };
 
   const onDemoPress = () => {
-    setUsername("UserPrac");
-    setPassword("AyurAid");
+    setUsername("suyashvashishtha@gmail.com");
+    setPassword("Suyash@2003");
   };
 
   return (
@@ -137,12 +143,12 @@ const LoginScreen = ({ navigation }) => {
             placeholder="Your Password"
             onChangeText={(text) => setPassword(text)}
           />
-
+{/* 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onDemoPress}>
             <AppText style={{ fontSize: 20, color: "grey" }}>
               Tap to Demo Login
             </AppText>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onForget}>
             <AppText style={{ fontSize: 15 }}>

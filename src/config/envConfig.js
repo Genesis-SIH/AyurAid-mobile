@@ -1,6 +1,7 @@
 export const config = {
   apiHeadProd: "https://backend2114.azurewebsites.net",
   apiHeadDev: "https://backend2114.azurewebsites.net",
+  
   env: "dev",
   languages: [
     { id: 0, name: "English", code: "en" },
@@ -107,5 +108,10 @@ export const ApiCollection = {
   ai: {
     askChatbot: `${ApiHeadAi}/chatbot/ask`,
     getChats: `${ApiHeadAi}/chatbot/get`,
+    wakeup: `${ApiHeadAi}/util/wakeup`,
   },
+  user:{
+    getUser: `${ApiHead}/api/user/user`,
+    updateUser: `${ApiHead}/api/user/update`,
+  }
 };

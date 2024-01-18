@@ -19,6 +19,8 @@ import EditProfile from "./editProfile";
 import Languges from "./languges";
 import ResetPassword from "../onBoarding/resetPassword";
 import Encyclopedia from "./encyclopedia";
+import AboutUsScreen from "./aboutUsScreen";
+import { useUserData } from "../../hooks/reactQuery/user/useUserData";
 
 const MainStack = createNativeStackNavigator();
 
@@ -26,6 +28,10 @@ export default function MainStackNavigator() {
   const dispatch = useDispatch();
   const user = User();
   const bottomSheetRef = React.useRef(null);
+
+  const {data:apiUser,isLoading}= useUserData()
+
+
 
   return (
     <MainStack.Navigator
@@ -52,15 +58,13 @@ export default function MainStackNavigator() {
                 alignItems: "center",
                 paddingBottom: 10,
               }}
-              onPress={()=>navigation.navigate(Routes.main.profileScreen)}
+              onPress={() => navigation.navigate(Routes.main.profileScreen)}
             >
               <Image
                 source={{
-                  uri: user.profileImage
-                    ? `data:image/jpeg;base64,${user.profileImage}`
-                    : "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=1000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cGVyc29ufGVufDB8fDB8fHww",
+                  uri: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKaiKiPcLJj7ufrj6M2KaPwyCT4lDSFA5oog&usqp=CAU'
                 }}
-                style={{ width: 40, height: 40, borderRadius: 50 }}
+                style={{ width: 35, height: 35, borderRadius: 50 }}
               />
               <View style={{ marginLeft: 10 }}>
                 <AppText
@@ -69,7 +73,7 @@ export default function MainStackNavigator() {
                   👋🏻 Hey,
                 </AppText>
                 <AppText style={{ fontSize: 18, color: Colors.primary }}>
-                  {user?.fullName}
+                  {apiUser ? apiUser.fullName :  user?.fullName}
                 </AppText>
               </View>
             </TouchableOpacity>
@@ -162,17 +166,17 @@ export default function MainStackNavigator() {
           header: () => (
             <Header
               title="Settings"
-              // rightElemnt={
-              //   <TouchableOpacity
-              //     style={{ marginRight: 10 }}
-              //     onPress={() => {
-              //       dispatch(setUserLogOutState());
-              //       navigation.replace(Routes.onBoarding.tag);
-              //     }}
-              //   >
-              //     <IonIcons name="exit-outline" size={28} color="white" />
-              //   </TouchableOpacity>
-              // }
+            // rightElemnt={
+            //   <TouchableOpacity
+            //     style={{ marginRight: 10 }}
+            //     onPress={() => {
+            //       dispatch(setUserLogOutState());
+            //       navigation.replace(Routes.onBoarding.tag);
+            //     }}
+            //   >
+            //     <IonIcons name="exit-outline" size={28} color="white" />
+            //   </TouchableOpacity>
+            // }
             />
           ),
         })}
@@ -190,17 +194,17 @@ export default function MainStackNavigator() {
           header: () => (
             <Header
               title="Edit Profile"
-              // rightElemnt={
-              //   <TouchableOpacity
-              //     style={{ marginRight: 10 }}
-              //     onPress={() => {
-              //       dispatch(setUserLogOutState());
-              //       navigation.replace(Routes.onBoarding.tag);
-              //     }}
-              //   >
-              //     <IonIcons name="exit-outline" size={28} color="white" />
-              //   </TouchableOpacity>
-              // }
+            // rightElemnt={
+            //   <TouchableOpacity
+            //     style={{ marginRight: 10 }}
+            //     onPress={() => {
+            //       dispatch(setUserLogOutState());
+            //       navigation.replace(Routes.onBoarding.tag);
+            //     }}
+            //   >
+            //     <IonIcons name="exit-outline" size={28} color="white" />
+            //   </TouchableOpacity>
+            // }
             />
           ),
         })}
@@ -218,17 +222,17 @@ export default function MainStackNavigator() {
           header: () => (
             <Header
               title="Languages"
-              // rightElemnt={
-              //   <TouchableOpacity
-              //     style={{ marginRight: 10 }}
-              //     onPress={() => {
-              //       dispatch(setUserLogOutState());
-              //       navigation.replace(Routes.onBoarding.tag);
-              //     }}
-              //   >
-              //     <IonIcons name="exit-outline" size={28} color="white" />
-              //   </TouchableOpacity>
-              // }
+            // rightElemnt={
+            //   <TouchableOpacity
+            //     style={{ marginRight: 10 }}
+            //     onPress={() => {
+            //       dispatch(setUserLogOutState());
+            //       navigation.replace(Routes.onBoarding.tag);
+            //     }}
+            //   >
+            //     <IonIcons name="exit-outline" size={28} color="white" />
+            //   </TouchableOpacity>
+            // }
             />
           ),
         })}
@@ -246,17 +250,17 @@ export default function MainStackNavigator() {
           header: () => (
             <Header
               title="Encyclopedia"
-              // rightElemnt={
-              //   <TouchableOpacity
-              //     style={{ marginRight: 10 }}
-              //     onPress={() => {
-              //       dispatch(setUserLogOutState());
-              //       navigation.replace(Routes.onBoarding.tag);
-              //     }}
-              //   >
-              //     <IonIcons name="exit-outline" size={28} color="white" />
-              //   </TouchableOpacity>
-              // }
+            // rightElemnt={
+            //   <TouchableOpacity
+            //     style={{ marginRight: 10 }}
+            //     onPress={() => {
+            //       dispatch(setUserLogOutState());
+            //       navigation.replace(Routes.onBoarding.tag);
+            //     }}
+            //   >
+            //     <IonIcons name="exit-outline" size={28} color="white" />
+            //   </TouchableOpacity>
+            // }
             />
           ),
         })}
@@ -283,17 +287,17 @@ export default function MainStackNavigator() {
           header: () => (
             <Header
               title="Reset Password"
-              // rightElemnt={
-              //   <TouchableOpacity
-              //     style={{ marginRight: 10 }}
-              //     onPress={() => {
-              //       dispatch(setUserLogOutState());
-              //       navigation.replace(Routes.onBoarding.tag);
-              //     }}
-              //   >
-              //     <IonIcons name="exit-outline" size={28} color="white" />
-              //   </TouchableOpacity>
-              // }
+            // rightElemnt={
+            //   <TouchableOpacity
+            //     style={{ marginRight: 10 }}
+            //     onPress={() => {
+            //       dispatch(setUserLogOutState());
+            //       navigation.replace(Routes.onBoarding.tag);
+            //     }}
+            //   >
+            //     <IonIcons name="exit-outline" size={28} color="white" />
+            //   </TouchableOpacity>
+            // }
             />
           ),
         })}
@@ -303,6 +307,34 @@ export default function MainStackNavigator() {
         component={BlogStackNavigator}
         options={({ route, navigation }) => ({
           headerShown: false,
+        })}
+      />
+      <MainStack.Screen
+        name={Routes.main.aboutUsScreen}
+        component={AboutUsScreen}
+        options={({ route, navigation }) => ({
+          headerShown: true,
+          headerTintColor: "white",
+          headerTitle: "About Us",
+          headerStyle: {
+            backgroundColor: "black",
+          },
+          header: () => (
+            <Header
+              title="About Us"
+            // rightElemnt={
+            //   <TouchableOpacity
+            //     style={{ marginRight: 10 }}
+            //     onPress={() => {
+            //       dispatch(setUserLogOutState());
+            //       navigation.replace(Routes.onBoarding.tag);
+            //     }}
+            //   >
+            //     <IonIcons name="exit-outline" size={28} color="white" />
+            //   </TouchableOpacity>
+            // }
+            />
+          ),
         })}
       />
     </MainStack.Navigator>

@@ -53,6 +53,8 @@ export default translations = {
         "Encyclopedia": "Encyclopedia",
         "Show Summary of AyurAid": "Show Summary of AyurAid",
         "Edit and update your profile": "Edit and update your profile",
+        "About Us": "About Us",
+        "About us and our mission to help people with Ayurveda": "About us and our mission to help people with Ayurveda",
     },
 
     // Hindi
@@ -108,6 +110,8 @@ export default translations = {
         "Encyclopedia": "विश्वकोश",
         "Show Summary of AyurAid": "आयुरएड का सारांश दिखाएं",
         "Edit and update your profile": "अपनी प्रोफ़ाइल संपादित करें और अपडेट करें",
+        "About Us": "हमारे बारे में",
+        "About us and our mission to help people with Ayurveda": "हमारे बारे में और आयुर्वेद से लोगों की मदद करने के लिए हमारी मिशन",
       },
            
     // Tamil
@@ -162,6 +166,8 @@ export default translations = {
         "Encyclopedia": "விக்கிபீடியா",
         "Show Summary of AyurAid": "ஆயுர்ஏட் சுருக்கம் காட்டு",
         "Edit and update your profile": "உங்கள் சுயவிவரத்தைத் திருத்தவும் மற்றும் புதுப்பிக்கவும்",
+        "About Us": "எங்களைப் பற்றி",
+        "About us and our mission to help people with Ayurveda": "எங்களைப் பற்றி மற்றும் ஆயுர்வேதத்தைப் பயன்படுத்தி மக்களுக்கு உதவ எங்கள் இலக்கு",
       },
       
     // Spanish
@@ -216,6 +222,8 @@ export default translations = {
         "Encyclopedia": "Enciclopedia",
         "Show Summary of AyurAid": "Mostrar resumen de AyurAid",
         "Edit and update your profile": "Edita y actualiza tu perfil",
+        "About Us": "Sobre nosotros",
+        "About us and our mission to help people with Ayurveda": "Sobre nosotros y nuestra misión de ayudar a las personas con Ayurveda",
       },
       
       mr: {
@@ -269,6 +277,8 @@ export default translations = {
         "Encyclopedia": "विश्वकोश",
         "Show Summary of AyurAid": "आयुरएडचं संक्षेप दाखवा",
         "Edit and update your profile": "आपलं प्रोफाइल संपादित करा आणि अपडेट करा",
+        "About Us": "आमच्याबद्दल",
+        "About us and our mission to help people with Ayurveda": "आमच्याबद्दल आणि आयुर्वेदाने माणसांना मदत करण्याच्या आमच्या मिशनबद्दल",
       },
       
 }
