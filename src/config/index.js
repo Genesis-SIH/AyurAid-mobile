@@ -1,8 +1,12 @@
-import { ApiCollection,config,ApiHead } from "./envConfig";
-
+import { ApiCollection,config,ApiHead ,ApiHeadAi} from "./envConfig";
+import { ShadowStyles } from "./shadow";
+import { ayurvedicIngredients } from "./ingredients";
 
 export {
     ApiCollection,
     config,
-    ApiHead
+    ApiHead,
+    ApiHeadAi,
+    ShadowStyles,
+    ayurvedicIngredients,
 }

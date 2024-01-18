@@ -2,8 +2,9 @@
 export const Colors = {
     primary: "#00BC8B",
     seconday: "#142D1F",
+    primaryBg: "#102B24",
     gradientGreen: "#00BC8B",
-    colorGray_100: "#0f2318",
+    darkGreen: "#0f2318",
     colorGray_200: "#121212",
     colorGray_300: "#010101",
     colorWhite: "#fff",

@@ -5,9 +5,12 @@ import { Image } from "expo-image";
 import {Colors, Routes } from "../../utils";
 import { AppText,RoundButton } from "../../components";
 import Logo from '../../images/logo/logo.png'
+import { useTranslation } from "../../hooks/translation";
 
 
 const WelcomScreen = ({navigation}) => {
+
+  const translation = useTranslation()
 
   const onGetStarted = () => {
     navigation.navigate(Routes.onBoarding.loginScreen)
@@ -28,15 +31,15 @@ const WelcomScreen = ({navigation}) => {
           />
 
           <AppText style={{ color: Colors.primary, fontSize: 35, marginBottom: 15 }}>AyurAid</AppText>
-          <AppText style={{ color: 'white', fontSize: 15, textAlign: 'center' }}>
-            Bridging Ayurveda and Modern Healthcare for Personalized Well-being
+          <AppText style={{fontSize: 15, textAlign: 'center' }}>
+            {translation.t('Bridging Ayurveda and Modern Healthcare for Personalized Well-being')}
           </AppText>
         </View>
 
         <RoundButton  
           title='GET STARTED' 
           boldTitle={true}  
-          style={{position:'absolute',bottom:40,width:'80%'}}
+          style={{position:'absolute',bottom:70,width:'80%'}}
           onPress={onGetStarted}
           />
 
