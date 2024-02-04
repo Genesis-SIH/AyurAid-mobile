@@ -36,6 +36,7 @@
     "i18n-js": "^4.3.2",
     "lottie-react-native": "^6.4.1",
     "react": "18.2.0",
+    "react-curved-text": "^3.0.0",
     "react-native": "0.72.6",
     "react-native-blob-util": "^0.19.6",
     "react-native-device-info": "^10.12.0",

@@ -188,6 +188,7 @@ export default function ChatScreen({ navigation }) {
         };
 
         let temp = chats.splice(0);
+        console.warn(temp.length);
         temp.push(userMessage);
         temp.push(botMessage);
 
@@ -688,12 +689,12 @@ export default function ChatScreen({ navigation }) {
               <AppText
                 style={{
                   fontSize: 14,
-                  width: "100%",
+                  width: "150%",
                   position: "absolute",
                   bottom: -20,
                 }}
               >
-                {translation.t("Listening")}..
+                {translation.t("Tap to Stop !")}
               </AppText>
             )}
           </View>

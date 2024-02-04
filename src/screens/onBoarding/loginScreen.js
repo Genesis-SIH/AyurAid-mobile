@@ -112,7 +112,7 @@ const LoginScreen = ({ navigation }) => {
       >
         <View
           style={{
-            width: "80%",
+            width: "90%",
             padding: 10,
             justifyContent: "center",
             alignItems: "center",
@@ -143,12 +143,12 @@ const LoginScreen = ({ navigation }) => {
             placeholder="Your Password"
             onChangeText={(text) => setPassword(text)}
           />
-{/* 
+
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onDemoPress}>
             <AppText style={{ fontSize: 20, color: "grey" }}>
               Tap to Demo Login
             </AppText>
-          </TouchableOpacity> */}
+          </TouchableOpacity>
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onForget}>
             <AppText style={{ fontSize: 15 }}>
