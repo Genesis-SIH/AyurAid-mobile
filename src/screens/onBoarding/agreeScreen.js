@@ -39,10 +39,7 @@ const AgreeScreen = ({ navigation }) => {
           </AppText>
 
           <AppText style={{ fontSize: 15,marginTop:20, textAlign: 'justify' }}>
-            Currently we have limited number of books to learn from, but I will keep learning and improving myself. So I might not be able to answer all your questions right now, but I will try my best.
-          </AppText>
-
-          
+          Currently, we have a limited number of books to learn from, but I will keep learning and improving myself. So I might not be able to answer all your questions right now, but I will try my best.</AppText>
         </View>
 
         <RoundButton
