@@ -17,19 +17,27 @@ import axios from "axios";
 import { ApiCollection } from "../../config";
 import LoadingModal from "../../components/loadingmodal";
 import { useTranslation } from "../../hooks/translation";
+import moment from "moment";
+
 
 function RegisterScreen({ navigation }) {
   const translation = useTranslation();
 
   const [fullName, setFullName] = React.useState("");
   const [email, setEmail] = React.useState("");
-  const [dob, setDob] = React.useState("");
+  
   const [country, setCountry] = React.useState("");
   const [password, setPassword] = React.useState("");
   const [confirmPassword, setConfirmPassword] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
+  const [day, setDay] = React.useState("");
+  const [month, setMonth] = React.useState("");
+  const [year, setYear] = React.useState("");
 
   const onContinue = async () => {
+
+
+
     if (fullName == "") {
       Alert.alert("Register Error", "Please enter your full name");
       return;
@@ -40,8 +48,18 @@ function RegisterScreen({ navigation }) {
       return;
     }
 
-    if (dob == "") {
+    if (email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/) == null) {
+      Alert.alert("Register Error", "Please enter a valid email");
+      return;
+    }
+
+    if(day=="" || month=="" || year==""){
       Alert.alert("Register Error", "Please enter your date of birth");
+      return;
+    }
+
+    if (moment(`${year}-${month}-${day}`, "YYYY-MM-DD").isValid() == false) {
+      Alert.alert("Register Error", "Please enter a valid date of birth");
       return;
     }
 
@@ -68,7 +86,7 @@ function RegisterScreen({ navigation }) {
       email: email,
       password: password,
       fullName: fullName,
-      dob: dob,
+      dob: moment(`${year}-${month}-${day}`, "YYYY-MM-DD").format("YYYY-MM-DD"),
       country: country,
       role: "practitioner",
     };
@@ -131,11 +149,39 @@ function RegisterScreen({ navigation }) {
             placeholder="Ex - some@gmail.com"
             onChangeText={(text) => setEmail(text)}
           />
-          <AppTextInput
+          <View style={{ flexDirection: "row", width: "100%",justifyContent:'space-between',alignItems:'center' }}>
+            <AppTextInput
+              label={translation.t("Date Of Birth")}
+              placeholder="DD"
+              maxLength={2}
+              keyboardType="number-pad"
+              containerStyle={{ width: "30%" }}
+              onChangeText={(text) => setDay(text)}
+            />
+            <AppTextInput
+              label={''}
+              placeholder="MM"
+              maxLength={2}
+              keyboardType="number-pad"
+              containerStyle={{ width: "30%" }}
+              onChangeText={(text) => setMonth(text)}
+            />
+            <AppTextInput
+              label={''}
+              placeholder="YYYY"
+              maxLength={4}
+              keyboardType="number-pad"
+              containerStyle={{ width: "30%" }}
+              onChangeText={(text) => setYear(text)}
+            />
+          </View>
+          {/* <AppTextInput
             label={translation.t("Date Of Birth")}
-            placeholder="Ex - 03 / 03 /2003"
+            placeholder="Ex - 03 - 03 - 2003"
+            // keyboardType="number-pad"
+            style={{ width: "100%" }}
             onChangeText={(text) => setDob(text)}
-          />
+          /> */}
           <AppTextInput
             label={translation.t("Country")}
             placeholder="Ex - India"
@@ -154,7 +200,7 @@ function RegisterScreen({ navigation }) {
             onChangeText={(text) => setConfirmPassword(text)}
           />
           <FlatButton
-            title={translation.t("Continue")}
+            title={translation.t("REGISTER")}
             onPress={onContinue}
             style={{
               width: "100%",

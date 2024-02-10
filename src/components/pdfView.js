@@ -31,6 +31,7 @@ function PdfView({ uri, book, author }) {
         onPress={() => handleOpenPdf(uri)}
       >
         <Pdf
+        
           trustAllCerts={false}
           source={{
             uri: uri,
@@ -72,11 +73,11 @@ function PdfView({ uri, book, author }) {
               backgroundColor: Colors.seconday,
             }}
           >
-            <AppText bold>{book}</AppText>
-            <AppText style={{ fontSize: 12, marginTop: 5 }}>
+            <AppText bold numberOfLines={2} style={{marginBottom:10}}>{book}</AppText>
+            <AppText style={{ fontSize: 12, marginTop: 5,color:Colors.primary }}>
               By- {author}
             </AppText>
-            <AppText style={{ fontSize: 12, marginTop: 5 }}>
+            <AppText style={{ fontSize: 12, marginTop: 5 ,color:Colors.primary}}>
               No.pages- {pages}
             </AppText>
           </View>
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
   pdf: {
     width: "100%",
     height: "100%",
+    backgroundColor:'grey'
   },
 });
 
