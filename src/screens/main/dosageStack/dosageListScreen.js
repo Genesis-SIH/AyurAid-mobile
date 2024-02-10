@@ -51,7 +51,7 @@ function DosageListScreen() {
     <View style={{ justifyContent: 'center', alignItems: 'center', width: '100%', flex: 1, height: 500 }}>
       <LottieView style={{ width: 50, height: 50 }} source={require('../../../utils/lottie/leafLoading.json')} autoPlay loop />
       <AppText style={{ color: 'grey', fontSize: 16, textAlign: 'center', width: '80%' }}>
-        Fetching blogs...
+        Fetching Dosages...
       </AppText>
     </View>
   );

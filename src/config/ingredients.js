@@ -907,7 +907,9 @@ const temp = [
   "Solomon’s Seal",
   "Sugar (Raw)",
   "Vidari-Kanda",
-  "Wild Yam"
+  "Wild Yam",
+  "sugar",
+  "cardamom"
 ]
 
 export const ayurvedicIngredients = new Set(temp);

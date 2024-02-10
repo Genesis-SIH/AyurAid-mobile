@@ -61,8 +61,6 @@ const LoginScreen = ({ navigation }) => {
       password: password,
     };
 
-    console.log(data);
-
     await axios
       .post(ApiCollection.authController.login, data)
       .then((res) => {
@@ -112,7 +110,7 @@ const LoginScreen = ({ navigation }) => {
       >
         <View
           style={{
-            width: "80%",
+            width: "90%",
             padding: 10,
             justifyContent: "center",
             alignItems: "center",
@@ -132,8 +130,8 @@ const LoginScreen = ({ navigation }) => {
           </AppText>
           <AppTextInput
             value={username}
-            label="Username"
-            placeholder="Ex- johndoe"
+            label="Email / Username"
+            placeholder="Ex- johndoe@gmail.com"
             onChangeText={(text) => setUsername(text)}
           />
           <AppTextInput

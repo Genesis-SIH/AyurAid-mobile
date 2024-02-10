@@ -188,6 +188,7 @@ export default function ChatScreen({ navigation }) {
         };
 
         let temp = chats.splice(0);
+        console.warn(temp.length);
         temp.push(userMessage);
         temp.push(botMessage);
 
@@ -296,6 +297,15 @@ export default function ChatScreen({ navigation }) {
     });
   };
 
+  const checkForBook = (string) => { config.books.forEach((book) => {
+    if (book.bookName.toLowerCase() == string.toLowerCase()) {
+      return true
+    } else {
+      return true
+    }
+  });
+};
+
   return (
     <View style={styles.container}>
       {!chatLoading ? (
@@ -357,18 +367,22 @@ export default function ChatScreen({ navigation }) {
                           <AppText style={{ fontSize: 14, lineHeight: 24 }}>
                             {translation.t("Source")}: {getSource(chat.text)}
                           </AppText>
-                          <TouchableOpacity
-                            onPress={() => getSourceLink(getSource(chat.text))}
-                            style={{
-                              backgroundColor: Colors.primary,
-                              padding: 5,
-                              paddingHorizontal: 10,
-                              borderRadius: 5,
-                              marginVertical: 10,
-                            }}
-                          >
-                            <AppText>View Book</AppText>
-                          </TouchableOpacity>
+                          {
+                            checkForBook(getSource(chat.text))==true &&
+                            <TouchableOpacity
+                              onPress={() => getSourceLink(getSource(chat.text))}
+                              style={{
+                                backgroundColor: Colors.primary,
+                                padding: 5,
+                                paddingHorizontal: 10,
+                                borderRadius: 5,
+                                marginVertical: 10,
+                              }}
+                            >
+                              <AppText>View Book</AppText>
+                            </TouchableOpacity>
+                          }
+
                         </View>
                       </View>
                     )}
@@ -688,12 +702,12 @@ export default function ChatScreen({ navigation }) {
               <AppText
                 style={{
                   fontSize: 14,
-                  width: "100%",
+                  width: "150%",
                   position: "absolute",
                   bottom: -20,
                 }}
               >
-                {translation.t("Listening")}..
+                {translation.t("Tap to Stop !")}
               </AppText>
             )}
           </View>

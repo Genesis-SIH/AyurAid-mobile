@@ -55,6 +55,7 @@ export default translations = {
         "Edit and update your profile": "Edit and update your profile",
         "About Us": "About Us",
         "About us and our mission to help people with Ayurveda": "About us and our mission to help people with Ayurveda",
+        "Tap to Stop !": "Tap to Stop !",
     },
 
     // Hindi
@@ -112,6 +113,7 @@ export default translations = {
         "Edit and update your profile": "अपनी प्रोफ़ाइल संपादित करें और अपडेट करें",
         "About Us": "हमारे बारे में",
         "About us and our mission to help people with Ayurveda": "हमारे बारे में और आयुर्वेद से लोगों की मदद करने के लिए हमारी मिशन",
+        "Tap to Stop !": "रोकने के लिए टैप करें !",
       },
            
     // Tamil
@@ -168,6 +170,7 @@ export default translations = {
         "Edit and update your profile": "உங்கள் சுயவிவரத்தைத் திருத்தவும் மற்றும் புதுப்பிக்கவும்",
         "About Us": "எங்களைப் பற்றி",
         "About us and our mission to help people with Ayurveda": "எங்களைப் பற்றி மற்றும் ஆயுர்வேதத்தைப் பயன்படுத்தி மக்களுக்கு உதவ எங்கள் இலக்கு",
+        "Tap to Stop !": "நிறுத்த தட்டவும் !",
       },
       
     // Spanish
@@ -224,6 +227,7 @@ export default translations = {
         "Edit and update your profile": "Edita y actualiza tu perfil",
         "About Us": "Sobre nosotros",
         "About us and our mission to help people with Ayurveda": "Sobre nosotros y nuestra misión de ayudar a las personas con Ayurveda",
+        "Tap to Stop !": "¡Toca para detener!",
       },
       
       mr: {
@@ -279,6 +283,7 @@ export default translations = {
         "Edit and update your profile": "आपलं प्रोफाइल संपादित करा आणि अपडेट करा",
         "About Us": "आमच्याबद्दल",
         "About us and our mission to help people with Ayurveda": "आमच्याबद्दल आणि आयुर्वेदाने माणसांना मदत करण्याच्या आमच्या मिशनबद्दल",
+        "Tap to Stop !": "थांबवायला टॅप करा !",
       },
       
 }
