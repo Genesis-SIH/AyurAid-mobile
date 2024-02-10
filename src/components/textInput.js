@@ -27,6 +27,7 @@ export default function AppTextInput(props) {
           <TextInput
             placeholderTextColor={"grey"}
             {...props}
+       
             style={[styles.input, { width: "90%" }, props.style]}
           />
           {props.rightElement}
@@ -71,11 +72,12 @@ export default function AppTextInput(props) {
   }
 
   return (
-    <View style={{ width: "100%", marginBottom: 20 }}>
+    <View style={[{ width: "100%", marginBottom: 20 },props.containerStyle]}>
       <AppText style={{ color: Colors.primary, marginBottom: 2 }}>
         {props.label}
       </AppText>
       <TextInput
+      
         placeholderTextColor={"grey"}
         {...props}
         style={[styles.input, props.style]}
