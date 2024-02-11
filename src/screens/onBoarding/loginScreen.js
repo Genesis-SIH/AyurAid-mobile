@@ -132,7 +132,7 @@ const LoginScreen = ({ navigation }) => {
           </AppText>
           <AppTextInput
             value={username}
-            label="Username / Email"
+            label="Email"
             placeholder="Ex- johndoe@gmail.com"
             onChangeText={(text) => setUsername(text)}
           />

@@ -71,7 +71,7 @@ export default function AppTextInput(props) {
   }
 
   return (
-    <View style={{ width: "100%", marginBottom: 20 }}>
+    <View style={[{ width: "100%", marginBottom: 20 },props.containerStyle]}>
       <AppText style={{ color: Colors.primary, marginBottom: 2 }}>
         {props.label}
       </AppText>
