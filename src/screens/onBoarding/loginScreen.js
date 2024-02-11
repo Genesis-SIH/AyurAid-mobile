@@ -132,8 +132,8 @@ const LoginScreen = ({ navigation }) => {
           </AppText>
           <AppTextInput
             value={username}
-            label="Username"
-            placeholder="Ex- johndoe"
+            label="Username / Email"
+            placeholder="Ex- johndoe@gmail.com"
             onChangeText={(text) => setUsername(text)}
           />
           <AppTextInput
@@ -144,11 +144,11 @@ const LoginScreen = ({ navigation }) => {
             onChangeText={(text) => setPassword(text)}
           />
 
-          <TouchableOpacity style={{ marginTop: 30 }} onPress={onDemoPress}>
+          {/* <TouchableOpacity style={{ marginTop: 30 }} onPress={onDemoPress}>
             <AppText style={{ fontSize: 20, color: "grey" }}>
               Tap to Demo Login
             </AppText>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
 
           <TouchableOpacity style={{ marginTop: 30 }} onPress={onForget}>
             <AppText style={{ fontSize: 15 }}>
