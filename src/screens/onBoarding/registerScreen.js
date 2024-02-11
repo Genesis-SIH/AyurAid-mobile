@@ -94,12 +94,12 @@ function RegisterScreen({ navigation }) {
       .then((res) => {
         setIsLoading(false);
         console.log(res.data);
-        Alert.alert("Success", "Account created successfully");
+        Alert.alert("Register", "Account created successfully");
         navigation.navigate(Routes.onBoarding.loginScreen);
       })
       .catch((err) => {
         setIsLoading(false);
-        Alert.alert("Register Error", err?.response?.data?.message || "Something went wrong");
+        Alert.alert("Register", err?.response?.data?.message || "Something went wrong");
       });
   };
 
